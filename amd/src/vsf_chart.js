@@ -7,6 +7,7 @@
  * @copyright  2016 Gareth J Barnard
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    Chartist is MIT licenced: https://raw.githubusercontent.com/gionkunz/chartist-js/master/LICENSE-MIT
  */
 
 /* jshint ignore:start */
@@ -17,10 +18,10 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
     log.debug('Progress Section Format Chartist AMD jQuery initialised');
 
     /**
-     * Chartist.js plugin to pre fill donouts with animations
+     * Chartist.js plugin to pre fill donouts with animations.
      * author: moxx
      * author-url: https://github.com/moxx/chartist-plugin-fill-donut
-     *
+     * @license    None specified.  Code is public.
      */
     (function(window, document, Chartist) {
         'use strict';
@@ -139,11 +140,6 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
 
 
             function process_chart(data, index) {
-                /*var data = {
-                    series: [60, 40],
-                    labels: ['', '']
-                };*/
-
                 var options = {
                     donut: true,
                     donutWidth: 10,
@@ -153,11 +149,6 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                     plugins: [
                         Chartist.plugins.fillDonut({
                             items: [{
-                                content: '<i class="fa fa-tachometer"></i>',
-                                position: 'bottom',
-                                offsetY : 10,
-                                offsetX: -2
-                            }, {
                                 content: '<h3>' + data.chartdata.series[0] +'<span class="small">%</span></h3>'
                             }]
                         })
@@ -179,7 +170,7 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                         var animationDefinition = {
                             'stroke-dashoffset': {
                                 id: 'anim' + data.index,
-                                dur: 24000,
+                                dur: 2400,
                                 from: -pathLength + 'px',
                                 to:  '0px',
                                 easing: Chartist.Svg.Easing.easeOutQuint,
