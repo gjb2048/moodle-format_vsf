@@ -34,3 +34,4 @@ $string['page-course-view-vsf'] = 'Any course main page in the progress section 
 $string['page-course-view-vsf-x'] = 'Any course page in progress section format';
 $string['hidefromothers'] = 'Hide section';
 $string['showfromothers'] = 'Show section';
+$string['completionpercentagechart'] = 'Section {$a->sectionno} completion percentage chart';

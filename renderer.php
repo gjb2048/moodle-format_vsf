@@ -31,6 +31,8 @@ require_once($CFG->dirroot.'/course/format/renderer.php');
 
 class format_vsf_renderer extends format_section_renderer_base {
 
+    private $sectioncompletionpercentage = array();
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -99,15 +101,15 @@ class format_vsf_renderer extends format_section_renderer_base {
             if ($course->marker == $section->section) {  // Show the "light globe" on/off.
                 $url->param('marker', 0);
                 $controls[] = html_writer::link($url,
-                                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marked'),
-                                        'class' => 'icon ', 'alt' => get_string('markedthistopic'))),
-                                    array('title' => get_string('markedthistopic'), 'class' => 'editing_highlight'));
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marked'),
+                        'class' => 'icon ', 'alt' => get_string('markedthistopic'))),
+                        array('title' => get_string('markedthistopic'), 'class' => 'editing_highlight'));
             } else {
                 $url->param('marker', $section->section);
                 $controls[] = html_writer::link($url,
-                                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marker'),
-                                    'class' => 'icon', 'alt' => get_string('markthistopic'))),
-                                array('title' => get_string('markthistopic'), 'class' => 'editing_highlight'));
+                    html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/marker'),
+                        'class' => 'icon', 'alt' => get_string('markthistopic'))),
+                        array('title' => get_string('markthistopic'), 'class' => 'editing_highlight'));
             }
         }
 
@@ -178,16 +180,13 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Output section completion data
         if ($total > 0) {
-            //$a = new stdClass;
-            //$a->complete = $complete;
-            //$a->total = $total;
-            $percentage = 50;
+            $percentage = round(($complete / $total) * 100);
+            $this->sectioncompletionpercentage[$section->section] = $percentage;
 
             $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
-            //$o.= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
             $o.= html_writer::tag('span', $percentage.'%');
-            $o.= '<div class="ct-chart ct-perfect-fourth"></div>';
             $o.= html_writer::end_tag('div');
+            $o.= '<div class="row-fluid"><div class="span2 pull-right"><div class="vsf-chart-section-'.$section->section.' ct-chart ct-perfect-fourth" title="'.get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section)).'"></div></div></div>';
         }
 
         return $o;
@@ -206,38 +205,25 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         echo parent::print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
 
-            $now = time();
-            $then = 100 * floor(($now - (2 * 60 * 60)) / 100);  // Round to the nearest 100 seconds for better query cache.
-            $params = array('then' => $then);
-            $sql = 'SELECT u.currentlogin, u.lastaccess FROM {user} u WHERE u.lastaccess >= :then';
+        // Must be after normal print of page so that data is gathered.
+        global $PAGE;
 
-            global $DB, $PAGE;
-            if (!$users = $DB->get_records_sql($sql, $params)) {
-                $users = array();
-            }
+        /*
+                var data = {
+                    series: [60, 40],
+                    labels: ['', '']
+                };
+        */
 
-            $userloadpostfix = 'm';
+        //$data = array('data' => array('labels' => array('', ''), 'series' => array(array_values($tally))));
 
-            $tally = array();
-            for ($interval = (2 * 60); $interval >= 15; $interval -= 15) {
-                $intervaltime = $now - (60 * $interval);
-                $tally[strval($interval).$userloadpostfix] = 0;
-                foreach ($users as $user) {
-                    if (($user->currentlogin <= $intervaltime) && ($user->lastaccess >= $intervaltime)) {
-                        $tally[strval($interval).$userloadpostfix]++;
-                    }
-                }
-            }
-            $tally['0'.$userloadpostfix] = 0;
-            $then = 100 * floor(($now - (15 * 60)) / 100);;
-            foreach ($users as $user) {
-                if (($user->lastaccess <= $now) && ($user->lastaccess >= $then)) {
-                    $tally['0'.$userloadpostfix]++;
-                }
-            }
+        $data = array();
+        foreach($this->sectioncompletionpercentage as $sectionno => $percentage) {
+            $rest = 100 - $percentage;
+            $data['data'][] = array('sectionno' => $sectionno, 'chartdata' => array('labels' => array('', ''), 'series' => array($percentage, $rest)));
+        }
 
-            $data = array('data' => array('labels' => array_keys($tally), 'series' => array(array_values($tally))));
 
-            $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
+        $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
     }
 }

@@ -137,15 +137,16 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
             log.debug('Progress Section Format Chartist AMD init initialised');
             log.debug(data);
 
-            $(document).ready(function() {
-                var data = {
+
+            function process_chart(data, index) {
+                /*var data = {
                     series: [60, 40],
                     labels: ['', '']
-                };
+                };*/
 
                 var options = {
                     donut: true,
-                    donutWidth: 40,
+                    donutWidth: 10,
                     startAngle: 0,
                     total: 100,
                     showLabel: false,
@@ -157,12 +158,12 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                                 offsetY : 10,
                                 offsetX: -2
                             }, {
-                                content: '<h3>60<span class="small">%</span></h3>'
+                                content: '<h3>' + data.chartdata.series[0] +'<span class="small">%</span></h3>'
                             }]
                         })
                     ]
                 };
-                var chart = new Chartist.Pie('.ct-chart', data, options);
+                var chart = new Chartist.Pie('.vsf-chart-section-' + data.sectionno, data.chartdata, options);
 
                 // Animation for the first series.
                 // Depreciated in Chrome - need to think about CSS: https://css-tricks.com/animating-svg-css/.
@@ -191,6 +192,10 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                         data.element.animate(animationDefinition, true);
                     }
                 });
+            }
+
+            $(document).ready(function() {
+                data.forEach(process_chart);
             });
         }
     }
