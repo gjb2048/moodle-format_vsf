@@ -22,7 +22,7 @@
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
 
@@ -112,5 +112,132 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         return array_merge($controls, parent::section_edit_controls($course, $section, $onsectionpage));
+    }
+
+    /**
+     * Generate a summary of the activites in a section
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @param stdClass $course the course record from DB
+     * @param array    $mods (argument not used)
+     * @return string HTML to output.
+     */
+    protected function section_activity_summary($section, $course, $mods) {
+        $modinfo = get_fast_modinfo($course);
+        if (empty($modinfo->sections[$section->section])) {
+            return '';
+        }
+
+        // Generate array with count of activities in this section:
+        $sectionmods = array();
+        $total = 0;
+        $complete = 0;
+        $cancomplete = isloggedin() && !isguestuser();
+        $completioninfo = new completion_info($course);
+        foreach ($modinfo->sections[$section->section] as $cmid) {
+            $thismod = $modinfo->cms[$cmid];
+
+            if ($thismod->modname == 'label') {
+                // Labels are special (not interesting for students)!
+                continue;
+            }
+
+            if ($thismod->uservisible) {
+                if (isset($sectionmods[$thismod->modname])) {
+                    $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
+                    $sectionmods[$thismod->modname]['count']++;
+                } else {
+                    $sectionmods[$thismod->modname]['name'] = $thismod->modfullname;
+                    $sectionmods[$thismod->modname]['count'] = 1;
+                }
+                if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
+                    $total++;
+                    $completiondata = $completioninfo->get_data($thismod, true);
+                    if ($completiondata->completionstate == COMPLETION_COMPLETE ||
+                            $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        $complete++;
+                    }
+                }
+            }
+        }
+
+        if (empty($sectionmods)) {
+            // No sections
+            return '';
+        }
+
+        // Output section activities summary:
+        $o = '';
+        $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+        foreach ($sectionmods as $mod) {
+            $o.= html_writer::start_tag('span', array('class' => 'activity-count'));
+            $o.= $mod['name'].': '.$mod['count'];
+            $o.= html_writer::end_tag('span');
+        }
+        $o.= html_writer::end_tag('div');
+
+        // Output section completion data
+        if ($total > 0) {
+            //$a = new stdClass;
+            //$a->complete = $complete;
+            //$a->total = $total;
+            $percentage = 50;
+
+            $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+            //$o.= html_writer::tag('span', get_string('progresstotal', 'completion', $a), array('class' => 'activity-count'));
+            $o.= html_writer::tag('span', $percentage.'%');
+            $o.= '<div class="ct-chart ct-perfect-fourth"></div>';
+            $o.= html_writer::end_tag('div');
+        }
+
+        return $o;
+    }
+
+    /**
+     * Output the html for a multiple section page
+     *
+     * @param stdClass $course The course entry from DB
+     * @param array $sections (argument not used)
+     * @param array $mods (argument not used)
+     * @param array $modnames (argument not used)
+     * @param array $modnamesused (argument not used)
+     */
+    public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
+
+        echo parent::print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
+
+            $now = time();
+            $then = 100 * floor(($now - (2 * 60 * 60)) / 100);  // Round to the nearest 100 seconds for better query cache.
+            $params = array('then' => $then);
+            $sql = 'SELECT u.currentlogin, u.lastaccess FROM {user} u WHERE u.lastaccess >= :then';
+
+            global $DB, $PAGE;
+            if (!$users = $DB->get_records_sql($sql, $params)) {
+                $users = array();
+            }
+
+            $userloadpostfix = 'm';
+
+            $tally = array();
+            for ($interval = (2 * 60); $interval >= 15; $interval -= 15) {
+                $intervaltime = $now - (60 * $interval);
+                $tally[strval($interval).$userloadpostfix] = 0;
+                foreach ($users as $user) {
+                    if (($user->currentlogin <= $intervaltime) && ($user->lastaccess >= $intervaltime)) {
+                        $tally[strval($interval).$userloadpostfix]++;
+                    }
+                }
+            }
+            $tally['0'.$userloadpostfix] = 0;
+            $then = 100 * floor(($now - (15 * 60)) / 100);;
+            foreach ($users as $user) {
+                if (($user->lastaccess <= $now) && ($user->lastaccess >= $then)) {
+                    $tally['0'.$userloadpostfix]++;
+                }
+            }
+
+            $data = array('data' => array('labels' => array_keys($tally), 'series' => array(array_values($tally))));
+
+            $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
     }
 }
