@@ -599,3 +599,18 @@
     position: absolute;
     top: 0;
     left: 0; }
+
+/* Make a color different to fill-donut series*/
+.format-vsf .ct-chart-donut .ct-series-a .ct-slice-donut {
+    stroke: #1ABC9C;
+}
+/* Make b hidden*/
+.format-vsf  .ct-chart-donut .ct-series-b .ct-slice-donut {
+    stroke: #ECF0F1;
+    opacity: 0.0;
+}
+/* Make all fill-donut series visible and set color*/
+.format-vsf .ct-chart-donut .ct-fill-donut .ct-slice-donut{
+    stroke: #ECF0F1;
+    opacity: 1;
+}
