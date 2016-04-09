@@ -150,7 +150,11 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                         Chartist.plugins.fillDonut({
                             items: [{
                                 content: '<h3>' + data.chartdata.series[0] +'<span class="small">%</span></h3>'
-                            }]
+                            }],
+                            label : {
+                                html: '<div></div>',
+                                class: 'ct-fill-donut-label'
+                            }
                         })
                     ]
                 };
@@ -158,6 +162,7 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
 
                 // Animation for the first series.
                 // Depreciated in Chrome - need to think about CSS: https://css-tricks.com/animating-svg-css/.
+                /*
                 chart.on('draw', function(data) {
                     if(data.type === 'slice' && data.index == 0) {
                         // array animation.
@@ -181,6 +186,37 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                             'stroke-dashoffset': -pathLength + 'px'
                         });
                         data.element.animate(animationDefinition, true);
+                    }
+                });
+                */
+                /*
+                chart.on('draw', function(data) {
+                    if(data.type === 'slice' && data.index == 0) {
+                        // array animation.
+                        var pathLength = data.element._node.getTotalLength();
+                        log.debug('PL: ' + pathLength);
+                    }
+                });
+                */
+                // https://jakearchibald.com/2013/animated-line-drawing-svg/.
+                chart.on('draw', function(data) {
+                    if(data.type === 'slice' && data.index == 0) {
+                        // var path = document.querySelector('.squiggle-animated path');
+                        var path = data.element._node;
+                        var length = path.getTotalLength();
+                        // Clear any previous transition
+                        path.style.transition = path.style.WebkitTransition = 'none';
+                        // Set up the starting positions
+                        path.style.strokeDasharray = length + ' ' + length;
+                        path.style.strokeDashoffset = -length;
+                        // Trigger a layout so styles are calculated & the browser
+                        // picks up the starting position before animating
+                        path.getBoundingClientRect();
+                        // Define our transition
+                        path.style.transition = path.style.WebkitTransition =
+                            'stroke-dashoffset 5s ease-out';
+                        // Go!
+                        path.style.strokeDashoffset = '0';
                     }
                 });
             }
