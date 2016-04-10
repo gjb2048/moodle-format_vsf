@@ -42,6 +42,11 @@ Notes
    deleted, then a page refresh will recreate the forum but all previous posts will be lost.
 2. Any title and summary that has been previously set for the general section will not be shown.
 
+Additional classes
+Section name = 'vsf-sectionname'.
+Section summary = 'vsf-summary' - due to Moodle limitations, use CSS such as '.vsf-summary p' to target the text directly.
+Section progress chart = 'vsf-progress'.
+
 Version Information
 ===================
 See Changes.md

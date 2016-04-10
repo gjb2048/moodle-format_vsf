@@ -1,5 +1,5 @@
 .format-vsf .course-content ul.sections {margin:0;}
-.format-vsf .course-content ul.sections li.section {list-style: none;margin:0 0 5px 0;padding:0;}
+.format-vsf .course-content ul.sections li.section {list-style: none;margin:0 0 5px 0;padding:0 0 20px 0;}
 .format-vsf .course-content ul.sections li.section .content {margin:0 40px;}
 .format-vsf .course-content ul.sections li.section .left {float:left;}
 .format-vsf .course-content ul.sections li.section .right {float:right;}
@@ -637,4 +637,13 @@
   to {
     stroke-dashoffset: 0px;
   }
+}
+
+/* Specific styling. */
+.format-vsf .course-content ul li.section.main {
+    border: 0 solid transparent;
+}
+
+.format-vsf .course-content .section-summary .section-title, .format-vsf .single-section h3.sectionname {
+    margin-bottom: 0;
 }

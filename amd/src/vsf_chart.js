@@ -160,63 +160,19 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                 };
                 var chart = new Chartist.Pie('.vsf-chart-section-' + data.sectionno, data.chartdata, options);
 
-                // Animation for the first series.
-                // Depreciated in Chrome - need to think about CSS: https://css-tricks.com/animating-svg-css/.
-                /*
-                chart.on('draw', function(data) {
-                    if(data.type === 'slice' && data.index == 0) {
-                        // array animation.
-                        var pathLength = data.element._node.getTotalLength();
-
-                        data.element.attr({
-                            'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
-                        });
-
-                        var animationDefinition = {
-                            'stroke-dashoffset': {
-                                id: 'anim' + data.index,
-                                dur: 2400,
-                                from: -pathLength + 'px',
-                                to:  '0px',
-                                easing: Chartist.Svg.Easing.easeOutQuint,
-                                fill: 'freeze'
-                            }
-                        };
-                        data.element.attr({
-                            'stroke-dashoffset': -pathLength + 'px'
-                        });
-                        data.element.animate(animationDefinition, true);
-                    }
-                });
-                */
-                /*
-                chart.on('draw', function(data) {
-                    if(data.type === 'slice' && data.index == 0) {
-                        // array animation.
-                        var pathLength = data.element._node.getTotalLength();
-                        log.debug('PL: ' + pathLength);
-                    }
-                });
-                */
                 // https://jakearchibald.com/2013/animated-line-drawing-svg/.
+                // http://www.w3schools.com/jsref/prop_style_transition.asp.
                 chart.on('draw', function(data) {
                     if(data.type === 'slice' && data.index == 0) {
-                        // var path = document.querySelector('.squiggle-animated path');
-                        var path = data.element._node;
-                        var length = path.getTotalLength();
-                        // Clear any previous transition
-                        path.style.transition = path.style.WebkitTransition = 'none';
-                        // Set up the starting positions
-                        path.style.strokeDasharray = length + ' ' + length;
-                        path.style.strokeDashoffset = -length;
-                        // Trigger a layout so styles are calculated & the browser
-                        // picks up the starting position before animating
-                        path.getBoundingClientRect();
-                        // Define our transition
-                        path.style.transition = path.style.WebkitTransition =
-                            'stroke-dashoffset 5s ease-out';
-                        // Go!
-                        path.style.strokeDashoffset = '0';
+                        var node = data.element._node;
+                        var len = node.getTotalLength();
+                        node.style.transition = node.style.WebkitTransition = 'none';
+                        node.style.strokeDasharray = len + 'px ' + len + 'px';
+                        node.style.strokeDashoffset = -len + 'px';
+                        node.getBoundingClientRect();
+                        node.style.transition = node.style.WebkitTransition =
+                            'stroke-dashoffset 2s ease-out';
+                        node.style.strokeDashoffset = '0px';
                     }
                 });
             }
