@@ -149,7 +149,7 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                         // https://github.com/moxx/chartist-plugin-fill-donut#license.
                         Chartist.plugins.fillDonut({
                             items: [{
-                                content: '<p class="vsf-percentage">' + data.chartdata.series[0] +'<span class="small">%</span></p>'
+                                content: '<p class="vsf-percentage">' + data.chartdata.series[0] +'%</p>'
                             }],
                             label : {
                                 html: '<div></div>',
