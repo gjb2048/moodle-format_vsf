@@ -138,7 +138,6 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
             log.debug('Progress Section Format Chartist AMD init initialised');
             log.debug(data);
 
-
             function process_chart(data, index) {
                 var options = {
                     donut: true,
@@ -147,9 +146,10 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                     total: 100,
                     showLabel: false,
                     plugins: [
+                        // https://github.com/moxx/chartist-plugin-fill-donut#license.
                         Chartist.plugins.fillDonut({
                             items: [{
-                                content: '<h3>' + data.chartdata.series[0] +'<span class="small">%</span></h3>'
+                                content: '<p class="vsf-percentage">' + data.chartdata.series[0] +'<span class="small">%</span></p>'
                             }],
                             label : {
                                 html: '<div></div>',
@@ -160,18 +160,17 @@ define(['jquery', 'format_vsf/chartist', 'core/log'], function($, Chartist, log)
                 };
                 var chart = new Chartist.Pie('.vsf-chart-section-' + data.sectionno, data.chartdata, options);
 
-                // https://jakearchibald.com/2013/animated-line-drawing-svg/.
-                // http://www.w3schools.com/jsref/prop_style_transition.asp.
                 chart.on('draw', function(data) {
                     if(data.type === 'slice' && data.index == 0) {
                         var node = data.element._node;
                         var len = node.getTotalLength();
-                        node.style.transition = node.style.WebkitTransition = 'none';
+                        node.style.transition = 'none';
+                        node.style.WebkitTransition = node.style.transition;
                         node.style.strokeDasharray = len + 'px ' + len + 'px';
                         node.style.strokeDashoffset = -len + 'px';
                         node.getBoundingClientRect();
-                        node.style.transition = node.style.WebkitTransition =
-                            'stroke-dashoffset 2s ease-out';
+                        node.style.transition = 'stroke-dashoffset 2s ease-out';
+                        node.style.WebkitTransition = node.style.transition;
                         node.style.strokeDashoffset = '0px';
                     }
                 });

@@ -209,13 +209,13 @@ class format_vsf extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'hiddensections' => array(
-                    'default' => $courseconfig->hiddensections,
+                    'default' => 1, // Completely invisible.
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => $courseconfig->coursedisplay,
+                    'default' => COURSE_DISPLAY_MULTIPAGE,
                     'type' => PARAM_INT,
-                ),
+                )
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -232,31 +232,15 @@ class format_vsf extends format_base {
                 'numsections' => array(
                     'label' => new lang_string('numberweeks'),
                     'element_type' => 'select',
-                    'element_attributes' => array($sectionmenu),
+                    'element_attributes' => array($sectionmenu)
                 ),
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
-                    'help' => 'hiddensections',
-                    'help_component' => 'moodle',
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            0 => new lang_string('hiddensectionscollapsed'),
-                            1 => new lang_string('hiddensectionsinvisible')
-                        )
-                    ),
+                    'element_type' => 'hidden'
                 ),
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single'),
-                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
-                        )
-                    ),
-                    'help' => 'coursedisplay',
-                    'help_component' => 'moodle',
+                    'element_type' => 'hidden'
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);

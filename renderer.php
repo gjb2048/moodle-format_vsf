@@ -267,7 +267,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             return '';
         }
 
-        // Generate array with count of activities in this section:
+        // Generate array with count of activities in this section.
         $sectionmods = array();
         $total = 0;
         $complete = 0;
@@ -301,13 +301,12 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         if (empty($sectionmods)) {
-            // No sections
+            // No sections.
             return '';
         }
 
-        // Output section activities summary:
-        $o = '';
-        $o.= html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+        // Output section activities summary.
+        $o = html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
         foreach ($sectionmods as $mod) {
             $o.= html_writer::start_tag('span', array('class' => 'activity-count'));
             $o.= $mod['name'].': '.$mod['count'];
@@ -315,12 +314,21 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
         $o.= html_writer::end_tag('div');
 
-        // Output section completion data
+        // Output section completion data.
         if ($total > 0) {
             $percentage = round(($complete / $total) * 100);
             $this->sectioncompletionpercentage[$section->section] = $percentage;
 
-            $o .= '<div class="row-fluid"><div class="span2 pull-right"><div class="vsf-chart-section-'.$section->section.' ct-chart ct-perfect-fourth vsf-progress" title="'.get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section)).'"></div></div></div>';
+            $o .= html_writer::start_tag('div', array('class' => "row-fluid"));
+            $o .= html_writer::start_tag('div', array('class' => "span2 pull-right"));
+            // Note: Chart aspect ratio classes: https://gionkunz.github.io/chartist-js/getting-started.html#one-two-three-css.
+            $o .= html_writer::start_tag('div', array(
+                'class' => 'vsf-chart-section-'.$section->section.' ct-chart ct-square vsf-progress',
+                'title' => get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section))
+            ));
+            $o.= html_writer::end_tag('div');
+            $o.= html_writer::end_tag('div');
+            $o.= html_writer::end_tag('div');
         }
 
         return $o;
@@ -421,16 +429,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         echo html_writer::end_tag('div');
 
         // Progress chart.  Must be after normal print of page so that data is gathered.
-        global $PAGE;
-
-        $data = array();
-        // Should only be zero or one section progress percentages.  Loop is neat for this.
-        foreach($this->sectioncompletionpercentage as $sectionno => $percentage) {
-            $rest = 100 - $percentage;
-            $data['data'][] = array('sectionno' => $sectionno, 'chartdata' => array('labels' => array('', ''), 'series' => array($percentage, $rest)));
-        }
-
-        $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
+        $this->section_completion_charts();
     }
 
     /**
@@ -447,12 +446,19 @@ class format_vsf_renderer extends format_section_renderer_base {
         echo parent::print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
 
         // Progress chart.  Must be after normal print of page so that data is gathered.
+        $this->section_completion_charts();
+    }
+
+    private function section_completion_charts() {
         global $PAGE;
 
         $data = array();
         foreach($this->sectioncompletionpercentage as $sectionno => $percentage) {
             $rest = 100 - $percentage;
-            $data['data'][] = array('sectionno' => $sectionno, 'chartdata' => array('labels' => array('', ''), 'series' => array($percentage, $rest)));
+            $data['data'][] = array(
+                'sectionno' => $sectionno, 
+                'chartdata' => array('labels' => array('', ''), 'series' => array($percentage, $rest))
+            );
         }
 
         $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
