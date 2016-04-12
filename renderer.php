@@ -409,6 +409,12 @@ class format_vsf_renderer extends format_section_renderer_base {
         $sectiontitle .= html_writer::end_tag('div');
         echo $sectiontitle;
 
+        $activitysummary = $this->section_activity_summary($thissection, $course, null);
+        if (!empty($activitysummary)) {
+            echo html_writer::start_tag('div', array('class' => 'row-fluid'));
+            echo html_writer::start_tag('div', array('class' => 'span10'));
+        }
+
         // Now the list of sections..
         echo $this->start_section_list();
 
@@ -420,16 +426,16 @@ class format_vsf_renderer extends format_section_renderer_base {
         echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         echo $this->courserenderer->course_section_add_cm_control($course, $displaysection, $displaysection);
 
-        $activitysummary = $this->section_activity_summary($thissection, $course, null);
+        echo $this->section_footer();
+        echo $this->end_section_list();
+
         if (!empty($activitysummary)) {
-            echo html_writer::start_tag('div', array('class' => "row-fluid"));
-            echo html_writer::start_tag('div', array('class' => "span2 pull-right"));
+            echo html_writer::end_tag('div');
+            echo html_writer::start_tag('div', array('class' => 'span2'));
             echo $activitysummary;
             echo html_writer::end_tag('div');
             echo html_writer::end_tag('div');
         }
-        echo $this->section_footer();
-        echo $this->end_section_list();
 
         // Display section bottom navigation.
         $sectionbottomnav = '';
