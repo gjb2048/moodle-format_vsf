@@ -385,30 +385,6 @@
     opacity: 1;
 }
 
-/* Not sure if this will work! */
-.ie.format-vsf .ct-series.ct-series-a:not(.ct-fill-donut) path.ct-slice-donut {
-  stroke-dasharray: 200px 200px;
-  /* animation: dash 5s linear forwards;*/
-  animation-name: guage;
-  animation-duration: 5s; 
-  /* animation-timing-function: linear; */
-  animation-timing-function: ease-out; 
-  animation-delay: 0s;
-  /* animation-direction: alternate;*/
-  /* animation-iteration-count: 1;*/
-  animation-fill-mode: forwards;
-  /*animation-play-state: running; */
-}
-
-@keyframes guage {
-  from {
-    stroke-dashoffset: -200px;
-  }
-  to {
-    stroke-dashoffset: 0px;
-  }
-}
-
 /* Specific styling. */
 .format-vsf .course-content ul li.section.main {
     border: 0 solid transparent;
@@ -424,6 +400,6 @@
 }
 
 .format-vsf .vsf-percentage {
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
 }

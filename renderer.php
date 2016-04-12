@@ -230,18 +230,30 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         $o .= html_writer::tag('div', '', array('class' => 'left side'));
         $o .= html_writer::tag('div', '', array('class' => 'right side'));
+
         $o .= html_writer::start_tag('div', array('class' => 'content'));
 
         if ($section->uservisible) {
             $title = html_writer::tag('a', $title,
-                    array('href' => course_get_url($course, $section->section), 'class' => $linkclasses));
+                array('href' => course_get_url($course, $section->section), 'class' => $linkclasses));
         }
         $o .= $this->output->heading($title, 3, 'section-title');
 
+        $activitysummary = $this->section_activity_summary($section, $course, null);
+        if (!empty($activitysummary)) {
+            $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
+            $o .= html_writer::start_tag('div', array('class' => 'span10'));
+        }
         $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o.= $this->format_summary_text($section);
         $o.= html_writer::end_tag('div');
-        $o.= $this->section_activity_summary($section, $course, null);
+        if (!empty($activitysummary)) {
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'span2'));
+            $o .= $activitysummary;
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');
+        }
 
         $context = context_course::instance($course->id);
         $o .= $this->section_availability_message($section,
@@ -319,15 +331,11 @@ class format_vsf_renderer extends format_section_renderer_base {
             $percentage = round(($complete / $total) * 100);
             $this->sectioncompletionpercentage[$section->section] = $percentage;
 
-            $o .= html_writer::start_tag('div', array('class' => "row-fluid"));
-            $o .= html_writer::start_tag('div', array('class' => "span2 pull-right"));
             // Note: Chart aspect ratio classes: https://gionkunz.github.io/chartist-js/getting-started.html#one-two-three-css.
             $o .= html_writer::start_tag('div', array(
                 'class' => 'vsf-chart-section-'.$section->section.' ct-chart ct-square vsf-progress',
                 'title' => get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section))
             ));
-            $o.= html_writer::end_tag('div');
-            $o.= html_writer::end_tag('div');
             $o.= html_writer::end_tag('div');
         }
 
@@ -411,7 +419,15 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         echo $this->courserenderer->course_section_add_cm_control($course, $displaysection, $displaysection);
-        echo $this->section_activity_summary($thissection, $course, null);
+
+        $activitysummary = $this->section_activity_summary($thissection, $course, null);
+        if (!empty($activitysummary)) {
+            echo html_writer::start_tag('div', array('class' => "row-fluid"));
+            echo html_writer::start_tag('div', array('class' => "span2 pull-right"));
+            echo $activitysummary;
+            echo html_writer::end_tag('div');
+            echo html_writer::end_tag('div');
+        }
         echo $this->section_footer();
         echo $this->end_section_list();
 
