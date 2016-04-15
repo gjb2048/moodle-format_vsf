@@ -47,6 +47,7 @@ Section name = 'vsf-sectionname'.
 Section summary = 'vsf-summary' - due to Moodle limitations, use CSS such as '.vsf-summary p' to target the text directly.
 Section progress chart = 'vsf-progress'.
 Section progress chart percentage = 'vsf-percentage'.
+Section complete = 'vsf-section-complete'.
 
 Version Information
 ===================
