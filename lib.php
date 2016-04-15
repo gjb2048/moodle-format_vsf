@@ -191,10 +191,8 @@ class format_vsf extends format_base {
     /**
      * Definitions of the additional options that this course format uses for course
      *
-     * Topics format uses the following options:
-     * - coursedisplay
+     * Progress section format uses the following options:
      * - numsections
-     * - hiddensections
      *
      * @param bool $foreditform
      * @return array of options
@@ -214,11 +212,11 @@ class format_vsf extends format_base {
                 ),
                 'coursedisplay' => array(
                     'default' => COURSE_DISPLAY_MULTIPAGE,
-                    'type' => PARAM_INT,
+                    'type' => PARAM_INT
                 )
             );
         }
-        if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
+        if ($foreditform && !isset($courseformatoptions['numsections']['label'])) {
             $courseconfig = get_config('moodlecourse');
             $max = $courseconfig->maxsections;
             if (!isset($max) || !is_numeric($max)) {
@@ -234,13 +232,28 @@ class format_vsf extends format_base {
                     'element_type' => 'select',
                     'element_attributes' => array($sectionmenu)
                 ),
+                // Really horrible, but if set to 'hidden' fields then they are not set, default only appears to affect this.
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
-                    'element_type' => 'hidden'
+                    'help' => 'hiddensections',
+                    'help_component' => 'moodle',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('hiddensectionsinvisible')
+                        )
+                    ),
                 ),
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'hidden'
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
+                        )
+                    ),
+                    'help' => 'coursedisplay',
+                    'help_component' => 'moodle'
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);

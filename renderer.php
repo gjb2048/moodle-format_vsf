@@ -490,6 +490,8 @@ class format_vsf_renderer extends format_section_renderer_base {
             );
         }
 
-        $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
+        if (!empty($data)) {
+            $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
+        }
     }
 }
