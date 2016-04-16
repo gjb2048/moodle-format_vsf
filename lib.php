@@ -232,28 +232,13 @@ class format_vsf extends format_base {
                     'element_type' => 'select',
                     'element_attributes' => array($sectionmenu)
                 ),
-                // Really horrible, but if set to 'hidden' fields then they are not set, default only appears to affect this.
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
-                    'help' => 'hiddensections',
-                    'help_component' => 'moodle',
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            1 => new lang_string('hiddensectionsinvisible')
-                        )
-                    ),
+                    'element_type' => 'hidden'
                 ),
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
-                        )
-                    ),
-                    'help' => 'coursedisplay',
-                    'help_component' => 'moodle'
+                    'element_type' => 'hidden'
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -308,6 +293,15 @@ class format_vsf extends format_base {
     public function update_course_format_options($data, $oldcourse = null) {
         global $DB;
         $data = (array)$data;
+
+        // Don't allow values from other formats to override the fixed defaults here.
+        if (array_key_exists('coursedisplay', $data)) {
+            unset($data['coursedisplay']);
+        }
+        if (array_key_exists('hiddensections', $data)) {
+            unset($data['hiddensections']);
+        }
+
         if ($oldcourse !== null) {
             $oldcourse = (array)$oldcourse;
             $options = $this->course_format_options();
