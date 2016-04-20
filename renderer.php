@@ -402,15 +402,6 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Copy activity clipboard..
         echo $this->course_activity_clipboard($course, $displaysection);
-        $thissection = $modinfo->get_section_info(0);
-        if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
-            echo $this->start_section_list();
-            echo $this->section_header($thissection, $course, true, $displaysection);
-            echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
-            echo $this->courserenderer->course_section_add_cm_control($course, 0, $displaysection);
-            echo $this->section_footer();
-            echo $this->end_section_list();
-        }
 
         // Start single-section div
         echo html_writer::start_tag('div', array('class' => 'single-section'));

@@ -403,3 +403,9 @@
     font-size: 14px;
     margin: 0;
 }
+
+.format-vsf .course-content .single-section .section-navigation a,
+.format-vsf.path-course-view .single-section .completionprogress,
+.format-vsf .section .activity.modtype_label.label {
+    text-decoration: underline;
+}
