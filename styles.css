@@ -1,13 +1,17 @@
 .format-vsf .course-content ul.sections {margin:0;}
 .format-vsf .course-content ul.sections li.section {list-style: none;margin:0 0 20px 0;padding:0;}
 .format-vsf .course-content ul.sections li.section .content {margin:0 40px;}
-.format-vsf .course-content ul.sections li.section .left {float:left;}
+.format-vsf .course-content ul.sections li.section .left {
+    float: left;
+    clear: left;
+}
 .format-vsf .course-content ul.sections li.section .right {
     float: right;
     clear: right;
 }
 .format-vsf .course-content ul.sections li.section .left,
-.format-vsf .course-content ul.sections li.section .right {width:40px;text-align:center;padding: 6px 0;}
+.format-vsf .course-content ul.sections li.section .right {width:40px; text-align:center; padding: 6px 0;}
+
 .format-vsf .course-content ul.sections li.section .right img.icon { padding: 0 0 4px 0;}
 .format-vsf .course-content ul.sections li.section .left .section-handle img.icon { padding:0; vertical-align: baseline; }
 
@@ -420,20 +424,53 @@
 .format-vsf .course-content .single-section {
     margin-top: 0;
     padding-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .format-vsf .course-content .single-section ul.section {
     margin-top: 0;
 }
 
-/*
-.format-vsf .course-content .single-section ul.sections li.section .left,
-.format-vsf .course-content .single-section ul.sections li.section .right {
-    width: 0;
+.format-vsf .course-content {
+    box-shadow: none;
 }
 
-.editing.format-vsf .course-content .single-section ul.sections li.section .left,
-.editing.format-vsf .course-content .single-section ul.sections li.section .right {
-    width: 40px;
+.format-vsf .course-content ul.sections li.section {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
 }
-*/
+
+.format-vsf .course-content ul.sections li.section,
+.format-vsf .course-content .single-section {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+}
+.format-vsf .course-content .single-section ul.sections li.section {
+    box-shadow: none;
+}
+
+.format-vsf .course-content .single-section .section-navigation.navigationtitle {
+    padding: 0;
+    height: 20px;
+    margin: 0;
+}
+
+.format-vsf .course-content .single-section ul.sections li.section .left, .format-vsf .course-content .single-section ul.sections li.section .right {
+    width: 0;
+    padding: 0;
+}
+
+.format-vsf.editing .course-content .single-section ul.sections li.section .left,
+.format-vsf.editing .course-content .single-section ul.sections li.section .right {
+    width: 40px;
+    padding: 6px 0;
+}
+
+.format-vsf .course-content .single-section ul.sections li.section .content {
+    margin: 0;
+}
+
+.format-vsf.editing .course-content .single-section ul.sections li.section .content {
+    margin: 0 40px;
+}

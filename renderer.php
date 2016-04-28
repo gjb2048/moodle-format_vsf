@@ -166,18 +166,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
         $o .= $this->output->heading($this->section_title($section, $course), 3, 'sectionname vsf-sectionname' . $classes);
 
-        $o .= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
-        $o .= $this->format_summary_text($section);
-
         $context = context_course::instance($course->id);
-        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
-            $url = new moodle_url('/course/editsection.php', array('id'=>$section->id, 'sr'=>$sectionreturn));
-            $o.= html_writer::link($url,
-                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
-                    'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
-                array('title' => get_string('editsummary')));
-        }
-        $o .= html_writer::end_tag('div');
 
         $o .= $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
@@ -423,6 +412,18 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         $sectiontitle .= html_writer::end_tag('div');
         echo $sectiontitle;
+
+        echo html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
+        echo $this->format_summary_text($sectioninfo);
+        $context = context_course::instance($course->id);
+        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
+            $url = new moodle_url('/course/editsection.php', array('id '=> $sectioninfo->id, 'sr' => $displaysection));
+            echo html_writer::link($url,
+                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
+                    'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
+                array('title' => get_string('editsummary')));
+        }
+        echo html_writer::end_tag('div');
 
         // Now the list of sections..
         echo $this->start_section_list();
