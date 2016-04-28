@@ -19,16 +19,19 @@
  *
  * @package    course/format
  * @subpackage vsf
- * @version    See the value of '$plugin->version' below.
+ * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2016040801;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->requires  = 2015051100.00; // 2.9 (Build: 20150511).
-$plugin->component = 'format_vsf';
-$plugin->release = '2.9.1';
+ 
+$string['currentsection'] = 'Deze sectie';
+$string['deletesection'] = 'Verwijder sectie';
+$string['sectionname'] = 'Sectie';
+$string['pluginname'] = 'Voortgang Sectie Format';
+$string['section0name'] = 'Algemeen';
+$string['page-course-view-vsf'] = 'Elke cursus hoofdpagina in de voortgang sectie format';
+$string['page-course-view-vsf-x'] = 'Elke cursus pagina in de voortgang sectie format';
+$string['hidefromothers'] = 'Verberg sectie';
+$string['showfromothers'] = 'Toon sectie';
+$string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
