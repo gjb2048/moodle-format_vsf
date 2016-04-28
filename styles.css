@@ -450,8 +450,11 @@
     box-shadow: none;
 }
 
-.format-vsf .course-content .single-section .section-navigation.navigationtitle {
+.format-vsf .course-content .single-section .section-navigation {
     padding: 0;
+}
+
+.format-vsf .course-content .single-section .section-navigation.navigationtitle {
     height: 20px;
     margin: 0;
 }
