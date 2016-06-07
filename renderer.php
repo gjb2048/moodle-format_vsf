@@ -417,7 +417,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         echo $this->format_summary_text($sectioninfo);
         $context = context_course::instance($course->id);
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
-            $url = new moodle_url('/course/editsection.php', array('id '=> $sectioninfo->id, 'sr' => $displaysection));
+            $url = new moodle_url('/course/editsection.php', array('id' => $sectioninfo->id, 'sr' => $displaysection));
             echo html_writer::link($url,
                 html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
                     'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
