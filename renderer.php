@@ -167,6 +167,13 @@ class format_vsf_renderer extends format_section_renderer_base {
         $o .= $this->output->heading($this->section_title($section, $course), 3, 'sectionname vsf-sectionname' . $classes);
 
         $context = context_course::instance($course->id);
+        if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
+            $url = new moodle_url('/course/editsection.php', array('id'=>$section->id, 'sr'=>$sectionreturn));
+            $o.= html_writer::link($url,
+                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
+                    'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
+                array('title' => get_string('editsummary')));
+        }
 
         $o .= $this->section_availability_message($section,
             has_capability('moodle/course:viewhiddensections', $context));
