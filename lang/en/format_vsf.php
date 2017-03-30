@@ -26,7 +26,10 @@
  */
  
 $string['currentsection'] = 'This section';
+$string['editsection'] = 'Edit section';
+$string['editsectionname'] = 'Edit section name';
 $string['deletesection'] = 'Delete section';
+$string['newsectionname'] = 'New name for section {$a}';
 $string['sectionname'] = 'Section';
 $string['pluginname'] = 'Progress Section Format';
 $string['section0name'] = 'General';
@@ -35,3 +38,6 @@ $string['page-course-view-vsf-x'] = 'Any course page in progress section format'
 $string['hidefromothers'] = 'Hide section';
 $string['showfromothers'] = 'Show section';
 $string['completionpercentagechart'] = 'Section {$a->sectionno} completion percentage chart';
+// These are 'sections' as they are only shown in 'section' based structures.
+$string['markedthissection'] = 'This section is highlighted as the current section';
+$string['markthissection'] = 'Highlight this section as the current section';
