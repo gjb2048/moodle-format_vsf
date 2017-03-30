@@ -4,11 +4,11 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle version 2015051100.00 2.9 (Build: 20150511) and above within the 2.9 branch until the
+This version works with Moodle 3.1 version 2016052300.00 (Build: 20160523) and above within the 3.1 branch until the
 next release.
 
 Please ensure that your hardware and software complies with 'Requirements' in 'Installing Moodle' on
-'docs.moodle.org/29/en/Installing_Moodle'.
+'docs.moodle.org/31/en/Installing_Moodle'.
 
 Installation
 ============
@@ -32,7 +32,7 @@ Uninstallation
 Usage
 =====
 1. When creating a new course, select the course format as 'Progress Section Format' from the list of available options.
-2. To change an existing course, edit the course settings (http://docs.moodle.org/29/en/course/edit) and select the
+2. To change an existing course, edit the course settings (http://docs.moodle.org/31/en/course/edit) and select the
    'Progress Section Format' from the list of available options.
 
 Notes
@@ -79,6 +79,8 @@ Chartist.JS and FillDonut plugin for Chartist.js
 ------------------------------------------------
 
 MIT:
+Copyright (c) 2013 Gion Kunz <gion.kunz@gmail.com>
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
 (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify,
 merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished
@@ -86,10 +88,10 @@ to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
-IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 See: https://github.com/gionkunz/chartist-js/blob/master/LICENSE-MIT and https://github.com/moxx/chartist-plugin-fill-donut#license.
 
