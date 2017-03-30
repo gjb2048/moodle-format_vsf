@@ -377,14 +377,6 @@
     top: 0;
     left: 0; }
 
-/* 0.10.0 additions. */
-.format-vsf .ct-chart-donut .ct-label {
-  dominant-baseline: central; }
-
-.format-vsf .ct-grid-background {
-  fill: none; }
-
-
 /* Make a color different to fill-donut series*/
 .format-vsf .ct-chart-donut .ct-series-a .ct-slice-donut {
     stroke: #1ABC9C;
