@@ -26,7 +26,10 @@
  */
  
 $string['currentsection'] = 'Deze sectie';
+$string['editsection'] = 'Bewerk sectie';
+$string['editsectionname'] = 'Bewerk sectienaam';
 $string['deletesection'] = 'Verwijder sectie';
+$string['newsectionname'] = 'Nieuwe naam voor sectie {$a}';
 $string['sectionname'] = 'Sectie';
 $string['pluginname'] = 'Voortgang Sectie Format';
 $string['section0name'] = 'Algemeen';
@@ -35,3 +38,5 @@ $string['page-course-view-vsf-x'] = 'Elke cursus pagina in de voortgang sectie f
 $string['hidefromothers'] = 'Verberg sectie';
 $string['showfromothers'] = 'Toon sectie';
 $string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
+$string['markedthissection'] = 'Deze sectie is gemarkeerd als huidige sectie';
+$string['markthissection'] = 'markeren';
