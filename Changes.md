@@ -1,5 +1,16 @@
 Version Information
 ===================
+Version 3.1.1.1
+  1. Update to latest ChartistJS 0.10.1 and Fill Donut plugin:
+     https://github.com/gionkunz/chartist-js/releases/tag/v0.10.1
+     https://github.com/moxx/chartist-plugin-fill-donut/tree/9cd9452ca4340813d55d8a8cb73726b752300634
+     Note: To make the dist of ChartistJS work had to change:
+         define('Chartist', [], function () {
+         to:
+         define([], function () {
+     in chartist.min.js.
+     Must be a Moodle AMD RequireJS version thing.
+
 Version 3.1.1.0
   1. Update for Moodle 3.1.
   2. Apply MDL-51250 course: Display the default section name.
