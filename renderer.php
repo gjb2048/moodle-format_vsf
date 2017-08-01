@@ -119,9 +119,8 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
         $url->param('sesskey', sesskey());
 
-        $isstealth = $section->section > $course->numsections;
         $controls = array();
-        if (!$isstealth && $section->section && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
+        if ($section->section && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
             if ($course->marker == $section->section) {  // Show the "light globe" on/off.
                 $url->param('marker', 0);
                 $markedthissection = get_string('markedthissection', 'format_vsf');
@@ -129,7 +128,8 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $controls['highlight'] = array('url' => $url, "icon" => 'i/marked',
                                                'name' => $highlightoff,
                                                'pixattr' => array('class' => '', 'alt' => $markedthissection),
-                                               'attr' => array('class' => 'editing_highlight', 'title' => $markedthissection));
+                                               'attr' => array('class' => 'editing_highlight', 'title' => $markedthissection,
+                                                   'data-action' => 'removemarker'));
             } else {
                 $url->param('marker', $section->section);
                 $markthissection = get_string('markthissection', 'format_vsf');
@@ -137,7 +137,8 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $controls['highlight'] = array('url' => $url, "icon" => 'i/marker',
                                                'name' => $highlight,
                                                'pixattr' => array('class' => '', 'alt' => $markthissection),
-                                               'attr' => array('class' => 'editing_highlight', 'title' => $markthissection));
+                                               'attr' => array('class' => 'editing_highlight', 'title' => $markthissection,
+                                                   'data-action' => 'setmarker'));
             }
         }
 
@@ -214,7 +215,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id'=>$section->id, 'sr'=>$sectionreturn));
             $o.= html_writer::link($url,
-                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
+                html_writer::empty_tag('img', array('src' => $this->output->image_url('i/settings'),
                     'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
                 array('title' => get_string('editsummary')));
         }
@@ -470,7 +471,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             $url = new moodle_url('/course/editsection.php', array('id' => $sectioninfo->id, 'sr' => $displaysection));
             echo html_writer::link($url,
-                html_writer::empty_tag('img', array('src' => $this->output->pix_url('i/settings'),
+                html_writer::empty_tag('img', array('src' => $this->output->image_url('i/settings'),
                     'class' => 'iconsmall edit', 'alt' => get_string('edit'))),
                 array('title' => get_string('editsummary')));
         }

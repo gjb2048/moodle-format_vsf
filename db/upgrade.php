@@ -20,24 +20,34 @@
  * @package    course/format
  * @subpackage vsf
  * @version    See the value of '$plugin->version' in version.php.
- * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
+ * @copyright  &copy; 2017-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
-$string['addsections'] = 'Voeg sectie toe';
-$string['currentsection'] = 'Deze sectie';
-$string['editsection'] = 'Bewerk sectie';
-$string['editsectionname'] = 'Bewerk sectienaam';
-$string['deletesection'] = 'Verwijder sectie';
-$string['newsectionname'] = 'Nieuwe naam voor sectie {$a}';
-$string['sectionname'] = 'Sectie';
-$string['pluginname'] = 'Voortgang Sectie Format';
-$string['section0name'] = 'Algemeen';
-$string['page-course-view-vsf'] = 'Elke cursus hoofdpagina in de voortgang sectie format';
-$string['page-course-view-vsf-x'] = 'Elke cursus pagina in de voortgang sectie format';
-$string['hidefromothers'] = 'Verberg sectie';
-$string['showfromothers'] = 'Toon sectie';
-$string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
-$string['markedthissection'] = 'Deze sectie is gemarkeerd als huidige sectie';
-$string['markthissection'] = 'markeren';
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Upgrade script for format_vsf
+ *
+ * @param int $oldversion the version we are upgrading from
+ * @return bool result
+ */
+function xmldb_format_vsf_upgrade($oldversion) {
+    global $CFG, $DB;
+
+    require_once($CFG->dirroot . '/course/format/vsf/db/upgradelib.php');
+
+    if ($oldversion < 2017080100) {
+
+        // Remove 'numsections' option and hide or delete orphaned sections.
+        format_vsf_upgrade_remove_numsections();
+
+        upgrade_plugin_savepoint(true, 2017080100, 'format', 'vsf');
+    }
+
+    // Automatically generated Moodle v3.3.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    return true;
+}

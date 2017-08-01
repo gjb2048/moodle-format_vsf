@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.3.0.1
+  1. Update to Moodle 3.3.
+
 Version 3.1.1.1
   1. Update to latest ChartistJS 0.10.1 and Fill Donut plugin:
      https://github.com/gionkunz/chartist-js/releases/tag/v0.10.1

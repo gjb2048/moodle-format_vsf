@@ -25,6 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
+$string['addsections'] = 'Add sections';
 $string['currentsection'] = 'This section';
 $string['editsection'] = 'Edit section';
 $string['editsectionname'] = 'Edit section name';
