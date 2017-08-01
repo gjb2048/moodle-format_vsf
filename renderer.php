@@ -388,6 +388,11 @@ class format_vsf_renderer extends format_section_renderer_base {
                     'title' => get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section))
                 ));
                 $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('div');
+
+                $data = new \stdClass();
+                $data->hasprogress = true;
+                $data->progress = $percentage;
+                $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);
             }
 
             $this->sectioncompletioncalculated[$section->section] = true;
