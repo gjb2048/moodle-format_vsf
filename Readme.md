@@ -4,11 +4,11 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 3.1 version 2016052300.00 (Build: 20160523) and above within the 3.1 branch until the
+This version works with Moodle 3.3 version 2017051500.00 (Build: 20170515) and above within the 3.3 branch until the
 next release.
 
 Please ensure that your hardware and software complies with 'Requirements' in 'Installing Moodle' on
-'docs.moodle.org/31/en/Installing_Moodle'.
+'docs.moodle.org/33/en/Installing_Moodle'.
 
 Installation
 ============
@@ -74,27 +74,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-Chartist.JS and FillDonut plugin for Chartist.js
-------------------------------------------------
-
-MIT:
-Copyright (c) 2013 Gion Kunz <gion.kunz@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files
-(the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-See: https://github.com/gionkunz/chartist-js/blob/master/LICENSE-MIT and https://github.com/moxx/chartist-plugin-fill-donut#license.
-
 
 G J Barnard MSc. BSc(Hons)(Sndw). MBCS. CEng. CITP. PGCE.
 Moodle profile: moodle.org/user/profile.php?id=442195.

@@ -289,14 +289,14 @@ class format_vsf_renderer extends format_section_renderer_base {
         $activitysummary = $this->section_activity_summary($section, $course, null);
         if (!empty($activitysummary)) {
             $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-            $o .= html_writer::start_tag('div', array('class' => 'span10'));
+            $o .= html_writer::start_tag('div', array('class' => 'span11'));
         }
         $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o.= $this->format_summary_text($section);
         $o.= html_writer::end_tag('div');
         if (!empty($activitysummary)) {
             $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'span2'));
+            $o .= html_writer::start_tag('div', array('class' => 'span1'));
             $o .= $activitysummary;
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');
@@ -382,16 +382,9 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $percentage = round(($complete / $total) * 100);
                 $this->sectioncompletionpercentage[$section->section] = $percentage;
 
-                // Note: Chart aspect ratio classes: https://gionkunz.github.io/chartist-js/getting-started.html#one-two-three-css.
-                $this->sectioncompletionmarkup[$section->section] .= html_writer::start_tag('div', array(
-                    'class' => 'vsf-chart-section-'.$section->section.' ct-chart ct-square vsf-progress',
-                    'title' => get_string('completionpercentagechart', 'format_vsf', array('sectionno' => $section->section))
-                ));
-                $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('div');
-
                 $data = new \stdClass();
                 $data->hasprogress = true;
-                $data->progress = $percentage;
+                $data->progress = $this->sectioncompletionpercentage[$section->section];
                 $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);
             }
 
@@ -507,39 +500,5 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Close single-section div.
         echo html_writer::end_tag('div');
-    }
-
-    /**
-     * Output the html for a multiple section page
-     *
-     * @param stdClass $course The course entry from DB
-     * @param array $sections (argument not used)
-     * @param array $mods (argument not used)
-     * @param array $modnames (argument not used)
-     * @param array $modnamesused (argument not used)
-     */
-    public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
-
-        echo parent::print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
-
-        // Progress chart.  Must be after normal print of page so that data is gathered.
-        $this->section_completion_charts();
-    }
-
-    private function section_completion_charts() {
-        global $PAGE;
-
-        $data = array();
-        foreach($this->sectioncompletionpercentage as $sectionno => $percentage) {
-            $rest = 100 - $percentage;
-            $data['data'][] = array(
-                'sectionno' => $sectionno, 
-                'chartdata' => array('labels' => array('', ''), 'series' => array($percentage, $rest))
-            );
-        }
-
-        if (!empty($data)) {
-            $PAGE->requires->js_call_amd('format_vsf/vsf_chart', 'init', $data);
-        }
     }
 }
