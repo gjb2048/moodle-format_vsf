@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/lib.php');
 
 class format_vsf extends format_base {
+    private $settings;
 
     /**
      * Returns true if this course format uses sections
@@ -37,6 +38,17 @@ class format_vsf extends format_base {
      */
     public function uses_sections() {
         return true;
+    }
+
+    /**
+     * Returns the format's settings and gets them if they do not exist.
+     * @return array The settings as an array.
+     */
+    public function get_settings() {
+        if (empty($this->settings) == true) {
+            $this->settings = $this->get_format_options();
+        }
+        return $this->settings;
     }
 
     /**
@@ -220,7 +232,10 @@ class format_vsf extends format_base {
     public function course_format_options($foreditform = false) {
         static $courseformatoptions = false;
         if ($courseformatoptions === false) {
-            $courseconfig = get_config('moodlecourse');
+            /* Note: Because 'admin_setting_configcolourpicker' in 'settings.php' needs to use a prefixing '#'
+                     this needs to be stripped off here if it's there for the format's specific colour picker. */
+            $defaults = $this->get_course_format_colour_defaults();
+
             $courseformatoptions = array(
                 'hiddensections' => array(
                     'default' => 1, // Completely invisible.
@@ -229,10 +244,24 @@ class format_vsf extends format_base {
                 'coursedisplay' => array(
                     'default' => COURSE_DISPLAY_MULTIPAGE,
                     'type' => PARAM_INT
+                ),
+                'continuebackgroundcolour' => array(
+                    'default' => $defaults['defaultcontinuebackgroundcolour'],
+                    'type' => PARAM_ALPHANUM
+                ),
+                'continuetextcolour' => array(
+                    'default' => $defaults['defaultcontinuetextcolour'],
+                    'type' => PARAM_ALPHANUM
                 )
             );
         }
         if ($foreditform && !isset($courseformatoptions['numsections']['label'])) {
+            if (empty($defaults)) {
+                /* Note: Because 'admin_setting_configcolourpicker' in 'settings.php' needs to use a prefixing '#'
+                         this needs to be stripped off here if it's there for the format's specific colour picker. */
+                $defaults = $this->get_course_format_colour_defaults();
+            }
+
             $courseconfig = get_config('moodlecourse');
             $max = $courseconfig->maxsections;
             if (!isset($max) || !is_numeric($max)) {
@@ -250,11 +279,42 @@ class format_vsf extends format_base {
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
                     'element_type' => 'hidden'
+                ),
+                'continuebackgroundcolour' => array(
+                    'label' => new lang_string('continuebackgroundcolour', 'format_vsf'),
+                    'help' => 'continuebackgroundcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultcontinuebackgroundcolour'])
+                    )
+                ),
+                'continuetextcolour' => array(
+                    'label' => new lang_string('continuetextcolour', 'format_vsf'),
+                    'help' => 'continuetextcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultcontinuetextcolour'])
+                    )
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
+    }
+
+    protected function get_course_format_colour_defaults() {
+        $defaults = array();
+        $defaults['defaultcontinuebackgroundcolour'] = get_config('format_vsf', 'defaultcontinuebackgroundcolour');
+        if ($defaults['defaultcontinuebackgroundcolour'][0] == '#') {
+            $defaults['defaultcontinuebackgroundcolour'] = substr($defaults['defaultcontinuebackgroundcolour'], 1);
+        }
+        $defaults['defaultcontinuetextcolour'] = get_config('format_vsf', 'defaultcontinuetextcolour');
+        if ($defaults['defaultcontinuetextcolour'][0] == '#') {
+            $defaults['defaultcontinuetextcolour'] = substr($defaults['defaultcontinuetextcolour'], 1);
+        }
+        return $defaults;
     }
 
     /**
@@ -267,7 +327,9 @@ class format_vsf extends format_base {
      * @return array array of references to the added form elements.
      */
     public function create_edit_form_elements(&$mform, $forsection = false) {
-        global $COURSE;
+        global $CFG, $COURSE;
+        MoodleQuickForm::registerElementType('vsfcolourpopup', "$CFG->dirroot/course/format/vsf/js/vsf_colourpopup.php",
+                'MoodleQuickForm_vsfcolourpopup');
         $elements = parent::create_edit_form_elements($mform, $forsection);
 
         if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {

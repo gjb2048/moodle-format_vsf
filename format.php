@@ -41,7 +41,9 @@ if ($topic = optional_param('topic', 0, PARAM_INT)) {
 
 $context = context_course::instance($course->id);
 // Retrieve course format option fields and add them to the $course object.
-$course = course_get_format($course)->get_course();
+$courseformat = course_get_format($course);
+$course = $courseformat->get_course();
+$vsfsettings = $courseformat->get_settings();
 
 if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
@@ -52,6 +54,35 @@ if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context)
 course_create_sections_if_missing($course, 0);
 
 $renderer = $PAGE->get_renderer('format_vsf');
+
+echo '<style type="text/css" media="screen">';
+echo '/* <![CDATA[ */';
+echo '.format-vsf .vsf-continue {';
+
+echo 'background-color: ';
+$startindex = 0;
+if ($vsfsettings['continuebackgroundcolour'][0] == '#') {
+    $startindex++;
+} else {
+    echo '#';
+}
+echo $vsfsettings['continuebackgroundcolour'].';';
+
+$cbgred = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex, 2));
+$cbggreen = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex + 2, 2));
+$cbgblue = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex + 4, 2));
+
+echo 'box-shadow: 0 0 0 2px rgba('.$cbgred.','.$cbggreen.','.$cbgblue.', 0.8);';
+
+echo 'color: ';
+if ($vsfsettings['continuetextcolour'][0] != '#') {
+    echo '#';
+}
+echo $vsfsettings['continuetextcolour'].';';
+echo '}';
+
+echo '/* ]]> */';
+echo '</style>';
 
 if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);

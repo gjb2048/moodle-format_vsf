@@ -35,6 +35,8 @@ class format_vsf_renderer extends format_section_renderer_base {
     private $sectioncompletionmarkup = array();
     private $sectioncompletioncalculated = array();
 
+    private $showcontinuebutton = false;
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -43,6 +45,8 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     public function __construct(moodle_page $page, $target) {
         parent::__construct($page, $target);
+
+        $this->showcontinuebutton = get_config('format_vsf', 'defaultcontinueshow');
 
         // Since format_topics_renderer::section_edit_controls() only displays the 'Set current section' control when editing mode is on
         // we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other managing capability.
@@ -298,6 +302,16 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= html_writer::end_tag('div');
             $o .= html_writer::start_tag('div', array('class' => 'span1'));
             $o .= $activitysummary;
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');
+        }
+
+        if (($section->uservisible) && ($this->showcontinuebutton == 2)) {
+            $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
+            $o .= html_writer::start_tag('div', array('class' => 'span12'));
+            $o .= html_writer::start_tag('a', array('href' => course_get_url($course, $section->section), 'class' => 'vsf-continue'));
+            $o .= get_string('continue', 'format_vsf');
+            $o .= html_writer::end_tag('a');
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');
         }

@@ -24,7 +24,7 @@
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 $string['addsections'] = 'Voeg sectie toe';
 $string['currentsection'] = 'Deze sectie';
 $string['editsection'] = 'Bewerk sectie';
@@ -41,3 +41,5 @@ $string['showfromothers'] = 'Toon sectie';
 $string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
 $string['markedthissection'] = 'Deze sectie is gemarkeerd als huidige sectie';
 $string['markthissection'] = 'markeren';
+
+$string['continue'] = 'Ga verder';

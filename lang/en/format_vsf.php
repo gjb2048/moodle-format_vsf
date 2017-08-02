@@ -24,7 +24,7 @@
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 $string['addsections'] = 'Add sections';
 $string['currentsection'] = 'This section';
 $string['editsection'] = 'Edit section';
@@ -42,3 +42,15 @@ $string['completionpercentagechart'] = 'Section {$a->sectionno} completion perce
 // These are 'sections' as they are only shown in 'section' based structures.
 $string['markedthissection'] = 'This section is highlighted as the current section';
 $string['markthissection'] = 'Highlight this section as the current section';
+
+$string['continue'] = 'Continue';
+$string['defaultcontinueshow'] = 'Show the continue button';
+$string['defaultcontinueshow_desc'] = 'Show the continue button on the main course page.  The default is \'Yes\'.';
+$string['defaultcontinuebackgroundcolour'] = 'Set the continue button background colour';
+$string['defaultcontinuebackgroundcolour_desc'] = 'Set the continue button background colour in hexidecimal RGB.  The default is \'CE2E2B\'.';
+$string['defaultcontinuetextcolour'] = 'Set the continue button text colour';
+$string['defaultcontinuetextcolour_desc'] = 'Set the continue button text colour in hexidecimal RGB.  The default is \'FFFFFF\'.';
+$string['continuebackgroundcolour'] = 'Set the continue button background colour';
+$string['continuebackgroundcolour_help'] = 'Set the continue button background colour in hexidecimal RGB.  The default is set by the administrator.';
+$string['continuetextcolour'] = 'Set the continue button text colour';
+$string['continuetextcolour_help'] = 'Set the continue button text colour in hexidecimal RGB.  The default is set by the administrator.';

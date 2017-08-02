@@ -480,3 +480,8 @@
 .format-vsf.editing .course-content .single-section ul.sections li.section .content {
     margin: 0 40px;
 }
+
+/* Continue button */
+.format-vsf .vsf-continue {
+    padding: 4px 12px;
+}
