@@ -400,8 +400,12 @@
     border: 0 solid transparent;
 }
 
-.format-vsf .course-content .section-summary .section-title, .format-vsf .single-section h3.sectionname {
+.format-vsf .single-section h3.sectionname {
     margin-bottom: 0;
+}
+
+.format-vsf .course-content .section-summary .section-title {
+    margin: 0 0 8px;
 }
 
 .format-vsf .course-content .section-summary .section-summary-activities .activity-count,
@@ -484,4 +488,13 @@
 /* Continue button */
 .format-vsf .vsf-continue {
     padding: 4px 12px;
+    margin-left: 2px;
+}
+
+/* Section header background / foreground */
+.format-vsf .vsf-sectionname {
+    padding: 0 12px;
+}
+.format-vsf .vsf-sectionname a {
+    color: inherit;
 }

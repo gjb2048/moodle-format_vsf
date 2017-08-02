@@ -245,12 +245,30 @@ class format_vsf extends format_base {
                     'default' => COURSE_DISPLAY_MULTIPAGE,
                     'type' => PARAM_INT
                 ),
+                // Continue button.
                 'continuebackgroundcolour' => array(
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
                     'type' => PARAM_ALPHANUM
                 ),
                 'continuetextcolour' => array(
                     'default' => $defaults['defaultcontinuetextcolour'],
+                    'type' => PARAM_ALPHANUM
+                ),
+                // Section header.
+                'sectionheaderbackgroundcolour' => array(
+                    'default' => $defaults['defaultsectionheaderbackgroundcolour'],
+                    'type' => PARAM_ALPHANUM
+                ),
+                'sectionheaderbackgroundhvrcolour' => array(
+                    'default' => $defaults['defaultsectionheaderbackgroundhvrcolour'],
+                    'type' => PARAM_ALPHANUM
+                ),
+                'sectionheaderforegroundcolour' => array(
+                    'default' => $defaults['defaultsectionheaderforegroundcolour'],
+                    'type' => PARAM_ALPHANUM
+                ),
+                'sectionheaderforegroundhvrcolour' => array(
+                    'default' => $defaults['defaultsectionheaderforegroundhvrcolour'],
                     'type' => PARAM_ALPHANUM
                 )
             );
@@ -280,6 +298,7 @@ class format_vsf extends format_base {
                     'label' => new lang_string('coursedisplay'),
                     'element_type' => 'hidden'
                 ),
+                // Continue button.
                 'continuebackgroundcolour' => array(
                     'label' => new lang_string('continuebackgroundcolour', 'format_vsf'),
                     'help' => 'continuebackgroundcolour',
@@ -297,6 +316,43 @@ class format_vsf extends format_base {
                     'element_attributes' => array(
                         array('value' => $defaults['defaultcontinuetextcolour'])
                     )
+                ),
+                // Section header.
+                'sectionheaderbackgroundcolour' => array(
+                    'label' => new lang_string('sectionheaderbackgroundcolour', 'format_vsf'),
+                    'help' => 'sectionheaderbackgroundcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultsectionheaderbackgroundcolour'])
+                    )
+                ),
+                'sectionheaderbackgroundhvrcolour' => array(
+                    'label' => new lang_string('sectionheaderbackgroundhvrcolour', 'format_vsf'),
+                    'help' => 'sectionheaderbackgroundhvrcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultsectionheaderbackgroundhvrcolour'])
+                    )
+                ),
+                'sectionheaderforegroundcolour' => array(
+                    'label' => new lang_string('sectionheaderforegroundcolour', 'format_vsf'),
+                    'help' => 'sectionheaderforegroundcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultsectionheaderforegroundcolour'])
+                    )
+                ),
+                'sectionheaderforegroundhvrcolour' => array(
+                    'label' => new lang_string('sectionheaderforegroundhvrcolour', 'format_vsf'),
+                    'help' => 'sectionheaderforegroundhvrcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => array(
+                        array('value' => $defaults['defaultsectionheaderforegroundhvrcolour'])
+                    )
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
@@ -306,6 +362,7 @@ class format_vsf extends format_base {
 
     protected function get_course_format_colour_defaults() {
         $defaults = array();
+        // Continue button.
         $defaults['defaultcontinuebackgroundcolour'] = get_config('format_vsf', 'defaultcontinuebackgroundcolour');
         if ($defaults['defaultcontinuebackgroundcolour'][0] == '#') {
             $defaults['defaultcontinuebackgroundcolour'] = substr($defaults['defaultcontinuebackgroundcolour'], 1);
@@ -313,6 +370,23 @@ class format_vsf extends format_base {
         $defaults['defaultcontinuetextcolour'] = get_config('format_vsf', 'defaultcontinuetextcolour');
         if ($defaults['defaultcontinuetextcolour'][0] == '#') {
             $defaults['defaultcontinuetextcolour'] = substr($defaults['defaultcontinuetextcolour'], 1);
+        }
+        // Section header.
+        $defaults['defaultsectionheaderbackgroundcolour'] = get_config('format_vsf', 'defaultsectionheaderbackgroundcolour');
+        if ($defaults['defaultsectionheaderbackgroundcolour'][0] == '#') {
+            $defaults['defaultsectionheaderbackgroundcolour'] = substr($defaults['defaultsectionheaderbackgroundcolour'], 1);
+        }
+        $defaults['defaultsectionheaderbackgroundhvrcolour'] = get_config('format_vsf', 'defaultsectionheaderbackgroundhvrcolour');
+        if ($defaults['defaultsectionheaderbackgroundhvrcolour'][0] == '#') {
+            $defaults['defaultsectionheaderbackgroundhvrcolour'] = substr($defaults['defaultsectionheaderbackgroundhvrcolour'], 1);
+        }
+        $defaults['defaultsectionheaderforegroundcolour'] = get_config('format_vsf', 'defaultsectionheaderforegroundcolour');
+        if ($defaults['defaultsectionheaderforegroundcolour'][0] == '#') {
+            $defaults['defaultsectionheaderforegroundcolour'] = substr($defaults['defaultsectionheaderforegroundcolour'], 1);
+        }
+        $defaults['defaultsectionheaderforegroundhvrcolour'] = get_config('format_vsf', 'defaultsectionheaderforegroundhvrcolour');
+        if ($defaults['defaultsectionheaderforegroundhvrcolour'][0] == '#') {
+            $defaults['defaultsectionheaderforegroundhvrcolour'] = substr($defaults['defaultsectionheaderforegroundhvrcolour'], 1);
         }
         return $defaults;
     }

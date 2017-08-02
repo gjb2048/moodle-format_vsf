@@ -29,7 +29,8 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
 
-    /* Show continue button - 1 = no, 2 = yes. */
+    // Continue button.
+    // Show continue button - 1 = no, 2 = yes.
     $name = 'format_vsf/defaultcontinueshow';
     $title = get_string('defaultcontinueshow', 'format_vsf');
     $description = get_string('defaultcontinueshow_desc', 'format_vsf');
@@ -52,6 +53,39 @@ if ($ADMIN->fulltree) {
     $name = 'format_vsf/defaultcontinuetextcolour';
     $title = get_string('defaultcontinuetextcolour', 'format_vsf');
     $description = get_string('defaultcontinuetextcolour_desc', 'format_vsf');
+    $default = '#FFFFFF';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $settings->add($setting);
+
+    // Section header background and foreground.
+    // Default section header background colour in hexadecimal RGB with preceding '#'.
+    $name = 'format_vsf/defaultsectionheaderbackgroundcolour';
+    $title = get_string('defaultsectionheaderbackgroundcolour', 'format_vsf');
+    $description = get_string('defaultsectionheaderbackgroundcolour_desc', 'format_vsf');
+    $default = '#777777';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $settings->add($setting);
+
+    // Default section header background hover colour in hexadecimal RGB with preceding '#'.
+    $name = 'format_vsf/defaultsectionheaderbackgroundhvrcolour';
+    $title = get_string('defaultsectionheaderbackgroundhvrcolour', 'format_vsf');
+    $description = get_string('defaultsectionheaderbackgroundhvrcolour_desc', 'format_vsf');
+    $default = '#D93913';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $settings->add($setting);
+
+    // Default section header foreground colour in hexadecimal RGB with preceding '#'.
+    $name = 'format_vsf/defaultsectionheaderforegroundcolour';
+    $title = get_string('defaultsectionheaderforegroundcolour', 'format_vsf');
+    $description = get_string('defaultsectionheaderforegroundcolour_desc', 'format_vsf');
+    $default = '#FFFFFF';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $settings->add($setting);
+
+    // Default section header foreground hover colour in hexadecimal RGB with preceding '#'.
+    $name = 'format_vsf/defaultsectionheaderforegroundhvrcolour';
+    $title = get_string('defaultsectionheaderforegroundhvrcolour', 'format_vsf');
+    $description = get_string('defaultsectionheaderforegroundhvrcolour_desc', 'format_vsf');
     $default = '#FFFFFF';
     $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
     $settings->add($setting);

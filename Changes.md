@@ -4,6 +4,7 @@ Version 3.3.0.1
   1. Update to Moodle 3.3.
   2. Update to core chart API.
   3. Add continue button, on / off setting (admin) and colour settings for admin and course.
+  4. Add section header settings.
 
 Version 3.1.1.1
   1. Update to latest ChartistJS 0.10.1 and Fill Donut plugin:

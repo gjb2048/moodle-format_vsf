@@ -57,8 +57,8 @@ $renderer = $PAGE->get_renderer('format_vsf');
 
 echo '<style type="text/css" media="screen">';
 echo '/* <![CDATA[ */';
+// Continue button.
 echo '.format-vsf .vsf-continue {';
-
 echo 'background-color: ';
 $startindex = 0;
 if ($vsfsettings['continuebackgroundcolour'][0] == '#') {
@@ -79,6 +79,32 @@ if ($vsfsettings['continuetextcolour'][0] != '#') {
     echo '#';
 }
 echo $vsfsettings['continuetextcolour'].';';
+echo '}';
+
+// Section header.
+echo '.format-vsf .vsf-sectionname {';
+echo 'background-color: ';
+if ($vsfsettings['sectionheaderbackgroundcolour'][0] != '#') {
+    echo '#';
+}
+echo $vsfsettings['sectionheaderbackgroundcolour'].';';
+echo 'color: ';
+if ($vsfsettings['sectionheaderforegroundcolour'][0] != '#') {
+    echo '#';
+}
+echo $vsfsettings['sectionheaderforegroundcolour'].';';
+echo '}';
+echo '.format-vsf .vsf-sectionname:hover {';
+echo 'background-color: ';
+if ($vsfsettings['sectionheaderbackgroundhvrcolour'][0] != '#') {
+    echo '#';
+}
+echo $vsfsettings['sectionheaderbackgroundhvrcolour'].';';
+echo 'color: ';
+if ($vsfsettings['sectionheaderforegroundhvrcolour'][0] != '#') {
+    echo '#';
+}
+echo $vsfsettings['sectionheaderforegroundhvrcolour'].';';
 echo '}';
 
 echo '/* ]]> */';

@@ -43,6 +43,7 @@ $string['completionpercentagechart'] = 'Section {$a->sectionno} completion perce
 $string['markedthissection'] = 'This section is highlighted as the current section';
 $string['markthissection'] = 'Highlight this section as the current section';
 
+// Continue.
 $string['continue'] = 'Continue';
 $string['defaultcontinueshow'] = 'Show the continue button';
 $string['defaultcontinueshow_desc'] = 'Show the continue button on the main course page.  The default is \'Yes\'.';
@@ -54,3 +55,21 @@ $string['continuebackgroundcolour'] = 'Set the continue button background colour
 $string['continuebackgroundcolour_help'] = 'Set the continue button background colour in hexidecimal RGB.  The default is set by the administrator.';
 $string['continuetextcolour'] = 'Set the continue button text colour';
 $string['continuetextcolour_help'] = 'Set the continue button text colour in hexidecimal RGB.  The default is set by the administrator.';
+
+// Section header.
+$string['defaultsectionheaderbackgroundcolour'] = 'Set the section header background colour';
+$string['defaultsectionheaderbackgroundcolour_desc'] = 'Set the section header background colour in hexidecimal RGB.  The default is \'777777\'.';
+$string['defaultsectionheaderbackgroundhvrcolour'] = 'Set the section header background hover colour';
+$string['defaultsectionheaderbackgroundhvrcolour_desc'] = 'Set the section header background hover colour in hexidecimal RGB.  The default is \'D93913\'.';
+$string['defaultsectionheaderforegroundcolour'] = 'Set the section header foreground colour';
+$string['defaultsectionheaderforegroundcolour_desc'] = 'Set the section header foreground colour in hexidecimal RGB.  The default is \'FFFFFF\'.';
+$string['defaultsectionheaderforegroundhvrcolour'] = 'Set the section header foreground hover colour';
+$string['defaultsectionheaderforegroundhvrcolour_desc'] = 'Set the section header foreground hover colour in hexidecimal RGB.  The default is \'FFFFFF\'.';
+$string['sectionheaderbackgroundcolour'] = 'Set the section header background colour';
+$string['sectionheaderbackgroundcolour_help'] = 'Set the section header background colour in hexidecimal RGB.  The default is set by the administrator.';
+$string['sectionheaderbackgroundhvrcolour'] = 'Set the section header background hover colour';
+$string['sectionheaderbackgroundhvrcolour_help'] = 'Set the section header background hover colour in hexidecimal RGB.  The default is set by the administrator.';
+$string['sectionheaderforegroundcolour'] = 'Set the section header foreground colour';
+$string['sectionheaderforegroundcolour_help'] = 'Set the section header foreground colour in hexidecimal RGB.  The default is set by the administrator.';
+$string['sectionheaderforegroundhvrcolour'] = 'Set the section header foreground hover colour';
+$string['sectionheaderforegroundhvrcolour_help'] = 'Set the section header foreground hover colour in hexidecimal RGB.  The default is set by the administrator.';
