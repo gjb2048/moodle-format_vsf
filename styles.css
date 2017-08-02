@@ -498,3 +498,49 @@
 .format-vsf .vsf-sectionname a {
     color: inherit;
 }
+
+/* Section header with navigation */
+.format-vsf .single-section .vsf-nav-bottom,
+.format-vsf .single-section .vsf-sectionname {
+    position: relative;
+}
+
+.format-vsf .single-section .vsf-sectionname .vsf-sectionname-nav {
+    bottom: 0;
+    color: inherit;
+    display: table;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
+    bottom: 0;
+    display: table;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left {
+    left: 10px;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
+    right: 10px;
+}
+
+.format-vsf .vsf-sectionname h3,
+.format-vsf .single-section .vsf-sectionname .vsf-sectionname-nav a .fa,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left a .fa,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right a .fa {
+    color: inherit;
+}
+
+.format-vsf .single-section .vsf-sectionname h3 {
+    text-align: left;
+}

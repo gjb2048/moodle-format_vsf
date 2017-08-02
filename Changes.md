@@ -6,6 +6,7 @@ Version 3.3.0.1
   3. Add continue button, on / off setting (admin) and colour settings for admin and course.
   4. Add section header colour settings.
   5. Add section header border settings.
+  6. Single page navigation changes.
 
 Version 3.1.1.1
   1. Update to latest ChartistJS 0.10.1 and Fill Donut plugin:

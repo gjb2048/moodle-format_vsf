@@ -288,7 +288,9 @@ class format_vsf_renderer extends format_section_renderer_base {
             $title = html_writer::tag('a', $title,
                 array('href' => course_get_url($course, $section->section), 'class' => $linkclasses));
         }
-        $o .= $this->output->heading($title, 3, 'section-title vsf-sectionname');
+        $o .= html_writer::start_tag('div', array('class' => 'vsf-sectionname'));
+        $o .= $this->output->heading($title, 3, 'section-title');
+        $o .= html_writer::end_tag('div');
 
         $activitysummary = $this->section_activity_summary($section, $course, null);
         if (!empty($activitysummary)) {
@@ -421,6 +423,53 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
+     * Generate next/previous section links for naviation
+     *
+     * @param stdClass $course The course entry from DB
+     * @param array $sections The course_sections entries from the DB
+     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @return array associative array with previous and next section link
+     */
+    protected function get_nav_links($course, $sections, $sectionno) {
+        // FIXME: This is really evil and should by using the navigation API.
+        $course = course_get_format($course)->get_course();
+        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($course->id))
+            or !$course->hiddensections;
+
+        $links = array('previous' => '', 'next' => '');
+        $back = $sectionno - 1;
+        while ($back > 0 and empty($links['previous'])) {
+            if ($canviewhidden || $sections[$back]->uservisible) {
+                $params = array();
+                if (!$sections[$back]->visible) {
+                    $params = array('class' => 'dimmed_text');
+                }
+                $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-left')).' ';
+                $previouslink .= get_section_name($course, $sections[$back]);
+                $links['previous'] = html_writer::link(course_get_url($course, $back), $previouslink, $params);
+            }
+            $back--;
+        }
+
+        $forward = $sectionno + 1;
+        $numsections = course_get_format($course)->get_last_section_number();
+        while ($forward <= $numsections and empty($links['next'])) {
+            if ($canviewhidden || $sections[$forward]->uservisible) {
+                $params = array();
+                if (!$sections[$forward]->visible) {
+                    $params = array('class' => 'dimmed_text');
+                }
+                $nextlink = get_section_name($course, $sections[$forward]).' ';
+                $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-right'));
+                $links['next'] = html_writer::link(course_get_url($course, $forward), $nextlink, $params);
+            }
+            $forward++;
+        }
+
+        return $links;
+    }
+
+    /**
      * Output the html for a single section page .
      *
      * @param stdClass $course The course entry from DB
@@ -465,15 +514,14 @@ class format_vsf_renderer extends format_section_renderer_base {
         // Title with section navigation links.
         $sectionnavlinks = $this->get_nav_links($course, $modinfo->get_section_info_all(), $displaysection);
         // Title attributes.
-        $classes = 'sectionname vsf-sectionname';
+        $classes = 'sectionname';
         if (!$thissection->visible) {
             $classes .= ' dimmed_text';
         }
-        $sectiontitle = $this->output->heading(get_section_name($course, $displaysection), 3, $classes);
-        $sectiontitle .= html_writer::start_tag('div', array('class' => 'section-navigation navigationtitle'));
-        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
 
+        $sectiontitle = html_writer::start_tag('div', array('class' => 'vsf-sectionname'));
+        $sectiontitle .= $this->output->heading(get_section_name($course, $displaysection), 3, $classes);
+        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'vsf-sectionname-nav'));
         $sectiontitle .= html_writer::end_tag('div');
         echo $sectiontitle;
 
@@ -504,9 +552,9 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Display section bottom navigation.
         $sectionbottomnav = '';
-        $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation mdl-bottom'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
+        $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation vsf-nav-bottom'));
+        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'vsf-nav-left'));
+        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'vsf-nav-right'));
         $sectionbottomnav .= html_writer::tag('div', $this->section_nav_selection($course, $sections, $displaysection),
             array('class' => 'mdl-align'));
         $sectionbottomnav .= html_writer::end_tag('div');
