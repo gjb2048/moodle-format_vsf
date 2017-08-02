@@ -88,12 +88,25 @@ if ($vsfsettings['sectionheaderbackgroundcolour'][0] != '#') {
     echo '#';
 }
 echo $vsfsettings['sectionheaderbackgroundcolour'].';';
+
+// Site wide configuration Site Administration -> Plugins -> Course formats -> Progress Section Format.
+$vsfborderradiustl = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustl'), PARAM_TEXT);
+$vsfborderradiustr = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustr'), PARAM_TEXT);
+$vsfborderradiusbr = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
+$vsfborderradiusbl = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
+echo 'border-top-left-radius: '.$vsfborderradiustl.'em;';
+echo 'border-top-right-radius: '.$vsfborderradiustr.'em;';
+echo 'border-bottom-right-radius: '.$vsfborderradiusbr.'em;';
+echo 'border-bottom-left-radius: '.$vsfborderradiusbl.'em;';
+
 echo 'color: ';
 if ($vsfsettings['sectionheaderforegroundcolour'][0] != '#') {
     echo '#';
 }
 echo $vsfsettings['sectionheaderforegroundcolour'].';';
+
 echo '}';
+
 echo '.format-vsf .vsf-sectionname:hover {';
 echo 'background-color: ';
 if ($vsfsettings['sectionheaderbackgroundhvrcolour'][0] != '#') {

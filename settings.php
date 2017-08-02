@@ -89,4 +89,75 @@ if ($ADMIN->fulltree) {
     $default = '#FFFFFF';
     $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
     $settings->add($setting);
+
+    // Section header border radius top left.
+    $name = 'format_vsf/defaultsectionheaderborderradiustl';
+    $title = get_string('defaultsectionheaderborderradiustl', 'format_vsf');
+    $description = get_string('defaultsectionheaderborderradiustl_desc', 'format_vsf');
+    $default = '0.7';
+    $choices = array(
+        '0.0' => new lang_string('em0_0', 'format_vsf'),
+        '0.1' => new lang_string('em0_1', 'format_vsf'),
+        '0.2' => new lang_string('em0_2', 'format_vsf'),
+        '0.3' => new lang_string('em0_3', 'format_vsf'),
+        '0.4' => new lang_string('em0_4', 'format_vsf'),
+        '0.5' => new lang_string('em0_5', 'format_vsf'),
+        '0.6' => new lang_string('em0_6', 'format_vsf'),
+        '0.7' => new lang_string('em0_7', 'format_vsf'),
+        '0.8' => new lang_string('em0_8', 'format_vsf'),
+        '0.9' => new lang_string('em0_9', 'format_vsf'),
+        '1.0' => new lang_string('em1_0', 'format_vsf'),
+        '1.1' => new lang_string('em1_1', 'format_vsf'),
+        '1.2' => new lang_string('em1_2', 'format_vsf'),
+        '1.3' => new lang_string('em1_3', 'format_vsf'),
+        '1.4' => new lang_string('em1_4', 'format_vsf'),
+        '1.5' => new lang_string('em1_5', 'format_vsf'),
+        '1.6' => new lang_string('em1_6', 'format_vsf'),
+        '1.7' => new lang_string('em1_7', 'format_vsf'),
+        '1.8' => new lang_string('em1_8', 'format_vsf'),
+        '1.9' => new lang_string('em1_9', 'format_vsf'),
+        '2.0' => new lang_string('em2_0', 'format_vsf'),
+        '2.1' => new lang_string('em2_1', 'format_vsf'),
+        '2.2' => new lang_string('em2_2', 'format_vsf'),
+        '2.3' => new lang_string('em2_3', 'format_vsf'),
+        '2.4' => new lang_string('em2_4', 'format_vsf'),
+        '2.5' => new lang_string('em2_5', 'format_vsf'),
+        '2.6' => new lang_string('em2_6', 'format_vsf'),
+        '2.7' => new lang_string('em2_7', 'format_vsf'),
+        '2.8' => new lang_string('em2_8', 'format_vsf'),
+        '2.9' => new lang_string('em2_9', 'format_vsf'),
+        '3.0' => new lang_string('em3_0', 'format_vsf'),
+        '3.1' => new lang_string('em3_1', 'format_vsf'),
+        '3.2' => new lang_string('em3_2', 'format_vsf'),
+        '3.3' => new lang_string('em3_3', 'format_vsf'),
+        '3.4' => new lang_string('em3_4', 'format_vsf'),
+        '3.5' => new lang_string('em3_5', 'format_vsf'),
+        '3.6' => new lang_string('em3_6', 'format_vsf'),
+        '3.7' => new lang_string('em3_7', 'format_vsf'),
+        '3.8' => new lang_string('em3_8', 'format_vsf'),
+        '3.9' => new lang_string('em3_9', 'format_vsf'),
+        '4.0' => new lang_string('em4_0', 'format_vsf')
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Section header border radius top right.
+    $name = 'format_vsf/defaultsectionheaderborderradiustr';
+    $title = get_string('defaultsectionheaderborderradiustr', 'format_vsf');
+    $description = get_string('defaultsectionheaderborderradiustr_desc', 'format_vsf');
+    $default = '0.7';
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Section header border radius bottom right.
+    $name = 'format_vsf/defaultsectionheaderborderradiusbr';
+    $title = get_string('defaultsectionheaderborderradiusbr', 'format_vsf');
+    $description = get_string('defaultsectionheaderborderradiusbr_desc', 'format_vsf');
+    $default = '0.7';
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Section header border radius bottom left.
+    $name = 'format_vsf/defaultsectionheaderborderradiusbl';
+    $title = get_string('defaultsectionheaderborderradiusbl', 'format_vsf');
+    $description = get_string('defaultsectionheaderborderradiusbl_desc', 'format_vsf');
+    $default = '0.7';
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 }
