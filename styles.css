@@ -11,390 +11,6 @@
 .format-vsf .course-content ul.sections li.section .section_action_menu .textmenu,
 .format-vsf .course-content ul.sections li.section .section_action_menu .menu-action-text { white-space: nowrap; }
 
-/* ChartistJS CSS Reduced */
-.format-vsf .ct-slice-donut {
-  fill: none;
-  stroke-width: 60px; }
-
-.format-vsf .ct-square {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-square:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 100%; }
-.format-vsf .ct-square:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-square > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-minor-second {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-minor-second:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 93.75%; }
-.format-vsf .ct-minor-second:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-minor-second > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-second {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-second:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 88.8888888889%; }
-.format-vsf .ct-major-second:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-second > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-minor-third {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-minor-third:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 83.3333333333%; }
-.format-vsf .ct-minor-third:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-minor-third > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-third {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf  ct-major-third:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 80%; }
-.format-vsf .ct-major-third:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-third > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-perfect-fourth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-perfect-fourth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 75%; }
-.format-vsf .ct-perfect-fourth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-perfect-fourth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-perfect-fifth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-perfect-fifth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 66.6666666667%; }
-.format-vsf .ct-perfect-fifth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-perfect-fifth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-minor-sixth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-minor-sixth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 62.5%; }
-.format-vsf .ct-minor-sixth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-minor-sixth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-golden-section {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-golden-section:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 61.804697157%; }
-.format-vsf .ct-golden-section:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-golden-section > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-sixth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-sixth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 60%; }
-.format-vsf .ct-major-sixth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-sixth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-minor-seventh {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-minor-seventh:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 56.25%; }
-.format-vsf .ct-minor-seventh:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-minor-seventh > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-seventh {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-seventh:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 53.3333333333%; }
-.format-vsf .ct-major-seventh:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-seventh > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-octave {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-octave:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 50%; }
-.format-vsf .ct-octave:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-octave > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-tenth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-tenth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 40%; }
-.format-vsf .ct-major-tenth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-tenth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-eleventh {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-eleventh:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 37.5%; }
-.format-vsf .ct-major-eleventh:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-eleventh > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-major-twelfth {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-major-twelfth:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 33.3333333333%; }
-.format-vsf .ct-major-twelfth:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-major-twelfth > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-.format-vsf .ct-double-octave {
-  display: block;
-  position: relative;
-  width: 100%; }
-.format-vsf .ct-double-octave:before {
-    display: block;
-    float: left;
-    content: "";
-    width: 0;
-    height: 0;
-    padding-bottom: 25%; }
-.format-vsf .ct-double-octave:after {
-    content: "";
-    display: table;
-    clear: both; }
-.format-vsf .ct-double-octave > svg {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0; }
-
-/* 0.10.0 additions. */
-.format-vsf .ct-chart-donut .ct-label {
-  dominant-baseline: central; }
-
-.format-vsf .ct-grid-background {
-  fill: none; }
-
-/* Make a color different to fill-donut series*/
-.format-vsf .ct-chart-donut .ct-series-a .ct-slice-donut {
-    stroke: #1ABC9C;
-}
-/* Make b hidden*/
-.format-vsf  .ct-chart-donut .ct-series-b .ct-slice-donut {
-    stroke: #ECF0F1;
-    opacity: 0.0;
-}
-/* Make all fill-donut series visible and set color*/
-.format-vsf .ct-chart-donut .ct-fill-donut .ct-slice-donut{
-    stroke: #ECF0F1;
-    opacity: 1;
-}
-
 /* Specific styling. */
 .format-vsf .course-content ul li.section.main {
     border: 0 solid transparent;
@@ -430,9 +46,9 @@
 
 .format-vsf .course-content .single-section {
     margin-top: 0;
-    padding-top: 1em;
     padding-left: 2em;
     padding-right: 2em;
+    padding-top: 1em;
 }
 
 .format-vsf .course-content .single-section ul.section {
@@ -466,23 +82,34 @@
     margin: 0;
 }
 
-.format-vsf .course-content .single-section ul.sections li.section .left, .format-vsf .course-content .single-section ul.sections li.section .right {
-    width: 0;
+.format-vsf .course-content .single-section ul.sections li.section .left,
+.format-vsf .course-content .single-section ul.sections li.section .right {
     padding: 0;
+    width: 0;
 }
 
 .format-vsf.editing .course-content .single-section ul.sections li.section .left,
 .format-vsf.editing .course-content .single-section ul.sections li.section .right {
-    width: 40px;
     padding: 6px 0;
+    width: 40px;
 }
 
-.format-vsf .course-content .single-section ul.sections li.section .content {
+.format-vsf .course-content .single-section ul.sections li.section .content,
+.editing.format-vsf .course-content .single-section ul.sections li.section .content,
+.editing.format-vsf.lang-nl .course-content .single-section ul.sections li.section .content {
     margin: 0;
 }
 
 .format-vsf.editing .course-content .single-section ul.sections li.section .content {
     margin: 0 40px;
+}
+
+.editing.format-vsf .course-content ul.sections li.section .content {
+    margin: 0 60px;
+}
+
+.editing.format-vsf.lang-nl .course-content ul.sections li.section .content {
+    margin: 0 80px;
 }
 
 /* Progress chart */
