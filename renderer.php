@@ -295,14 +295,14 @@ class format_vsf_renderer extends format_section_renderer_base {
         $activitysummary = $this->section_activity_summary($section, $course, null);
         if (!empty($activitysummary)) {
             $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-            $o .= html_writer::start_tag('div', array('class' => 'span11'));
+            $o .= html_writer::start_tag('div', array('class' => 'span10'));
         }
         $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o.= $this->format_summary_text($section);
         $o.= html_writer::end_tag('div');
         if (!empty($activitysummary)) {
             $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'span1'));
+            $o .= html_writer::start_tag('div', array('class' => 'span2'));
             $o .= $activitysummary;
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');

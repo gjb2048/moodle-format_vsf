@@ -60,19 +60,10 @@ echo '/* <![CDATA[ */';
 // Continue button.
 echo '.format-vsf .vsf-continue {';
 echo 'background-color: ';
-$startindex = 0;
-if ($vsfsettings['continuebackgroundcolour'][0] == '#') {
-    $startindex++;
-} else {
+if ($vsfsettings['continuebackgroundcolour'][0] != '#') {
     echo '#';
 }
 echo $vsfsettings['continuebackgroundcolour'].';';
-
-$cbgred = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex, 2));
-$cbggreen = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex + 2, 2));
-$cbgblue = hexdec(substr($vsfsettings['continuebackgroundcolour'], $startindex + 4, 2));
-
-echo 'box-shadow: 0 0 0 2px rgba('.$cbgred.','.$cbggreen.','.$cbgblue.', 0.8);';
 
 echo 'color: ';
 if ($vsfsettings['continuetextcolour'][0] != '#') {
