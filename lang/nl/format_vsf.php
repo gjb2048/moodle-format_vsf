@@ -42,4 +42,43 @@ $string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percenta
 $string['markedthissection'] = 'Deze sectie is gemarkeerd als huidige sectie';
 $string['markthissection'] = 'markeren';
 
-$string['continue'] = 'Ga verder';
+// Ga Verder.
+$string['continue'] = 'Ga Verder';
+$string['defaultcontinueshow'] = 'Toon de Ga Verder knop';
+$string['defaultcontinueshow_desc'] = 'Toon de Ga Verder knop op de hoofd cursuspagina. De standaard instelling is \'Ja\'.';
+$string['defaultcontinuebackgroundcolour'] = 'Stel de achtergrond kleur in van de Ga Verder knop';
+$string['defaultcontinuebackgroundcolour_desc'] = 'Stel de achtergrond kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is \'CE2E2B\'.';
+$string['defaultcontinuetextcolour'] = 'Stel de tekst kleur in van de Ga Verder knop';
+$string['defaultcontinuetextcolour_desc'] = 'Stel de tekst kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is \'FFFFFF\'.';
+$string['continuebackgroundcolour'] = 'Stel de kleur achtergrond kleur in van de Ga Vader knop';
+$string['continuebackgroundcolour_help'] = 'Stel de achtergrond kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is ingesteld door de sitebeheerder.';
+$string['continuetextcolour'] = 'Stel de tekst kleur in van de Ga Verder knop';
+$string['continuetextcolour_help'] = 'Stel de tekst kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is ingesteld door de sitebeheerder.';
+
+// Section header.
+$string['defaultsectionheaderbackgroundcolour'] = 'Stel de achtergrond kleur in van de koptekst';
+$string['defaultsectionheaderbackgroundcolour_desc'] = 'Stel de achtergrond kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is \'777777\'.';
+$string['defaultsectionheaderbackgroundhvrcolour'] = 'Stel de achtergrond hover kleur in van de koptekst';
+$string['defaultsectionheaderbackgroundhvrcolour_desc'] = 'Stel de achtergrond hover kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is \'D93913\'.';
+$string['defaultsectionheaderforegroundcolour'] = 'Stel de voorgrond kleur in van de koptekst';
+$string['defaultsectionheaderforegroundcolour_desc'] = 'Stel de voorgrond kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is \'FFFFFF\'.';
+$string['defaultsectionheaderforegroundhvrcolour'] = 'Stel de voorgrond hover kleur in van de koptekst';
+$string['defaultsectionheaderforegroundhvrcolour_desc'] = 'Stel de voorgrond hover kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is \'FFFFFF\'.';
+$string['sectionheaderbackgroundcolour'] = 'Stel de achtergrond kleur in van de koptekst';
+$string['sectionheaderbackgroundcolour_help'] = 'Stel de achtergrond kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is ingesteld door de sitebeheerder.';
+$string['sectionheaderbackgroundhvrcolour'] = 'Stel de achtergrond hover kleur in van de koptekst';
+$string['sectionheaderbackgroundhvrcolour_help'] = 'Stel de achtergrond hover kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is ingesteld door de sitebeheerder.';
+$string['sectionheaderforegroundcolour'] = 'Stel de voorgrond kleur in van de koptekst';
+$string['sectionheaderforegroundcolour_help'] = 'Stel de voorgrond kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is ingesteld door de sitebeheerder.';
+$string['sectionheaderforegroundhvrcolour'] = 'Stel de voorgrond hover kleur in van de koptekst';
+$string['sectionheaderforegroundhvrcolour_help'] = 'Stel de voorgrond hover kleur in van de koptekst in hexidecimal RGB.  De standaard instelling is ingesteld door de sitebeheerder.';
+
+// Section header border radius.
+$string['defaultsectionheaderborderradiustl'] = 'Sectie koptekst omranding radius linksboven';
+$string['defaultsectionheaderborderradiustl_desc'] = 'Radius Omranding linksboven van de koptekst.';
+$string['defaultsectionheaderborderradiustr'] = 'Sectie koptekst omranding rechtsboven radius';
+$string['defaultsectionheaderborderradiustr_desc'] = 'Radius omranding rechtsboven van de koptekst.';
+$string['defaultsectionheaderborderradiusbr'] = 'Sectie koptekst omrading radius rechtsonder';
+$string['defaultsectionheaderborderradiusbr_desc'] = 'Radius omranding rechtsonder van de koptekst.';
+$string['defaultsectionheaderborderradiusbl'] = 'Sectie koptekst omrading radius linksonder';
+$string['defaultsectionheaderborderradiusbl_desc'] = 'Radius omrading linksonder van de koptekst.';
