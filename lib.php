@@ -275,6 +275,15 @@ class format_vsf extends format_base {
                 'sectionheaderforegroundhvrcolour' => array(
                     'default' => $defaults['defaultsectionheaderforegroundhvrcolour'],
                     'type' => PARAM_ALPHANUM
+                ),
+                // Columns.
+                'layoutcolumns' => array(
+                    'default' => get_config('format_vsf', 'defaultlayoutcolumns'),
+                    'type' => PARAM_INT,
+                ),
+                'layoutcolumnorientation' => array(
+                    'default' => get_config('format_vsf', 'defaultlayoutcolumnorientation'),
+                    'type' => PARAM_INT,
                 )
             );
         }
@@ -362,6 +371,28 @@ class format_vsf extends format_base {
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => array(
                         array('value' => $defaults['defaultsectionheaderforegroundhvrcolour'])
+                    )
+                ),
+                'layoutcolumns' => array(
+                    'label' => new lang_string('setlayoutcolumns', 'format_vsf'),
+                    'help' => 'setlayoutcolumns',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(1 => new lang_string('one', 'format_vsf'),   // Default.
+                              2 => new lang_string('two', 'format_vsf'),   // Two.
+                              3 => new lang_string('three', 'format_vsf'), // Three.
+                              4 => new lang_string('four', 'format_vsf'))  // Four.
+                    )
+                ),
+                'layoutcolumnorientation' => array(
+                    'label' => new lang_string('setlayoutcolumnorientation', 'format_vsf'),
+                    'help' => 'setlayoutcolumnorientation',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(1 => new lang_string('columnvertical', 'format_vsf'),
+                              2 => new lang_string('columnhorizontal', 'format_vsf')) // Default.
                     )
                 )
             );
@@ -507,6 +538,17 @@ class format_vsf extends format_base {
      */
     public function can_delete_section($section) {
         return true;
+    }
+
+    /**
+     * Updates the number of columns when the renderer detects that they are wrong.
+     * @param int $layoutcolumns The layout columns to use.
+     */
+    public function update_vsf_columns_setting($layoutcolumns) {
+        // Create data array.
+        $data = array('layoutcolumns' => $layoutcolumns);
+
+        $this->update_course_format_options($data);
     }
 
     /**

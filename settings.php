@@ -160,4 +160,28 @@ if ($ADMIN->fulltree) {
     $description = get_string('defaultsectionheaderborderradiusbl_desc', 'format_vsf');
     $default = '0.7';
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Default number of columns between 1 and 4.
+    $name = 'format_vsf/defaultlayoutcolumns';
+    $title = get_string('defaultlayoutcolumns', 'format_vsf');
+    $description = get_string('defaultlayoutcolumns_desc', 'format_vsf');
+    $default = 1;
+    $choices = array(
+        1 => new lang_string('one', 'format_vsf'), // Default.
+        2 => new lang_string('two', 'format_vsf'), // Two.
+        3 => new lang_string('three', 'format_vsf'), // Three.
+        4 => new lang_string('four', 'format_vsf')   // Four.
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Default column orientation - 1 = vertical and 2 = horizontal.
+    $name = 'format_vsf/defaultlayoutcolumnorientation';
+    $title = get_string('defaultlayoutcolumnorientation', 'format_vsf');
+    $description = get_string('defaultlayoutcolumnorientation_desc', 'format_vsf');
+    $default = 2;
+    $choices = array(
+        1 => new lang_string('columnvertical', 'format_vsf'),
+        2 => new lang_string('columnhorizontal', 'format_vsf') // Default.
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 }

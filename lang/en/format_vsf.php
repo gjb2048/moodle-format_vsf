@@ -124,3 +124,19 @@ $string['em3_7'] = '3.7em';
 $string['em3_8'] = '3.8em';
 $string['em3_9'] = '3.9em';
 $string['em4_0'] = '4.0em';
+
+// Columns enhancement.
+$string['one'] = 'One';
+$string['two'] = 'Two';
+$string['three'] = 'Three';
+$string['four'] = 'Four';
+$string['columnvertical'] = 'Vertical';
+$string['columnhorizontal'] = 'Horizontal';
+$string['setlayoutcolumns'] = 'Columns';
+$string['setlayoutcolumns_help'] = 'How many columns to use.';
+$string['setlayoutcolumnorientation'] = 'Column orientation';
+$string['setlayoutcolumnorientation_help'] = 'Vertical - Sections go top to bottom.<br />Horizontal - Sections go left to right.';
+$string['defaultlayoutcolumns'] = 'Number of columns';
+$string['defaultlayoutcolumns_desc'] = "Number of columns between one and four.";
+$string['defaultlayoutcolumnorientation'] = 'Column orientation';
+$string['defaultlayoutcolumnorientation_desc'] = "The default column orientation: Vertical or Horizontal.";

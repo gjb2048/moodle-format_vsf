@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.3.1.1
+  1. Add columns functionality from Collapsed Topics.
+
 Version 3.3.1.0
   1. Stable version.
 

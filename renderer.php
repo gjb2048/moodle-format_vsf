@@ -37,6 +37,9 @@ class format_vsf_renderer extends format_section_renderer_base {
 
     private $showcontinuebutton = false;
 
+    private $courseformat = null; // Our course format object as defined in lib.php.
+    private $vsfsettings; // Settings for the format - array.
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -45,6 +48,7 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     public function __construct(moodle_page $page, $target) {
         parent::__construct($page, $target);
+        $this->courseformat = course_get_format($page->course); // Needed for settings retrieval.
 
         $this->showcontinuebutton = get_config('format_vsf', 'defaultcontinueshow');
 
@@ -59,6 +63,20 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     protected function start_section_list() {
         return html_writer::start_tag('ul', array('class' => 'sections'));
+    }
+
+    /**
+     * Generate the starting container html for a list of sections in columns
+     * @return string HTML to output.
+     */
+    protected function start_columns_section_list() {
+        $classes = 'sections';
+        if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+            $classes .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
+        } else {
+            $classes .= ' '.$this->get_row_class();
+        }
+        return html_writer::start_tag('ul', array('class' => $classes));
     }
 
     /**
@@ -192,9 +210,20 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
         }
 
-        $o = html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle, 'role'=>'region',
-            'aria-label'=> get_section_name($course, $section)));
+        if (empty($this->vsfsettings)) {
+            $this->vsfsettings = $this->courseformat->get_settings();
+        }
+        if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
+            $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
+        }
+        $liattributes = array(
+            'id' => 'section-'.$section->section,
+            'class' => 'section main clearfix'.$sectionstyle,
+            'role' => 'region',
+            'aria-label' => $this->courseformat->get_section_name($section)
+        );
+        $o = html_writer::start_tag('li', $liattributes);
 
         $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
         $o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
@@ -203,10 +232,10 @@ class format_vsf_renderer extends format_section_renderer_base {
         $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
         $o .= html_writer::start_tag('div', array('class' => 'content'));
 
-        // When not on a section page, we display the section titles except the general section if null
+        // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
 
-        // When on a section page, we only display the general section title, if title is not the default one
+        // When on a section page, we only display the general section title, if title is not the default one.
         $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
 
         $classes = ' accesshide';
@@ -234,14 +263,68 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     protected function stealth_section_header($sectionno) {
         $o = '';
-        $o.= html_writer::start_tag('li', array('id' => 'section-'.$sectionno, 'class' => 'section main clearfix orphaned hidden'));
+        $course = $this->courseformat->get_course();
+        $sectionstyle = '';
+        if (empty($this->vsfsettings)) {
+            $this->vsfsettings = $this->courseformat->get_settings();
+        }
+        if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
+            $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
+        }
+        $liattributes = array(
+            'id' => 'section-'.$sectionno,
+            'class' => 'section main clearfix orphaned hidden'.$sectionstyle,
+            'role' => 'region',
+            'aria-label' => $this->courseformat->get_section_name($sectionno)
+        );
         $o.= html_writer::tag('div', '', array('class' => 'left side'));
-        $course = course_get_format($this->page->course)->get_course();
-        $section = course_get_format($this->page->course)->get_section($sectionno);
+        $section = $this->courseformat->get_section($sectionno);
         $rightcontent = $this->section_right_content($section, $course, false);
         $o.= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
         $o.= html_writer::start_tag('div', array('class' => 'content'));
         $o.= $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $sectionno), 3, 'sectionname vsf-sectionname');
+        return $o;
+    }
+
+    /**
+     * Generate the html for a hidden section
+     *
+     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @param int|stdClass $courseorid The course to get the section name for (object or just course id)
+     * @return string HTML to output.
+     */
+    protected function section_hidden($sectionno, $courseorid = null) {
+        if ($courseorid) {
+            $sectionname = get_section_name($courseorid, $sectionno);
+            $strnotavailable = get_string('notavailablecourse', '', $sectionname);
+        } else {
+            $strnotavailable = get_string('notavailable');
+        }
+
+        $o = '';
+        $sectionstyle = 'section main clearfix hidden';
+        if (empty($this->vsfsettings)) {
+            $this->vsfsettings = $this->courseformat->get_settings();
+        }
+        if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
+            $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
+        }
+        $liattributes = array(
+            'id' => 'section-'.$sectionno,
+            'class' => $sectionstyle,
+            'role' => 'region',
+            'aria-label' => $this->courseformat->get_section_name($section)
+        );
+
+        $o.= html_writer::start_tag('li', $liattributes);
+        $o.= html_writer::tag('div', '', array('class' => 'left side'));
+        $o.= html_writer::tag('div', '', array('class' => 'right side'));
+        $o.= html_writer::start_tag('div', array('class' => 'content'));
+        $o.= html_writer::tag('div', $strnotavailable);
+        $o.= html_writer::end_tag('div');
+        $o.= html_writer::end_tag('li');
         return $o;
     }
 
@@ -271,9 +354,21 @@ class format_vsf_renderer extends format_section_renderer_base {
             $classattr .= ' current';
         }
 
-        $title = get_section_name($course, $section);
-        $o = html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => $classattr, 'role'=>'region', 'aria-label'=> $title));
+        $title = $this->courseformat->get_section_name($section);
+        if (empty($this->vsfsettings)) {
+            $this->vsfsettings = $this->courseformat->get_settings();
+        }
+        if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
+            $classattr .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
+        }
+        $liattributes = array(
+            'id' => 'section-'.$section->section,
+            'class' => $classattr,
+            'role' => 'region',
+            'aria-label' => $title
+        );
+        $o = html_writer::start_tag('li', $liattributes);
 
         $o .= html_writer::tag('div', '', array('class' => 'left side'));
         $o .= html_writer::tag('div', '', array('class' => 'right side'));
@@ -546,5 +641,208 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Close single-section div.
         echo html_writer::end_tag('div');
+    }
+
+    /**
+     * Output the html for a multiple section page
+     *
+     * @param stdClass $course The course entry from DB
+     * @param array $sections (argument not used)
+     * @param array $mods (argument not used)
+     * @param array $modnames (argument not used)
+     * @param array $modnamesused (argument not used)
+     */
+    public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
+        global $PAGE;
+
+        $modinfo = get_fast_modinfo($course);
+        $course = $this->courseformat->get_course();
+        if (empty($this->vsfsettings)) {
+            $this->vsfsettings = $this->courseformat->get_settings();
+        }
+
+        $context = context_course::instance($course->id);
+        // Title with completion help icon.
+        $completioninfo = new completion_info($course);
+        echo $completioninfo->display_help_icon();
+        echo $this->output->heading($this->page_title(), 2, 'accesshide');
+
+        // Copy activity clipboard..
+        echo $this->course_activity_clipboard($course, 0);
+
+        $numsections = $course->numsections; // Because we want to manipulate this for column breakpoints.
+        if ($course->numsections > 0) {
+            if ($numsections < $this->vsfsettings['layoutcolumns']) {
+                $this->vsfsettings['layoutcolumns'] = $numsections;  // Help to ensure a reasonable display.
+            }
+            if ($this->vsfsettings['layoutcolumns'] > 1) {
+                if ($this->vsfsettings['layoutcolumns'] > 4) {
+                    // Default or database has been changed incorrectly.
+                    $this->vsfsettings['layoutcolumns'] = 4;
+
+                    // Update....
+                    $this->courseformat->update_vsf_columns_setting($this->vsfsettings['layoutcolumns']);
+                }
+            } else if ($this->vsfsettings['layoutcolumns'] < 1) {
+                // Distributed default in plugin settings (and reset in database) or database has been changed incorrectly.
+                $this->vsfsettings['layoutcolumns'] = 1;
+
+                // Update....
+                $this->courseformat->update_vsf_columns_setting($this->vsfsettings['layoutcolumns']);
+            }
+        }
+
+        if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+            echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
+        }
+        $canbreak = ($this->vsfsettings['layoutcolumns'] > 1);
+        $columncount = 1;
+        $breaking = false; // Once the first section is shown we can decide if we break on another column.
+        $breakpoint = 0;
+        $loopsection = 0;
+        $shownsectioncount = 0;
+
+        // Now the list of sections..
+        echo $this->start_section_list();
+
+        foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+            if ($section == 0) {
+                // 0-section is displayed a little different then the others
+                if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
+                    echo $this->section_header($thissection, $course, false, 0);
+                    echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+                    echo $this->courserenderer->course_section_add_cm_control($course, 0, 0);
+                    echo $this->section_footer();
+                }
+                if ($canbreak) {
+                    echo $this->end_section_list();
+                    echo $this->start_columns_section_list();
+                }
+                continue;
+            }
+            if ($section > $course->numsections) {
+                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
+                continue;
+            }
+            $loopsection++;
+            /* Show the section if the user is permitted to access it, OR if it's not available
+               but there is some available info text which explains the reason & should display. */
+            $showsection = $thissection->uservisible ||
+                ($thissection->visible && !$thissection->available &&
+                !empty($thissection->availableinfo));
+            if (!$showsection) {
+                // If the hiddensections option is set to 'show hidden sections in collapsed
+                // form', then display the hidden section message - UNLESS the section is
+                // hidden by the availability system, which is set to hide the reason.
+                if (!$course->hiddensections && $thissection->available) {
+                    echo $this->section_hidden($section, $course->id);
+                }
+
+                continue;
+            }
+            $shownsectioncount++;
+
+            if (!$PAGE->user_is_editing() && $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+                // Display section summary only.
+                echo $this->section_summary($thissection, $course, null);
+            } else {
+                echo $this->section_header($thissection, $course, false, 0);
+                if ($thissection->uservisible) {
+                    echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+                    echo $this->courserenderer->course_section_add_cm_control($course, $section, 0);
+                }
+                echo $this->section_footer();
+            }
+
+            // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
+            if ($canbreak === true) {
+                if ($this->vsfsettings['layoutcolumnorientation'] == 1) {  // Vertical mode.
+                    if ($breaking == false) {
+                        $breaking = true;
+                        // Divide the number of sections by the number of columns.
+                        $breakpoint = $numsections / $this->vsfsettings['layoutcolumns'];
+                    }
+
+                    if (($breaking == true) && ($shownsectioncount >= $breakpoint) &&
+                        ($columncount < $this->vsfsettings['layoutcolumns'])) {
+                        echo $this->end_section_list();
+                        echo $this->start_columns_section_list();
+                        $columncount++;
+                        // Next breakpoint is...
+                        $breakpoint += $numsections / $this->vsfsettings['layoutcolumns'];
+                    }
+                } else { // Horizontal mode.
+                    if ($breaking == false) {
+                        $breaking = true;
+                        // The lowest value here for layoutcolumns is 2 and the maximum for shownsectioncount is 2, so :).
+                        $breakpoint = $this->vsfsettings['layoutcolumns'];
+                    }
+
+                    if (($breaking == true) && ($shownsectioncount >= $breakpoint) && ($loopsection < $course->numsections)) {
+                        echo $this->end_section_list();
+                        echo $this->start_columns_section_list();
+                        // Next breakpoint is...
+                        $breakpoint += $this->vsfsettings['layoutcolumns'];
+                    }
+                }
+            }
+        }
+
+        if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
+            // Print stealth sections if present.
+            foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+                if ($section <= $course->numsections or empty($modinfo->sections[$section])) {
+                    // this is not stealth section or it is empty
+                    continue;
+                }
+                echo $this->stealth_section_header($section);
+                echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+                echo $this->stealth_section_footer();
+            }
+
+            echo $this->end_section_list();
+            if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+                echo html_writer::end_tag('div');
+            }
+
+            echo html_writer::start_tag('div', array('id' => 'changenumsections', 'class' => 'mdl-right'));
+
+            // Increase number of sections.
+            $straddsection = get_string('increasesections', 'moodle');
+            $url = new moodle_url('/course/changenumsections.php',
+                array('courseid' => $course->id,
+                      'increase' => true,
+                      'sesskey' => sesskey()));
+            $icon = $this->output->pix_icon('t/switch_plus', $straddsection);
+            echo html_writer::link($url, $icon.get_accesshide($straddsection), array('class' => 'increase-sections'));
+
+            if ($course->numsections > 0) {
+                // Reduce number of sections sections.
+                $strremovesection = get_string('reducesections', 'moodle');
+                $url = new moodle_url('/course/changenumsections.php',
+                    array('courseid' => $course->id,
+                          'increase' => false,
+                          'sesskey' => sesskey()));
+                $icon = $this->output->pix_icon('t/switch_minus', $strremovesection);
+                echo html_writer::link($url, $icon.get_accesshide($strremovesection), array('class' => 'reduce-sections'));
+            }
+
+            echo html_writer::end_tag('div');
+        } else {
+            echo $this->end_section_list();
+            if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+                echo html_writer::end_tag('div');
+            }
+        }
+    }
+
+    protected function get_row_class() {
+        return 'row-fluid';
+    }
+
+    protected function get_column_class($columns) {
+        $colclasses = array(1 => 'span12', 2 => 'span6', 3 => 'span4', 4 => 'span3');
+
+        return $colclasses[$columns];
     }
 }
