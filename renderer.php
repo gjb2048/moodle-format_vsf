@@ -269,6 +269,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $this->vsfsettings = $this->courseformat->get_settings();
         }
         if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumns'] > 1) &&
             ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
         }
@@ -308,6 +309,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $this->vsfsettings = $this->courseformat->get_settings();
         }
         if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumns'] > 1) &&
             ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
         }
@@ -359,6 +361,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $this->vsfsettings = $this->courseformat->get_settings();
         }
         if (($section->section != 0) &&
+            ($this->vsfsettings['layoutcolumns'] > 1) &&
             ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
             $classattr .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
         }
@@ -692,10 +695,10 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
         }
 
-        if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+        $canbreak = ($this->vsfsettings['layoutcolumns'] > 1);
+        if (($canbreak) && ($this->vsfsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
             echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
         }
-        $canbreak = ($this->vsfsettings['layoutcolumns'] > 1);
         $columncount = 1;
         $breaking = false; // Once the first section is shown we can decide if we break on another column.
         $breakpoint = 0;
@@ -801,7 +804,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
 
             echo $this->end_section_list();
-            if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+            if (($canbreak) && ($this->vsfsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
                 echo html_writer::end_tag('div');
             }
 
@@ -830,7 +833,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             echo html_writer::end_tag('div');
         } else {
             echo $this->end_section_list();
-            if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+            if (($canbreak) && ($this->vsfsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
                 echo html_writer::end_tag('div');
             }
         }
@@ -841,7 +844,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     protected function get_column_class($columns) {
-        $colclasses = array(1 => 'span12', 2 => 'span6', 3 => 'span4', 4 => 'span3');
+        $colclasses = array(2 => 'span6', 3 => 'span4', 4 => 'span3');
 
         return $colclasses[$columns];
     }
