@@ -214,6 +214,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $this->vsfsettings = $this->courseformat->get_settings();
         }
         if (($section->section != 0) &&
+            (!$onsectionpage) &&
             ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
         }
