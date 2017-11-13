@@ -794,6 +794,13 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
+            if ($canbreak) {
+                echo $this->end_section_list();
+                if ($this->vsfsettings['layoutcolumnorientation'] == 1) { // Vertical columns.
+                    echo html_writer::end_tag('div');
+                }
+                echo $this->start_section_list();
+            }
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
                 if ($section <= $numsections or empty($modinfo->sections[$section])) {
                     // this is not stealth section or it is empty
@@ -803,11 +810,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
                 echo $this->stealth_section_footer();
             }
-
             echo $this->end_section_list();
-            if (($canbreak) && ($this->vsfsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
-                echo html_writer::end_tag('div');
-            }
 
             echo $this->change_number_sections($course, 0);
         } else {
