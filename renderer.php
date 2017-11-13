@@ -269,7 +269,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if (empty($this->vsfsettings)) {
             $this->vsfsettings = $this->courseformat->get_settings();
         }
-        if (($section->section != 0) &&
+        if (($sectionno != 0) &&
             ($this->vsfsettings['layoutcolumns'] > 1) &&
             ($this->vsfsettings['layoutcolumnorientation'] == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->vsfsettings['layoutcolumns']);
@@ -795,7 +795,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
-                if ($section <= $course->numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections or empty($modinfo->sections[$section])) {
                     // this is not stealth section or it is empty
                     continue;
                 }
@@ -809,29 +809,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 echo html_writer::end_tag('div');
             }
 
-            echo html_writer::start_tag('div', array('id' => 'changenumsections', 'class' => 'mdl-right'));
-
-            // Increase number of sections.
-            $straddsection = get_string('increasesections', 'moodle');
-            $url = new moodle_url('/course/changenumsections.php',
-                array('courseid' => $course->id,
-                      'increase' => true,
-                      'sesskey' => sesskey()));
-            $icon = $this->output->pix_icon('t/switch_plus', $straddsection);
-            echo html_writer::link($url, $icon.get_accesshide($straddsection), array('class' => 'increase-sections'));
-
-            if ($course->numsections > 0) {
-                // Reduce number of sections sections.
-                $strremovesection = get_string('reducesections', 'moodle');
-                $url = new moodle_url('/course/changenumsections.php',
-                    array('courseid' => $course->id,
-                          'increase' => false,
-                          'sesskey' => sesskey()));
-                $icon = $this->output->pix_icon('t/switch_minus', $strremovesection);
-                echo html_writer::link($url, $icon.get_accesshide($strremovesection), array('class' => 'reduce-sections'));
-            }
-
-            echo html_writer::end_tag('div');
+            echo $this->change_number_sections($course, 0);
         } else {
             echo $this->end_section_list();
             if (($canbreak) && ($this->vsfsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
