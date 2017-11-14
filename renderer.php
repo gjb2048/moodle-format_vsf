@@ -389,15 +389,22 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         $activitysummary = $this->section_activity_summary($section, $course, null);
         if (!empty($activitysummary)) {
+            static $summarychartlayout = array(
+                1 => array('summary' => 10, 'chart' => 2),
+                2 => array('summary' => 8, 'chart' => 4),
+                3 => array('summary' => 7, 'chart' => 5),
+                4 => array('summary' => 6, 'chart' => 6)
+            );
+
             $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-            $o .= html_writer::start_tag('div', array('class' => 'span10'));
+            $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->vsfsettings['layoutcolumns']]['summary']));
         }
         $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o.= $this->format_summary_text($section);
         $o.= html_writer::end_tag('div');
         if (!empty($activitysummary)) {
             $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'span2'));
+            $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->vsfsettings['layoutcolumns']]['chart']));
             $o .= $activitysummary;
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');
@@ -826,7 +833,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     protected function get_column_class($columns) {
-        $colclasses = array(2 => 'span6', 3 => 'span4', 4 => 'span3');
+        $colclasses = array(2 => 'vsf-col2', 3 => 'vsf-col3', 4 => 'vsf-col4');
 
         return $colclasses[$columns];
     }
