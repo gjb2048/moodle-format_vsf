@@ -82,3 +82,19 @@ $string['defaultsectionheaderborderradiusbr'] = 'Sectie koptekst omrading radius
 $string['defaultsectionheaderborderradiusbr_desc'] = 'Radius omranding rechtsonder van de koptekst.';
 $string['defaultsectionheaderborderradiusbl'] = 'Sectie koptekst omrading radius linksonder';
 $string['defaultsectionheaderborderradiusbl_desc'] = 'Radius omrading linksonder van de koptekst.';
+
+// Columns enhancement.
+$string['one'] = 'Een';
+$string['two'] = 'Twee';
+$string['three'] = 'Drie';
+$string['four'] = 'Vier';
+$string['columnvertical'] = 'Verticaal';
+$string['columnhorizontal'] = 'Horizontaal';
+$string['setlayoutcolumns'] = 'Kolommen';
+$string['setlayoutcolumns_help'] = 'Hoeveel kolommen moeten er gebruikt worden.';
+$string['setlayoutcolumnorientation'] = 'Kolom orientatie';
+$string['setlayoutcolumnorientation_help'] = 'Verticaal - Secties gaan van boven naar beneden.<br>Horizontaal - Secties gaan van links naar rechts.';
+$string['defaultlayoutcolumns'] = 'Aantal kolommen';
+$string['defaultlayoutcolumns_desc'] = "Aantal kolommen tussen een en vier.";
+$string['defaultlayoutcolumnorientation'] = 'Kolom Orientatie';
+$string['defaultlayoutcolumnorientation_desc'] = "De standaard kolom orientatie: Verticaal of Horizontaal.";
