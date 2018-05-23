@@ -19,16 +19,28 @@
  *
  * @package    course/format
  * @subpackage vsf
- * @version    See the value of '$plugin->version' below.
- * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
+ * @version    See the value of '$plugin->version' in version.php.
+ * @copyright  &copy; 2018-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace format_vsf\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018052300;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->requires  = 2018051700.00; // 3.5 (Build: 20180517).
-$plugin->component = 'format_vsf';
-$plugin->release = '3.5.1.0';
+/**
+ * The PSF format does not store any user data.
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:nop';
+    }
+}
