@@ -45,7 +45,8 @@ class format_vsf extends format_base {
     public function get_course() {
         $course = parent::get_course();
 
-        // TODO.
+        // Get 'coursedisplay' setting from admin for now.
+        $course->coursedisplay = get_config('moodlecourse', 'coursedisplay');
 
         return $course;
     }
