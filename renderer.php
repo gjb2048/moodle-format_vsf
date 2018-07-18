@@ -21,7 +21,7 @@
  * @subpackage vsf
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
+ * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
@@ -700,6 +700,11 @@ class format_vsf_renderer extends format_section_renderer_base {
         $modinfo = get_fast_modinfo($course);
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
+        }
+
+        // Use our custom course renderer if we need to.
+        if ((!$PAGE->user_is_editing()) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
+            $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
         }
 
         $context = context_course::instance($course->id);
