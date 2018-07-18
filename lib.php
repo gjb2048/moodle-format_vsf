@@ -29,8 +29,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/lib.php');
 
 class format_vsf extends format_base {
-    private $settings;
-
     /**
      * Returns true if this course format uses sections
      *
@@ -44,11 +42,12 @@ class format_vsf extends format_base {
      * Returns the format's settings and gets them if they do not exist.
      * @return array The settings as an array.
      */
-    public function get_settings() {
-        if (empty($this->settings) == true) {
-            $this->settings = $this->get_format_options();
-        }
-        return $this->settings;
+    public function get_course() {
+        $course = parent::get_course();
+
+        // TODO.
+
+        return $course;
     }
 
     /**

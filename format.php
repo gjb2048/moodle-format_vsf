@@ -43,7 +43,6 @@ $context = context_course::instance($course->id);
 // Retrieve course format option fields and add them to the $course object.
 $courseformat = course_get_format($course);
 $course = $courseformat->get_course();
-$vsfsettings = $courseformat->get_settings();
 
 if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
@@ -60,25 +59,25 @@ echo '/* <![CDATA[ */';
 // Continue button.
 echo '.format-vsf .vsf-continue {';
 echo 'background-color: ';
-if ($vsfsettings['continuebackgroundcolour'][0] != '#') {
+if ($course->continuebackgroundcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['continuebackgroundcolour'].';';
+echo $course->continuebackgroundcolour.';';
 
 echo 'color: ';
-if ($vsfsettings['continuetextcolour'][0] != '#') {
+if ($course->continuetextcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['continuetextcolour'].';';
+echo $course->continuetextcolour.';';
 echo '}';
 
 // Section header.
 echo '.format-vsf .vsf-sectionname {';
 echo 'background-color: ';
-if ($vsfsettings['sectionheaderbackgroundcolour'][0] != '#') {
+if ($course->sectionheaderbackgroundcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['sectionheaderbackgroundcolour'].';';
+echo $course->sectionheaderbackgroundcolour.';';
 
 // Site wide configuration Site Administration -> Plugins -> Course formats -> Progress Section Format.
 $vsfborderradiustl = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustl'), PARAM_TEXT);
@@ -91,24 +90,24 @@ echo 'border-bottom-right-radius: '.$vsfborderradiusbr.'em;';
 echo 'border-bottom-left-radius: '.$vsfborderradiusbl.'em;';
 
 echo 'color: ';
-if ($vsfsettings['sectionheaderforegroundcolour'][0] != '#') {
+if ($course->sectionheaderforegroundcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['sectionheaderforegroundcolour'].';';
+echo $course->sectionheaderforegroundcolour.';';
 
 echo '}';
 
 echo '.format-vsf .vsf-sectionname:hover {';
 echo 'background-color: ';
-if ($vsfsettings['sectionheaderbackgroundhvrcolour'][0] != '#') {
+if ($course->sectionheaderbackgroundhvrcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['sectionheaderbackgroundhvrcolour'].';';
+echo $course->sectionheaderbackgroundhvrcolour.';';
 echo 'color: ';
-if ($vsfsettings['sectionheaderforegroundhvrcolour'][0] != '#') {
+if ($course->sectionheaderforegroundhvrcolour[0] != '#') {
     echo '#';
 }
-echo $vsfsettings['sectionheaderforegroundhvrcolour'].';';
+echo $course->sectionheaderforegroundhvrcolour.';';
 echo '}';
 
 echo '/* ]]> */';
