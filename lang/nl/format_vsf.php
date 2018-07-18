@@ -39,13 +39,14 @@ $string['page-course-view-vsf-x'] = 'Elke cursus pagina in de voortgang sectie f
 $string['hidefromothers'] = 'Verberg sectie';
 $string['showfromothers'] = 'Toon sectie';
 $string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
-$string['markedthissection'] = 'Deze sectie is gemarkeerd als huidige sectie';
-$string['markthissection'] = 'markeren';
+// These are 'sections' as they are only shown in 'section' based structures.
+$string['markedthissection'] = 'Deze sectie is gemarkeerd als de huidige sectie';
+$string['markthissection'] = 'markeren deze sectie als huidige sectie';
 
 // Ga Verder.
 $string['continue'] = 'Ga Verder';
 $string['defaultcontinueshow'] = 'Toon de Ga Verder knop';
-$string['defaultcontinueshow_desc'] = 'Toon de Ga Verder knop op de hoofd cursuspagina. De standaard instelling is \'Ja\'.';
+$string['defaultcontinueshow_desc'] = 'Toon de Ga Verder knop op de hoofd cursuspagina.';
 $string['defaultcontinuebackgroundcolour'] = 'Stel de achtergrond kleur in van de Ga Verder knop';
 $string['defaultcontinuebackgroundcolour_desc'] = 'Stel de achtergrond kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is \'CE2E2B\'.';
 $string['defaultcontinuetextcolour'] = 'Stel de tekst kleur in van de Ga Verder knop';
@@ -98,3 +99,18 @@ $string['defaultlayoutcolumns'] = 'Aantal kolommen';
 $string['defaultlayoutcolumns_desc'] = "Aantal kolommen tussen een en vier.";
 $string['defaultlayoutcolumnorientation'] = 'Kolom Orientatie';
 $string['defaultlayoutcolumnorientation_desc'] = "De standaard kolom orientatie: Verticaal of Horizontaal.";
+
+// Progress bar chart.
+$string['barchart'] = 'Progressiebalk';
+$string['barchart_help'] = 'Bepaal hier of je gebruik wil maken van de progressbalk of de progressieradar.';
+$string['defaultbarchart'] = 'Progressiebalk standaard';
+$string['defaultbarchart_desc'] = 'Door de instelling op ja te zetten zal de progressiebalk standaard gebruikt worden i.p.v. de progressieradar. Deze instelling zal alleen meegenomen worden bij NIEUWE cursussen óf wanneer je in een cursus wisselt naar dit cursusformat.';
+
+// Module view button.
+$string['moduleviewbutton'] = 'Knop Module bekijken';
+$string['moduleviewbutton_help'] = 'De knop Module bekijken wordt getoond in de cursussectie pagina onder de module afbeelding wanneer je \'Cursus-layout\' instelling hebt staan op \'Toon alle secties op één pagina\.';
+$string['defaultmoduleviewbutton'] = 'Knop Module bekijken standaard';
+$string['defaultmoduleviewbutton_desc'] = 'Door deze instelling op Ja te zetten zal de knop Module bekijken standaard getoond worden in de cursussectie pagina onder de module afbeelding wanneer je \'Cursus-layout\' instelling hebt staan op \'Toon alle secties op één pagina\'.eze instelling zal alleen meegenomen worden bij NIEUWE cursussen óf wanneer je in een cursus wisselt naar dit cursusformat.';
+
+// Privacy.
+$string['privacy:nop'] = 'VSF cursusformat bewaart de configuratieinstellingen. Geen van de instellingen hebben betrekking op een specifieke gebruiker. Het is de verantwoordelijkheid van de organisatie dat in vrije tekstvelden geen persoonlijke gebruikersinformatie vermeld wordt. Indien een instelling gewijzigd wordt zal dit in de Moodle log getoond wordt onder vermelding van de gebruiker die de instelling heeft aangepast. Deze logging heeft geen betrekking op het cursusformat en is onderdeel van de Moodle standaard functionaliteiten. Indien dit niet gewenst is dient dit in de Moodle standaard opgelost te worden. Indien afbeeldingen geupload worden bij de module beschrijving, adviseren we je om embedded locatie informatie (EXIF GPS) te vermelden inclusief andere persoonlijke informatie om zo te voorkomen dat persoonlijke informatie verspreid kan worden. Inspecteer de code om zeker te weten dat deze voldoet aan de organisaties interpertatie van de AVG wetgeving. De ontwikkelaar neemt hier verder geen verantwoordelijk voor. Twijfel je aan de analyse van de ontwikkelaar, verwijder dan het cursusformat van je Moodle installatie.';

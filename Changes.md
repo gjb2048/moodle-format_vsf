@@ -1,5 +1,9 @@
 Version Information
 ===================
+Version 3.5.1.1
+  1. Add new all sections on one page features, including a bar chart.
+  2. Fix drag and drop of sections in M3.5.
+
 Version 3.5.1.0
   1. Update to M3.5.
 

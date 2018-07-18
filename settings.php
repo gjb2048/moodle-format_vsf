@@ -41,6 +41,30 @@ if ($ADMIN->fulltree) {
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
+    // Chart or bar?.
+    // 1 = no, 2 = yes.
+    $name = 'format_vsf/defaultbarchart';
+    $title = get_string('defaultbarchart', 'format_vsf');
+    $description = get_string('defaultbarchart_desc', 'format_vsf');
+    $default = 1;
+    $choices = array(
+        1 => new lang_string('no'),   // No.
+        2 => new lang_string('yes')   // Yes.
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Module view button.
+    // 1 = no, 2 = yes.
+    $name = 'format_vsf/defaultmoduleviewbutton';
+    $title = get_string('defaultmoduleviewbutton', 'format_vsf');
+    $description = get_string('defaultmoduleviewbutton_desc', 'format_vsf');
+    $default = 2;
+    $choices = array(
+        1 => new lang_string('no'),   // No.
+        2 => new lang_string('yes')   // Yes.
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
     // Default continue button background colour in hexadecimal RGB with preceding '#'.
     $name = 'format_vsf/defaultcontinuebackgroundcolour';
     $title = get_string('defaultcontinuebackgroundcolour', 'format_vsf');

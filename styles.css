@@ -1,6 +1,6 @@
 .format-vsf .course-content ul.sections {margin:0;}
 .format-vsf .course-content ul.sections li.section {list-style: none;margin:0 0 5px 0;padding:0;}
-.format-vsf .course-content ul.sections li.section .content {margin:0 40px;}
+.format-vsf .course-content ul.sections li.section .content {margin:0 10px;}
 .format-vsf .course-content ul.sections li.section .left,
 .format-vsf .course-content ul.sections li.section .right {padding: 0 6px;}
 .format-vsf .course-content ul.sections li.section .left {padding-top:22px;text-align: right;}
@@ -25,6 +25,10 @@
 .format-vsf .course-content .section-summary .section-summary-activities .activity-count,
 .format-vsf .course-content .section-summary-activities .activity-count {
     display: none;
+}
+
+.format-vsf .vsf-empty-summary {
+    padding-bottom: 10px;
 }
 
 .format-vsf .vsf-percentage {
@@ -63,7 +67,7 @@
     padding: 0 0 20px 0;
 }
 
-.format-vsf .course-content ul.sections li.section,
+/*.format-vsf .course-content ul.sections li.section,*/
 .format-vsf .course-content .single-section {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
@@ -196,4 +200,45 @@
 
 .format-vsf .vsf-col2 {
     width: 50%;
+}
+
+.format-vsf .vsf-inline {
+    display: inline;
+}
+
+/* Module view */
+.format-vsf .moduleviewgap {
+    margin-bottom: 10px;
+}
+
+.format-vsf .moduleviewgapwithbutton {
+    padding-bottom: 30px;
+}
+
+.format-vsf .vsf-progress-bar {
+    background-color: #ddd;
+    display: inline-block;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.format-vsf .vsf-progress-bar .vsf-bar {
+    background-color: #fab;
+    min-width: 3em;
+    text-align: center;
+}
+
+.format-vsf .vsf-button-bottom {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+.format-vsf .vsf-button-bottom .btn.btn-primary {
+    display: block;
+    margin: 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

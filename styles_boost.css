@@ -1,3 +1,21 @@
+.format-vsf li.section:target {
+    padding-top: 50px!important;
+}
+
 .format-vsf .jumpmenu .form-inline {
     display: block;
+}
+
+.format-vsf .course-content ul.section,
+.format-vsf .course-content ul.sections {
+    padding: 0;
+}
+
+.format-vsf .course-content ul.section {
+    margin: 0;
+}
+
+/* Module view */
+.format-vsf .moduleview.section {
+    padding-left: 0;
 }

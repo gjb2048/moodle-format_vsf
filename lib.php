@@ -29,8 +29,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/lib.php');
 
 class format_vsf extends format_base {
-    private $settings;
-
     /**
      * Returns true if this course format uses sections
      *
@@ -38,17 +36,6 @@ class format_vsf extends format_base {
      */
     public function uses_sections() {
         return true;
-    }
-
-    /**
-     * Returns the format's settings and gets them if they do not exist.
-     * @return array The settings as an array.
-     */
-    public function get_settings() {
-        if (empty($this->settings) == true) {
-            $this->settings = $this->get_format_options();
-        }
-        return $this->settings;
     }
 
     /**
@@ -247,7 +234,15 @@ class format_vsf extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => COURSE_DISPLAY_MULTIPAGE,
+                    'default' => $courseconfig->coursedisplay,
+                    'type' => PARAM_INT
+                ),
+                'barchart' => array(
+                    'default' => get_config('format_vsf', 'defaultbarchart'),
+                    'type' => PARAM_INT
+                ),
+                'moduleviewbutton' => array(
+                    'default' => get_config('format_vsf', 'defaultmoduleviewbutton'),
                     'type' => PARAM_INT
                 ),
                 // Continue button.
@@ -315,7 +310,39 @@ class format_vsf extends format_base {
                 ),
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'hidden'
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single'),
+                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
+                        )
+                    ),
+                    'help' => 'coursedisplay',
+                    'help_component' => 'moodle',
+                ),
+                'barchart' => array(
+                    'label' => new lang_string('barchart', 'format_vsf'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('no'),
+                            2 => new lang_string('yes')
+                        )
+                    ),
+                    'help' => 'barchart',
+                    'help_component' => 'format_vsf',
+                ),
+                'moduleviewbutton' => array(
+                    'label' => new lang_string('moduleviewbutton', 'format_vsf'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('no'),
+                            2 => new lang_string('yes')
+                        )
+                    ),
+                    'help' => 'moduleviewbutton',
+                    'help_component' => 'format_vsf',
                 ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
@@ -485,9 +512,6 @@ class format_vsf extends format_base {
         $data = (array)$data;
 
         // Don't allow values from other formats to override the fixed defaults here.
-        if (array_key_exists('coursedisplay', $data)) {
-            unset($data['coursedisplay']);
-        }
         if (array_key_exists('hiddensections', $data)) {
             unset($data['hiddensections']);
         }

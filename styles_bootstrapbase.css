@@ -1,0 +1,148 @@
+/* Bootstrap V4.1.3 specific grid classes as used in the format for the 'Show all sections on one page' course layout.
+   Copied and adapted from dist/css/bootstrap-grid.css and hence:
+   Bootstrap Grid v4.1.3 (https://getbootstrap.com/)
+   Copyright 2011-2018 The Bootstrap Authors
+   Copyright 2011-2018 Twitter, Inc.
+   Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+*/
+
+/* Classes used:
+row
+no-gutters
+justify-content-center
+
+col-sm-6
+col-sm-12
+col-md-6
+col-md-12
+col-lg-4
+col-lg-5
+col-lg-6
+col-lg-7
+col-lg-12
+col-xl-2
+col-xl-4
+col-xl-6
+col-xl-8
+*/
+
+.format-vsf .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.format-vsf .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.format-vsf .no-gutters > .col,
+.format-vsf .no-gutters > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.format-vsf .justify-content-center {
+    justify-content: center !important;
+}
+
+.format-vsf .col-sm-6,
+.format-vsf .col-sm-12,
+.format-vsf .col-md-6,
+.format-vsf .col-md-12,
+.format-vsf .col-lg-4,
+.format-vsf .col-lg-5,
+.format-vsf .col-lg-6,
+.format-vsf .col-lg-7,
+.format-vsf .col-lg-12,
+.format-vsf .col-xl-2,
+.format-vsf .col-xl-4,
+.format-vsf .col-xl-6,
+.format-vsf .col-xl-7,
+.format-vsf .col-xl-8 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 576px) {
+    .format-vsf .col-sm-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .format-vsf .col-sm-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .format-vsf .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .format-vsf .col-md-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .format-vsf .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .format-vsf .col-lg-5 {
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+    .format-vsf .col-lg-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .format-vsf .col-lg-7 {
+        flex: 0 0 58.333333%;
+        max-width: 58.333333%;
+    }
+    .format-vsf .col-lg-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .format-vsf .col-xl-2 {
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+    .format-vsf .col-xl-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .format-vsf .col-xl-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .format-vsf .col-xl-8 {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+}
+
+/* Additional tweaks not related to Bootstrap itself.... */
+.format-vsf .vsf-progress-bar {
+    margin-top: 10px;
+}
+
+.format-vsf .vsf-sectionname h3 {
+    margin-top: 0;
+}
+
+.jsenabled.format-vsf .vsf-sectionname .quickediticon.visibleifjs {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+}
