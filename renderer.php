@@ -44,6 +44,8 @@ class format_vsf_renderer extends format_section_renderer_base {
     
     private $moduleview; // Showing the modules in a grid.
 
+    protected $editing; // Are we editing?
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -72,8 +74,9 @@ class format_vsf_renderer extends format_section_renderer_base {
             $this->course = $this->courseformat->get_course();
         }
         
+        $this->editing = $page->user_is_editing();
         // Use our custom course renderer if we need to.
-        if ((!$page->user_is_editing()) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
+        if ((!$this->editing) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
             $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
             $this->moduleview = true;
         } else {
@@ -153,9 +156,7 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @return array of edit control items
      */
     protected function section_edit_control_items($course, $section, $onsectionpage = false) {
-        global $PAGE;
-
-        if (!$PAGE->user_is_editing()) {
+        if (!$this->editing) {
             return array();
         }
 
@@ -471,7 +472,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Calculate and generate the markup for summary of the activites in a section.
+     * Calculate and generate the markup for summary of the activities in a section.
      *
      * @param stdClass $section The course_section entry from DB
      * @param stdClass $course the course record from DB
@@ -524,16 +525,18 @@ class format_vsf_renderer extends format_section_renderer_base {
                 return;
             }
 
-            // Output section activities summary.
-            $this->sectioncompletionmarkup[$section->section] =
-                html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
-            foreach ($sectionmods as $mod) {
-                $this->sectioncompletionmarkup[$section->section] .=
-                    html_writer::start_tag('span', array('class' => 'activity-count'));
-                $this->sectioncompletionmarkup[$section->section] .= $mod['name'].': '.$mod['count'];
-                $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('span');
+            if (!$this->moduleview) {
+                // Output section activities summary.
+                $this->sectioncompletionmarkup[$section->section] =
+                    html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+                foreach ($sectionmods as $mod) {
+                    $this->sectioncompletionmarkup[$section->section] .=
+                        html_writer::start_tag('span', array('class' => 'activity-count'));
+                    $this->sectioncompletionmarkup[$section->section] .= $mod['name'].': '.$mod['count'];
+                    $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('span');
+                }
+                $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('div');
             }
-            $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('div');
 
             // Output section completion data.
             if ($total > 0) {
@@ -552,7 +555,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Generate a summary of the activites in a section
+     * Generate a summary of the activities in a section
      *
      * @param stdClass $section The course_section entry from DB
      * @param stdClass $course the course record from DB
@@ -612,6 +615,56 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         return $links;
+    }
+
+    protected function display_section($section) {
+        $o = $this->section_header($section, $this->course, false, 0);
+
+        if (!$this->editing) {
+            $activitysummary = $this->section_activity_summary($section, $this->course, null);
+            if (!empty($activitysummary)) {
+                static $summarychartlayout = array(
+                    1 => array('summary' => 10, 'chart' => 2),
+                    2 => array('summary' => 9, 'chart' => 3),
+                    3 => array('summary' => 8, 'chart' => 4),
+                    4 => array('summary' => 7, 'chart' => 5)
+                );
+
+                if ($this->bsnewgrid) {
+                    $o .= html_writer::start_tag('div', array('class' => 'row'));
+                    $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
+                } else {
+                    $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
+                    $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
+                }
+            }
+        }
+        //$o.= html_writer::start_tag('div');
+        //$o.= $this->format_summary_text($section);
+
+        if ($section->uservisible) {
+            $o .= $this->courserenderer->course_section_cm_list($this->course, $section, 0);
+            $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
+        }
+
+        //$o.= html_writer::end_tag('div');
+        if (!$this->editing) {
+            if (!empty($activitysummary)) {
+                $o .= html_writer::end_tag('div');
+                if ($this->bsnewgrid) {
+                    $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
+                } else {
+                    $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
+                }
+                $o .= $activitysummary;
+                $o .= html_writer::end_tag('div');
+                $o .= html_writer::end_tag('div');
+            }
+        }
+
+        $o .= $this->section_footer();
+
+        return $o;
     }
 
     /**
@@ -707,8 +760,6 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @param array $modnamesused (argument not used)
      */
     public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
-        global $PAGE;
-
         $modinfo = get_fast_modinfo($course);
 
         $context = context_course::instance($course->id);
@@ -758,7 +809,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         foreach ($modinfo->get_section_info_all() as $section => $thissection) {
             if ($section == 0) {
                 // 0-section is displayed a little different then the others
-                if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
+                if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
                     echo $this->section_header($thissection, $this->course, false, 0);
                     echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
@@ -792,16 +843,18 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
             $shownsectioncount++;
 
-            if (!$PAGE->user_is_editing() && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+            if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
                 // Display section summary only.
                 echo $this->section_summary($thissection, $this->course, null);
             } else {
-                echo $this->section_header($thissection, $this->course, false, 0);
+                // Display the section fully.
+                echo $this->display_section($thissection);
+                /*echo $this->section_header($thissection, $this->course, false, 0);
                 if ($thissection->uservisible) {
                     echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($this->course, $section, 0);
                 }
-                echo $this->section_footer();
+                echo $this->section_footer();*/
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
@@ -838,7 +891,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
         }
 
-        if ($PAGE->user_is_editing() and has_capability('moodle/course:update', $context)) {
+        if ($this->editing and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             if ($canbreak) {
                 echo $this->end_section_list();

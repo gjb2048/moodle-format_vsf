@@ -40,6 +40,38 @@ class format_vsf_course_renderer extends \core_course_renderer {
     }
 
     /**
+     * Renders html to display the module content on the course page (i.e. text of the labels)
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_cm_text_vsf(cm_info $mod, $displayoptions = array()) {
+        $output = '';
+        if (!$mod->is_visible_on_course_page()) {
+            // nothing to be displayed to the user
+            return $output;
+        }
+        $content = $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+        list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
+        $textclasses .= ' row justify-content-center no-gutters';
+        if ($mod->url && $mod->uservisible) {
+            if ($content) {
+                // If specified, display extra content after link.
+                $output = html_writer::tag('div', $content, array('class' =>
+                        trim(/*'contentafterlink ' .*/ $textclasses)));
+            }
+        } else {
+            $groupinglabel = $mod->get_grouping_label($textclasses);
+
+            // No link, so display only content.
+            $output = html_writer::tag('div', $content . $groupinglabel,
+                    array('class' => 'contentwithoutlink ' . $textclasses));
+        }
+        return $output;
+    }
+
+    /**
      * Renders HTML to display one course module in a course section
      *
      * This includes link, content, availability, completion info and additional information
@@ -93,7 +125,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $output .= html_writer::div('', $indentclasses);
 
         // Start a wrapper for the actual content to keep the indentation consistent.
-        $output .= html_writer::start_tag('div');
+        //$output .= html_writer::start_tag('div');
 
         $url = $mod->url;
         if (($this->page->user_is_editing()) || (empty($url))) {
@@ -119,7 +151,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         // and for accessibility reasons, e.g. if you have a one-line label
         // it should work similarly (at least in terms of ordering) to an
         // activity.
-        $contentpart = $this->course_section_cm_text($mod, $displayoptions);
+        $contentpart = $this->course_section_cm_text_vsf($mod, $displayoptions);
         if (empty($url)) {
             $output .= $contentpart;
         }
@@ -150,7 +182,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        $output .= html_writer::end_tag('div'); // $indentclasses
+        //$output .= html_writer::end_tag('div');
 
         // End of indentation div.
         $output .= html_writer::end_tag('div');
@@ -281,6 +313,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
     
     // VSF methods.
     protected function course_section_cm_button(cm_info $mod) {
-        return html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary'));
+        return html_writer::tag('div',
+                html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
+                array('class' => 'row justify-content-center no-gutters'));
     }
 }
