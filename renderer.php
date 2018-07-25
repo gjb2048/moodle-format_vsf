@@ -41,6 +41,8 @@ class format_vsf_renderer extends format_section_renderer_base {
     private $course; // Course with settings.
 
     protected $bsnewgrid = false; // Using new BS4 grid system.
+    
+    private $moduleview; // Showing the modules in a grid.
 
     /**
      * Constructor method, calls the parent constructor
@@ -64,6 +66,18 @@ class format_vsf_renderer extends format_section_renderer_base {
             if (in_array('boost', $page->theme->parents) === true) {
                 $this->bsnewgrid = true;
             }
+        }
+
+        if (empty($this->course)) {
+            $this->course = $this->courseformat->get_course();
+        }
+        
+        // Use our custom course renderer if we need to.
+        if ((!$page->user_is_editing()) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
+            $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
+            $this->moduleview = true;
+        } else {
+            $this->moduleview = false;
         }
     }
 
@@ -611,8 +625,6 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @param int $displaysection The section number in the course which is being displayed
      */
     public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
-        global $PAGE;
-
         $modinfo = get_fast_modinfo($course);
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
@@ -698,14 +710,6 @@ class format_vsf_renderer extends format_section_renderer_base {
         global $PAGE;
 
         $modinfo = get_fast_modinfo($course);
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-
-        // Use our custom course renderer if we need to.
-        if ((!$PAGE->user_is_editing()) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
-            $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
-        }
 
         $context = context_course::instance($course->id);
         // Title with completion help icon.
