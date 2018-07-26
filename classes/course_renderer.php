@@ -52,7 +52,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             // nothing to be displayed to the user
             return $output;
         }
-        $content = $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+        $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
         $textclasses .= ' row justify-content-center no-gutters';
         if ($mod->url && $mod->uservisible) {

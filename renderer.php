@@ -632,7 +632,7 @@ class format_vsf_renderer extends format_section_renderer_base {
 
                 if ($this->bsnewgrid) {
                     $o .= html_writer::start_tag('div', array('class' => 'row'));
-                    $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
+                    $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
                 } else {
                     $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
                     $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
@@ -652,7 +652,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 if ($this->bsnewgrid) {
-                    $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
+                    $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
                 } else {
                     $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
                 }
