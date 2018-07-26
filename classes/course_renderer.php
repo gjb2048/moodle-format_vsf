@@ -279,8 +279,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
-                } else if ($modulehtml = $this->course_section_cm_list_item_vsf($course,
-                        $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                } else if (($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf($course,
+                        $completioninfo, $mod, $sectionreturn, $displayoptions))) {
                     $moduleshtml[$modnumber] = $modulehtml;
                 }
             }
