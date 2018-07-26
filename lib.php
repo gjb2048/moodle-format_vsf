@@ -39,19 +39,6 @@ class format_vsf extends format_base {
     }
 
     /**
-     * Returns the format's settings and gets them if they do not exist.
-     * @return array The settings as an array.
-     */
-    public function get_course() {
-        $course = parent::get_course();
-
-        // Get 'coursedisplay' setting from admin for now.
-        $course->coursedisplay = get_config('moodlecourse', 'coursedisplay');
-
-        return $course;
-    }
-
-    /**
      * Returns the display name of the given section that the course prefers.
      *
      * Use section name is specified by user. Otherwise use default ("Section #")
@@ -247,7 +234,7 @@ class format_vsf extends format_base {
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => COURSE_DISPLAY_MULTIPAGE,
+                    'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT
                 ),
                 // Continue button.
@@ -315,7 +302,15 @@ class format_vsf extends format_base {
                 ),
                 'coursedisplay' => array(
                     'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'hidden'
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single'),
+                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
+                        )
+                    ),
+                    'help' => 'coursedisplay',
+                    'help_component' => 'moodle',
                 ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
@@ -485,9 +480,6 @@ class format_vsf extends format_base {
         $data = (array)$data;
 
         // Don't allow values from other formats to override the fixed defaults here.
-        if (array_key_exists('coursedisplay', $data)) {
-            unset($data['coursedisplay']);
-        }
         if (array_key_exists('hiddensections', $data)) {
             unset($data['hiddensections']);
         }
