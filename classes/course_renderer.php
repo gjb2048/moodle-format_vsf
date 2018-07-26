@@ -58,8 +58,17 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if ($mod->url && $mod->uservisible) {
             if ($content) {
                 // If specified, display extra content after link.
-                $output = html_writer::tag('div', $content, array('class' =>
-                        trim(/*'contentafterlink ' .*/ $textclasses)));
+                $output = html_writer::tag('div', html_writer::tag('div',
+                        $content, array('class' => 'col-12')),
+                        array('class' => trim(/*'contentafterlink ' .*/ $textclasses)));
+            } else {
+                $output = html_writer::tag('div', 
+                    html_writer::tag('div',
+                        html_writer::tag('p',
+                            html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+                                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))),
+                        array('class' => 'col-12 mdl-align')),
+                    array('class' => 'row justify-content-center no-gutters'));
             }
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
@@ -68,6 +77,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $output = html_writer::tag('div', $content . $groupinglabel,
                     array('class' => 'contentwithoutlink ' . $textclasses));
         }
+
         return $output;
     }
 
@@ -113,13 +123,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        $output .= html_writer::start_tag('div');
+        //$output .= html_writer::start_tag('div');
 
         if ($this->page->user_is_editing()) {
             $output .= course_get_cm_move($mod, $sectionreturn);
         }
 
-        $output .= html_writer::start_tag('div', array('class' => 'mod-indent-outer'));
+        //$output .= html_writer::start_tag('div', array('class' => 'mod-indent-outer'));
 
         // This div is used to indent the content.
         $output .= html_writer::div('', $indentclasses);
@@ -185,9 +195,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
         //$output .= html_writer::end_tag('div');
 
         // End of indentation div.
-        $output .= html_writer::end_tag('div');
+        //$output .= html_writer::end_tag('div');
 
-        $output .= html_writer::end_tag('div');
+        //$output .= html_writer::end_tag('div');
         return $output;
     }
 
@@ -207,7 +217,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
     public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
         if ($modulehtml = $this->course_section_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses.' col-3';
+            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses.' col-lg-12 col-xl-6';
             $output .= html_writer::tag('div', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
         }
         return $output;
@@ -278,7 +288,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $sectionoutput = '';
         if (!empty($moduleshtml) /* || $ismoving */) {
-            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center'));
+            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center align-items-end'));
+            //$modulecount = 0;
             foreach ($moduleshtml as $modnumber => $modulehtml) {
                 /*if ($ismoving) {
                     $movingurl = new moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
@@ -288,6 +299,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 }*/
 
                 $sectionoutput .= $modulehtml;
+                //$modulecount++;
+                //if ($modulecount % 2 == 0) {
+                    //$sectionoutput .= html_writer::tag('div', '', array('class' => 'w-100 d-lg-none'));
+                //}
             }
             $sectionoutput .= html_writer::end_tag('li');
 
@@ -313,8 +328,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
     
     // VSF methods.
     protected function course_section_cm_button(cm_info $mod) {
-        return html_writer::tag('div',
+        return html_writer::tag('div', html_writer::tag('div',
                 html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
+                array('class' => 'col-12 mdl-align')),
                 array('class' => 'row justify-content-center no-gutters'));
     }
 }
