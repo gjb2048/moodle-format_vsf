@@ -202,3 +202,21 @@
 .format-vsf .moduleviewgap {
     padding-bottom: 10px;
 }
+
+.format-vsf .vsf-progress-bar {
+    background-color: #ddd;
+    display: inline-block;
+    float: right;
+    margin-top: 5px;
+    width: 50%;
+}
+
+.format-vsf .vsf-progress-bar .vsf-bar {
+    background-color: #fab;
+    min-width: 3em;
+    text-align: center;
+}
+
+.format-vsf .moduleviewinline {
+    display: inline;
+}

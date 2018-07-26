@@ -271,7 +271,20 @@ class format_vsf_renderer extends format_section_renderer_base {
         if ($hasnamenotsecpg || $hasnamesecpg) {
             $classes = '';
         }
-        $o .= $this->output->heading($this->section_title($section, $this->course), 3, 'sectionname vsf-sectionname' . $classes);
+
+        $moduleviewbar = ((!$this->editing) && (($this->moduleview) && ($this->course->moduleviewbar == 2))); // Moodle view and '2' is 'Yes'.
+
+        if ($moduleviewbar) {
+            $classes .= ' moduleviewinline';
+        }
+
+        $o.= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+        $o .= $this->output->heading($this->section_title($section, $this->course), 3, $classes);
+
+        if ($moduleviewbar) {
+            $o .= $this->section_activity_summary($section, $this->course, null);
+        }
+        $o.= html_writer::end_tag('div');
 
         $o.= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
         $o.= $this->format_summary_text($section);
@@ -544,9 +557,15 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $this->sectioncompletionpercentage[$section->section] = $percentage;
 
                 $data = new \stdClass();
-                $data->hasprogress = true;
-                $data->progress = $this->sectioncompletionpercentage[$section->section];
-                $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);
+                if (($this->moduleview) && ($this->course->moduleviewbar == 2)) { // Moodle view and '2' is 'Yes'.
+                    $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
+                    $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
+                    $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-bar', $data);
+                } else {
+                    $data->hasprogress = true;
+                    $data->progress = $this->sectioncompletionpercentage[$section->section];
+                    $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);                   
+                }
             }
 
             $this->sectioncompletioncalculated[$section->section] = true;
@@ -620,7 +639,8 @@ class format_vsf_renderer extends format_section_renderer_base {
     protected function display_section($section) {
         $o = $this->section_header($section, $this->course, false, 0);
 
-        if (!$this->editing) {
+        $moduleviewbar = (($this->moduleview) && ($this->course->moduleviewbar == 2)); // Moodle view and '2' is 'Yes'.
+        if ((!$this->editing) && (!$moduleviewbar)) {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             if (!empty($activitysummary)) {
                 static $summarychartlayout = array(
@@ -648,7 +668,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         //$o.= html_writer::end_tag('div');
-        if (!$this->editing) {
+        if ((!$this->editing) && (!$moduleviewbar)) {
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 if ($this->bsnewgrid) {

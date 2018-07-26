@@ -237,6 +237,10 @@ class format_vsf extends format_base {
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT
                 ),
+                'moduleviewbar' => array(
+                    'default' => 1, // No.
+                    'type' => PARAM_INT
+                ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
@@ -311,6 +315,18 @@ class format_vsf extends format_base {
                     ),
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
+                ),
+                'moduleviewbar' => array(
+                    'label' => new lang_string('moduleviewbar', 'format_vsf'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('no'),
+                            2 => new lang_string('yes')
+                        )
+                    ),
+                    'help' => 'moduleviewbar',
+                    'help_component' => 'format_vsf',
                 ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
