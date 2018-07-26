@@ -197,3 +197,8 @@
 .format-vsf .vsf-col2 {
     width: 50%;
 }
+
+/* Module view */
+.format-vsf .moduleviewgap {
+    padding-bottom: 10px;
+}

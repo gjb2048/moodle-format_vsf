@@ -217,7 +217,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
     public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
         if ($modulehtml = $this->course_section_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses.' col-lg-12 col-xl-6';
+            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . trim($mod->extraclasses).' col-lg-12 col-xl-6 moduleviewgap';
             $output .= html_writer::tag('div', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
         }
         return $output;
