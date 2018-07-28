@@ -241,6 +241,10 @@ class format_vsf extends format_base {
                     'default' => 1, // No.
                     'type' => PARAM_INT
                 ),
+                'moduleviewbutton' => array(
+                    'default' => 2, // Yes.
+                    'type' => PARAM_INT
+                ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
@@ -326,6 +330,18 @@ class format_vsf extends format_base {
                         )
                     ),
                     'help' => 'moduleviewbar',
+                    'help_component' => 'format_vsf',
+                ),
+                'moduleviewbutton' => array(
+                    'label' => new lang_string('moduleviewbutton', 'format_vsf'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('no'),
+                            2 => new lang_string('yes')
+                        )
+                    ),
+                    'help' => 'moduleviewbutton',
                     'help_component' => 'format_vsf',
                 ),
                 // Continue button.

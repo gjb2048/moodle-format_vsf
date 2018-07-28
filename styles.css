@@ -201,6 +201,9 @@
 /* Module view */
 .format-vsf .moduleviewgap {
     margin-bottom: 10px;
+}
+
+.format-vsf .moduleviewgapwithbutton {
     padding-bottom: 30px;
 }
 

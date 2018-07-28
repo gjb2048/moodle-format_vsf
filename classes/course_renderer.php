@@ -29,6 +29,8 @@ defined('MOODLE_INTERNAL') || die();
 
 class format_vsf_course_renderer extends \core_course_renderer {
 
+    protected $moduleviewbutton = false;
+
     /**
      * TODO: Remove.
      * @param moodle_page $page
@@ -56,23 +58,31 @@ class format_vsf_course_renderer extends \core_course_renderer {
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
         //$textclasses .= ' row justify-content-center no-gutters';
         if ($mod->url && $mod->uservisible) {
+
+            $classes = array();
             if ($content) {
                 // If specified, display extra content after link.
-                $output = html_writer::tag('div', $content,
-                        array('class' => $textclasses));
+                if (!empty($textclasses)) {
+                    $classes['class'] = $textclasses;
+                }
             } else {
-                $output = html_writer::tag('div',
-                    html_writer::tag('p',
+                $content = html_writer::tag('p',
                         html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                            'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))),
-                    array('class' => trim('mdl-align '.$textclasses)));
+                            'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation')));
+                $classes['class'] = trim('mdl-align '.$textclasses);
             }
+            if ($this->moduleviewbutton) {
+                $output = html_writer::tag('div', $content, $classes);                
+            } else {
+                $output = html_writer::link($mod->url, $content, $classes);
+            }
+
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
 
             // No link, so display only content.
             $output = html_writer::tag('div', $content . $groupinglabel,
-                    array('class' => 'contentwithoutlink ' . $textclasses));
+                    array('class' => trim('contentwithoutlink '.$textclasses)));
         }
 
         return $output;
@@ -185,7 +195,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $output .= $contentpart;
             
             if (!$this->page->user_is_editing()) {
-                $output .= $this->course_section_cm_button($mod);
+                if ($this->moduleviewbutton) {
+                    $output .= $this->course_section_cm_button($mod);
+                }
             }
         }
 
@@ -213,8 +225,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
      */
     public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
+        $ourclasses = ' col-lg-12 col-xl-6 moduleviewgap';
+        if ($this->moduleviewbutton) {
+            $ourclasses .= ' moduleviewgapwithbutton';
+        }
         if ($modulehtml = $this->course_section_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . trim($mod->extraclasses).' col-lg-12 col-xl-6 moduleviewgap';
+            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . trim($mod->extraclasses).$ourclasses;
             $output .= html_writer::tag('div', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
         }
         return $output;
@@ -258,6 +274,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
         } */
 
+        if ((!empty($course->moduleviewbutton)) && ($course->moduleviewbutton == 2)) { // Two is yes.
+            $this->moduleviewbutton = true;
+        }
         // Get the list of modules visible to user (excluding the module being moved if there is one)
         $moduleshtml = array();
         $aftermoduleshtml = array();
