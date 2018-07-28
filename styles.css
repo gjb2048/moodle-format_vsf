@@ -200,7 +200,8 @@
 
 /* Module view */
 .format-vsf .moduleviewgap {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .format-vsf .vsf-progress-bar {
@@ -219,4 +220,11 @@
 
 .format-vsf .moduleviewinline {
     display: inline;
+}
+
+.format-vsf .vsf-button-bottom {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
 }

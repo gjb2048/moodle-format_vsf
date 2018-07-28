@@ -58,17 +58,14 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if ($mod->url && $mod->uservisible) {
             if ($content) {
                 // If specified, display extra content after link.
-                $output = html_writer::tag('div', html_writer::tag('div',
-                        $content/*, array('class' => 'col-12')*/),
-                        array('class' => trim(/*'contentafterlink ' .*/ $textclasses)));
+                $output = html_writer::tag('div', $content,
+                        array('class' => $textclasses));
             } else {
-                $output = html_writer::tag('div', 
-                    html_writer::tag('div',
-                        html_writer::tag('p',
-                            html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))),
-                        array('class' => /*'col-12 */'mdl-align'))/*,
-                    array('class' => 'row justify-content-center no-gutters')*/);
+                $output = html_writer::tag('div',
+                    html_writer::tag('p',
+                        html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+                            'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))),
+                    array('class' => trim('mdl-align '.$textclasses)));
             }
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
@@ -328,9 +325,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
     
     // VSF methods.
     protected function course_section_cm_button(cm_info $mod) {
-        return html_writer::tag('div', html_writer::tag('div',
+        return html_writer::tag('div',
                 html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
-                array('class' => /*'col-12 */'mdl-align'))/*,
-                array('class' => 'row justify-content-center no-gutters')*/);
+                array('class' => /*'col-12 */'mdl-align vsf-button-bottom'));
     }
 }
