@@ -54,12 +54,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
-        $textclasses .= ' row justify-content-center no-gutters';
+        //$textclasses .= ' row justify-content-center no-gutters';
         if ($mod->url && $mod->uservisible) {
             if ($content) {
                 // If specified, display extra content after link.
                 $output = html_writer::tag('div', html_writer::tag('div',
-                        $content, array('class' => 'col-12')),
+                        $content/*, array('class' => 'col-12')*/),
                         array('class' => trim(/*'contentafterlink ' .*/ $textclasses)));
             } else {
                 $output = html_writer::tag('div', 
@@ -67,8 +67,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
                         html_writer::tag('p',
                             html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
                                 'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))),
-                        array('class' => 'col-12 mdl-align')),
-                    array('class' => 'row justify-content-center no-gutters'));
+                        array('class' => /*'col-12 */'mdl-align'))/*,
+                    array('class' => 'row justify-content-center no-gutters')*/);
             }
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
@@ -288,7 +288,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $sectionoutput = '';
         if (!empty($moduleshtml) /* || $ismoving */) {
-            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center align-items-end'));
+            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center' /*align-items-end'*/));
             //$modulecount = 0;
             foreach ($moduleshtml as $modnumber => $modulehtml) {
                 /*if ($ismoving) {
@@ -330,7 +330,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
     protected function course_section_cm_button(cm_info $mod) {
         return html_writer::tag('div', html_writer::tag('div',
                 html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
-                array('class' => 'col-12 mdl-align')),
-                array('class' => 'row justify-content-center no-gutters'));
+                array('class' => /*'col-12 */'mdl-align'))/*,
+                array('class' => 'row justify-content-center no-gutters')*/);
     }
 }
