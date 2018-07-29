@@ -227,7 +227,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $output = '';
         static $modulelayout = array(
             1 => 'col-md-12 col-lg-6 col-xl-3',
-            2 => 'col-lg-12 col-xl-6',
+            2 => 'col-md-12 col-lg-6 col-xl-6',
             3 => 'col-xl-12',
             4 => 'col-xl-12'
         );
@@ -343,7 +343,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         // Always output the section module list.
-        $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'section img-text'));
+        $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'moduleview section img-text'));
 
         return $output;
     }

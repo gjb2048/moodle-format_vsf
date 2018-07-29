@@ -1,3 +1,8 @@
 .format-vsf .jumpmenu .form-inline {
     display: block;
 }
+
+/* Module view */
+.format-vsf .moduleview.section {
+    padding-left: 0;
+}

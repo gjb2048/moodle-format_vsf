@@ -224,9 +224,6 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @return string HTML to output.
      */
     protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
-        global $PAGE;
-
-        $currenttext = '';
         $sectionstyle = '';
 
         if ($section->section != 0) {
