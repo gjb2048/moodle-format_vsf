@@ -275,7 +275,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $headerclasses .= ' moduleviewinline';
             $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
             $o .= html_writer::start_tag('div', array('class' => 'row'));
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-8'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
         } else {
             $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
         }
@@ -284,7 +284,7 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         if ($moduleviewbar) {
             $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-4'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
             $o .= $this->section_activity_summary($section, $this->course, null);
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');
