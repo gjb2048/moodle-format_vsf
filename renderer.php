@@ -283,9 +283,15 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
         $o.= html_writer::end_tag('div');
 
-        $o.= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
-        $o.= $this->format_summary_text($section);
-        $o.= html_writer::end_tag('div');
+        $summary = $this->format_summary_text($section);
+        if (!empty($summary)) {
+            $o.= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
+            $o.= $summary;
+            $o.= html_writer::end_tag('div');
+        } else {
+            $o.= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
+            $o.= html_writer::end_tag('div');
+        }
 
         $context = context_course::instance($this->course->id);
         $o .= $this->section_availability_message($section,
@@ -682,6 +688,27 @@ class format_vsf_renderer extends format_section_renderer_base {
         $o .= $this->section_footer();
 
         return $o;
+    }
+
+    /**
+     * Generate html for a section summary text
+     *
+     * @param stdClass $section The course_section entry from DB
+     * @return string HTML to output.
+     */
+    protected function format_summary_text($section) {
+        $context = context_course::instance($section->course);
+        $summarytext = file_rewrite_pluginfile_urls($section->summary, 'pluginfile.php',
+            $context->id, 'course', 'section', $section->id);
+
+        if (!empty($summarytext)) {
+            $options = new stdClass();
+            $options->noclean = true;
+            $options->overflowdiv = true;
+            return format_text($summarytext, $section->summaryformat, $options);
+        } else {
+            return '';
+        }
     }
 
     /**

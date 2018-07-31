@@ -226,10 +226,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
     public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
         static $modulelayout = array(
-            1 => 'col-md-12 col-lg-6 col-xl-3',
-            2 => 'col-md-12 col-lg-6 col-xl-6',
-            3 => 'col-xl-12',
-            4 => 'col-xl-12'
+            1 => 'col-sm-12 col-md-6 col-lg-4 col-xl-2',
+            2 => 'col-md-12 col-lg-6 col-xl-4',
+            3 => 'col-md-12 col-xl-6',
+            4 => 'col-md-12 col-xl-6'
         );
         $ourclasses = ' '.$modulelayout[$course->layoutcolumns].' moduleviewgap';
         if ($this->moduleviewbutton) {

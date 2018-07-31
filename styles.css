@@ -27,6 +27,10 @@
     display: none;
 }
 
+.format-vsf .vsf-empty-summary {
+    padding-bottom: 10px;
+}
+
 .format-vsf .vsf-percentage {
     font-size: 14px;
     margin: 0;
