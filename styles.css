@@ -214,9 +214,8 @@
 .format-vsf .vsf-progress-bar {
     background-color: #ddd;
     display: inline-block;
-    float: right;
     margin-top: 5px;
-    width: 50%;
+    width: 100%;
 }
 
 .format-vsf .vsf-progress-bar .vsf-bar {

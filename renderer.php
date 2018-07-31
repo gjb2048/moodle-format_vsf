@@ -264,22 +264,30 @@ class format_vsf_renderer extends format_section_renderer_base {
         // When on a section page, we only display the general section title, if title is not the default one.
         $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
 
-        $classes = ' accesshide';
+        $headerclasses = ' accesshide';
         if ($hasnamenotsecpg || $hasnamesecpg) {
-            $classes = '';
+            $headerclasses = '';
         }
 
         $moduleviewbar = ((!$this->editing) && (($this->moduleview) && ($this->course->moduleviewbar == 2))); // Moodle view and '2' is 'Yes'.
 
         if ($moduleviewbar) {
-            $classes .= ' moduleviewinline';
+            $headerclasses .= ' moduleviewinline';
+            $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+            $o .= html_writer::start_tag('div', array('class' => 'row'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-8'));
+        } else {
+            $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
         }
 
-        $o.= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
-        $o .= $this->output->heading($this->section_title($section, $this->course), 3, $classes);
+        $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
 
         if ($moduleviewbar) {
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-4'));
             $o .= $this->section_activity_summary($section, $this->course, null);
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');
         }
         $o.= html_writer::end_tag('div');
 
