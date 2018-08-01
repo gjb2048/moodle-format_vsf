@@ -93,7 +93,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Generate the starting container html for a list of sections in columns
+     * Generate the starting container html for a list of sections in columns.
      * @return string HTML to output.
      */
     protected function start_columns_section_list() {
@@ -343,7 +343,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     /**
      * Generate the html for a hidden section
      *
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @param int $sectionno The section number in the course which is being displayed
      * @param int|stdClass $courseorid The course to get the section name for (object or just course id)
      * @return string HTML to output.
      */
@@ -846,9 +846,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         $canbreak = ($this->course->layoutcolumns > 1);
-        if (($canbreak) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
-            echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
-        }
+
         $columncount = 1;
         $breaking = false; // Once the first section is shown we can decide if we break on another column.
         $breakpoint = 0;
@@ -858,10 +856,29 @@ class format_vsf_renderer extends format_section_renderer_base {
         // Now the list of sections..
         echo $this->start_section_list();
 
-        foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+        $sectionsinfo = $modinfo->get_section_info_all();
+        if (!empty($sectionsinfo)) {
+            $thissection = $sectionsinfo[0];
+            // 0-section is displayed a little different then the others.
+            if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
+                echo $this->section_header($thissection, $this->course, false, 0);
+                echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
+                echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
+                echo $this->section_footer();
+            }
+            if ($canbreak) {
+                echo $this->end_section_list();
+                if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
+                    echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
+                }
+                echo $this->start_columns_section_list();
+            }
+        }
+
+        foreach ($sectionsinfo as $section => $thissection) {
             if ($section == 0) {
                 // 0-section is displayed a little different then the others
-                if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
+                /*if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
                     echo $this->section_header($thissection, $this->course, false, 0);
                     echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
                     echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
@@ -870,7 +887,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 if ($canbreak) {
                     echo $this->end_section_list();
                     echo $this->start_columns_section_list();
-                }
+                }*/
                 continue;
             }
             if ($section > $this->course->numsections) {
