@@ -267,28 +267,31 @@ class format_vsf_renderer extends format_section_renderer_base {
         $headerclasses = ' accesshide';
         if ($hasnamenotsecpg || $hasnamesecpg) {
             $headerclasses = '';
-        }
 
-        $moduleviewbar = ((!$this->editing) && (($this->moduleview) && ($this->course->moduleviewbar == 2))); // Moodle view and '2' is 'Yes'.
+            $moduleviewbar = ((!$this->editing) && (($this->moduleview) && ($this->course->moduleviewbar == 2))); // Moodle view and '2' is 'Yes'.
 
-        if ($moduleviewbar) {
-            $headerclasses .= ' moduleviewinline';
             $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
-            $o .= html_writer::start_tag('div', array('class' => 'row'));
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
+            if ($moduleviewbar) {
+                $headerclasses = 'moduleviewinline';
+                $o .= html_writer::start_tag('div', array('class' => 'row'));
+                $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
+            }
+
+            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
+
+            if ($moduleviewbar) {
+                $o .= html_writer::end_tag('div');
+                $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
+                $o .= $this->section_activity_summary($section, $this->course, null);
+                $o .= html_writer::end_tag('div');
+                $o .= html_writer::end_tag('div');
+            }
         } else {
-            $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+            // Hidden section name so don't output anything bar the header name.
+            $o .= html_writer::start_tag('div', array('class' => 'sectionname'));
+            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
         }
 
-        $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
-
-        if ($moduleviewbar) {
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
-            $o .= $this->section_activity_summary($section, $this->course, null);
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::end_tag('div');
-        }
         $o.= html_writer::end_tag('div');
 
         $summary = $this->format_summary_text($section);
