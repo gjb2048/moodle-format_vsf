@@ -32,16 +32,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
     protected $moduleviewbutton = false;
 
     /**
-     * TODO: Remove.
-     * @param moodle_page $page
-     * @param string $target
-     */
-    public function __construct(moodle_page $page, $target) {
-        //error_log('vsf cc');
-        parent::__construct($page, $target);
-    }
-
-    /**
      * Renders html to display the module content on the course page (i.e. text of the labels)
      *
      * @param cm_info $mod
@@ -51,12 +41,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
     public function course_section_cm_text_vsf(cm_info $mod, $displayoptions = array()) {
         $output = '';
         if (!$mod->is_visible_on_course_page()) {
-            // nothing to be displayed to the user
+            // Nothing to be displayed to the user.
             return $output;
         }
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
-        //$textclasses .= ' row justify-content-center no-gutters';
         if ($mod->url && $mod->uservisible) {
 
             $classes = array();
@@ -82,7 +71,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
             // No link, so display only content.
             $output = html_writer::tag('div', $content . $groupinglabel,
-                    array('class' => trim('contentwithoutlink '.$textclasses)));
+                array('class' => trim('contentwithoutlink '.$textclasses)));
         }
 
         return $output;
@@ -130,19 +119,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        //$output .= html_writer::start_tag('div');
-
         if ($this->page->user_is_editing()) {
             $output .= course_get_cm_move($mod, $sectionreturn);
         }
 
-        //$output .= html_writer::start_tag('div', array('class' => 'mod-indent-outer'));
-
         // This div is used to indent the content.
         $output .= html_writer::div('', $indentclasses);
-
-        // Start a wrapper for the actual content to keep the indentation consistent.
-        //$output .= html_writer::start_tag('div');
 
         $url = $mod->url;
         if (($this->page->user_is_editing()) || (empty($url))) {
@@ -162,35 +144,22 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        // If there is content but NO link (eg label), then display the
-        // content here (BEFORE any icons). In this case cons must be
-        // displayed after the content so that it makes more sense visually
-        // and for accessibility reasons, e.g. if you have a one-line label
-        // it should work similarly (at least in terms of ordering) to an
-        // activity.
+        /* If there is content but NO link (eg label), then display the
+           content here (BEFORE any icons). In this case cons must be
+           displayed after the content so that it makes more sense visually
+           and for accessibility reasons, e.g. if you have a one-line label
+           it should work similarly (at least in terms of ordering) to an
+           activity. */
         $contentpart = $this->course_section_cm_text_vsf($mod, $displayoptions);
         if (empty($url)) {
             $output .= $contentpart;
         }
 
-        /* $modicons = '';
-        if ($this->page->user_is_editing()) {
-            $editactions = course_get_cm_edit_actions($mod, $mod->indent, $sectionreturn);
-            $modicons .= ' '. $this->course_section_cm_edit_actions($editactions, $mod, $displayoptions);
-            $modicons .= $mod->afterediticons;
-        }
-
-        $modicons .= $this->course_section_cm_completion($course, $completioninfo, $mod, $displayoptions);
-
-        if (!empty($modicons)) {
-            $output .= html_writer::span($modicons, 'actions');
-        } */
-
         // Show availability info (if module is not available).
         $output .= $this->course_section_cm_availability($mod, $displayoptions);
 
-        // If there is content AND a link, then display the content here
-        // (AFTER any icons). Otherwise it was displayed before
+        /* If there is content AND a link, then display the content here
+           (AFTER any icons). Otherwise it was displayed before. */
         if (!empty($url)) {
             $output .= $contentpart;
             
@@ -201,12 +170,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        //$output .= html_writer::end_tag('div');
-
-        // End of indentation div.
-        //$output .= html_writer::end_tag('div');
-
-        //$output .= html_writer::end_tag('div');
         return $output;
     }
 
@@ -241,7 +204,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
         return $output;
     }
-  
+
     /**
      * Renders HTML to display a list of course modules in a course section
      * Also displays "move here" controls in Javascript-disabled mode
@@ -273,29 +236,16 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
         $completioninfo = new completion_info($course);
 
-        // check if we are currently in the process of moving a module with JavaScript disabled
-        /*$ismoving = $this->page->user_is_editing() && ismoving($course->id);
-        if ($ismoving) {
-            $movingpix = new pix_icon('movehere', get_string('movehere'), 'moodle', array('class' => 'movetarget'));
-            $strmovefull = strip_tags(get_string("movefull", "", "'$USER->activitycopyname'"));
-        } */
-
         if ((!empty($course->moduleviewbutton)) && ($course->moduleviewbutton == 2)) { // Two is yes.
             $this->moduleviewbutton = true;
         }
-        // Get the list of modules visible to user (excluding the module being moved if there is one)
+        // Get the list of modules visible to user (excluding the module being moved if there is one).
         $moduleshtml = array();
         $aftermoduleshtml = array();
         if (!empty($modinfo->sections[$section->section])) {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
 
-                /*if ($ismoving and $mod->id == $USER->activitycopy) {
-                    // do not display moving mod
-                    continue;
-                }*/
-
-                //error_log(print_r($mod->modname, true));
                 if ($mod->modname == 'label') {
                     if ($modulehtml = $this->course_section_cm_list_item($course,
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {
@@ -309,31 +259,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         $sectionoutput = '';
-        if (!empty($moduleshtml) /* || $ismoving */) {
-            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center' /*align-items-end'*/));
-            //$modulecount = 0;
+        if (!empty($moduleshtml)) {
+            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center'));
             foreach ($moduleshtml as $modnumber => $modulehtml) {
-                /*if ($ismoving) {
-                    $movingurl = new moodle_url('/course/mod.php', array('moveto' => $modnumber, 'sesskey' => sesskey()));
-                    $sectionoutput .= html_writer::tag('li',
-                            html_writer::link($movingurl, $this->output->render($movingpix), array('title' => $strmovefull)),
-                            array('class' => 'movehere'));
-                }*/
 
                 $sectionoutput .= $modulehtml;
-                //$modulecount++;
-                //if ($modulecount % 2 == 0) {
-                    //$sectionoutput .= html_writer::tag('div', '', array('class' => 'w-100 d-lg-none'));
-                //}
             }
             $sectionoutput .= html_writer::end_tag('li');
-
-            /*if ($ismoving) {
-                $movingurl = new moodle_url('/course/mod.php', array('movetosection' => $section->id, 'sesskey' => sesskey()));
-                $sectionoutput .= html_writer::tag('li',
-                        html_writer::link($movingurl, $this->output->render($movingpix), array('title' => $strmovefull)),
-                        array('class' => 'movehere'));
-            }*/
         }
         
         if (!empty($aftermoduleshtml)) {
@@ -347,11 +279,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         return $output;
     }
-    
+
     // VSF methods.
     protected function course_section_cm_button(cm_info $mod) {
         return html_writer::tag('div',
                 html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
-                array('class' => /*'col-12 */'mdl-align vsf-button-bottom'));
+                array('class' => 'mdl-align vsf-button-bottom'));
     }
 }

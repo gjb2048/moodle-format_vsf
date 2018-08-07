@@ -58,8 +58,9 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         $this->showcontinuebutton = get_config('format_vsf', 'defaultcontinueshow');
 
-        // Since format_topics_renderer::section_edit_controls() only displays the 'Set current section' control when editing mode is on
-        // we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other managing capability.
+        /* Since format_topics_renderer::section_edit_controls() only displays the 'Set current section' control when editing mode
+           is on we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other
+           managing capability. */
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
 
         if (strcmp($page->theme->name, 'boost') === 0) {
@@ -73,7 +74,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        
+
         $this->editing = $page->user_is_editing();
         // Use our custom course renderer if we need to.
         if ((!$this->editing) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
@@ -292,16 +293,16 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
         }
 
-        $o.= html_writer::end_tag('div');
+        $o .= html_writer::end_tag('div');
 
         $summary = $this->format_summary_text($section);
         if (!empty($summary)) {
-            $o.= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
-            $o.= $summary;
-            $o.= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
+            $o .= $summary;
+            $o .= html_writer::end_tag('div');
         } else {
-            $o.= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
-            $o.= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
+            $o .= html_writer::end_tag('div');
         }
 
         $context = context_course::instance($this->course->id);
@@ -312,9 +313,9 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Generate the header html of a stealth section
+     * Generate the header html of a stealth section.
      *
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
+     * @param int $sectionno The section number in the course which is being displayed
      * @return string HTML to output.
      */
     protected function stealth_section_header($sectionno) {
@@ -322,24 +323,21 @@ class format_vsf_renderer extends format_section_renderer_base {
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        $sectionstyle = '';
-        if (($sectionno != 0) &&
-            ($this->course->layoutcolumns > 1) &&
-            ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
-            $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
-        }
         $liattributes = array(
             'id' => 'section-'.$sectionno,
-            'class' => 'section main clearfix orphaned hidden'.$sectionstyle,
+            'class' => 'section main clearfix orphaned hidden',
             'role' => 'region',
             'aria-label' => $this->courseformat->get_section_name($sectionno)
         );
-        $o.= html_writer::tag('div', '', array('class' => 'left side'));
+        $o .= html_writer::start_tag('li', $liattributes);
+        $o .= html_writer::tag('div', '', array('class' => 'left side'));
         $section = $this->courseformat->get_section($sectionno);
         $rightcontent = $this->section_right_content($section, $this->course, false);
-        $o.= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
-        $o.= html_writer::start_tag('div', array('class' => 'content'));
-        $o.= $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $sectionno), 3, 'sectionname vsf-sectionname');
+        $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+        $o .= html_writer::start_tag('div', array('class' => 'content'));
+        $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+        $o .= $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $sectionno), 3);
+        $o .= html_writer::end_tag('div');
         return $o;
     }
 
@@ -673,15 +671,12 @@ class format_vsf_renderer extends format_section_renderer_base {
                 }
             }
         }
-        //$o.= html_writer::start_tag('div');
-        //$o.= $this->format_summary_text($section);
 
         if ($section->uservisible) {
             $o .= $this->courserenderer->course_section_cm_list($this->course, $section, 0);
             $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
-        //$o.= html_writer::end_tag('div');
         if ((!$this->editing) && (!$moduleviewbar)) {
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
@@ -740,7 +735,7 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         // Can we view the section in question?
         if (!($sectioninfo = $modinfo->get_section_info($displaysection))) {
-            // This section doesn't exist
+            // This section doesn't exist.
             print_error('unknowncoursesection', 'error', null, $course->fullname);
             return;
         }
@@ -755,10 +750,10 @@ class format_vsf_renderer extends format_section_renderer_base {
             return;
         }
 
-        // Copy activity clipboard..
+        // Copy activity clipboard.
         echo $this->course_activity_clipboard($this->course, $displaysection);
 
-        // Start single-section div
+        // Start single-section div.
         echo html_writer::start_tag('div', array('class' => 'single-section'));
 
         // The requested section page.
@@ -778,7 +773,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         $sectiontitle .= html_writer::end_tag('div');
         echo $sectiontitle;
 
-        // Now the list of sections..
+        // Now the list of sections.
         echo $this->start_section_list();
 
         echo $this->section_header($thissection, $this->course, true, $displaysection);
@@ -792,8 +787,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         echo $this->end_section_list();
 
         // Display section bottom navigation.
-        $sectionbottomnav = '';
-        $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation vsf-nav-bottom'));
+        $sectionbottomnav = html_writer::start_tag('div', array('class' => 'section-navigation vsf-nav-bottom'));
         $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'vsf-nav-left'));
         $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'vsf-nav-right'));
         $sectionbottomnav .= html_writer::tag('div', $this->section_nav_selection($this->course, $sections, $displaysection),
@@ -869,7 +863,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
                 echo $this->section_footer();
             }
-            if ($canbreak) {
+            if ($canbreak === true) {
                 echo $this->end_section_list();
                 if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
                     echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
@@ -880,21 +874,11 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         foreach ($sectionsinfo as $section => $thissection) {
             if ($section == 0) {
-                // 0-section is displayed a little different then the others
-                /*if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                    echo $this->section_header($thissection, $this->course, false, 0);
-                    echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
-                    echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
-                    echo $this->section_footer();
-                }
-                if ($canbreak) {
-                    echo $this->end_section_list();
-                    echo $this->start_columns_section_list();
-                }*/
+                // Already output above.
                 continue;
             }
             if ($section > $this->course->numsections) {
-                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
+                // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
             $loopsection++;
@@ -904,9 +888,9 @@ class format_vsf_renderer extends format_section_renderer_base {
                 ($thissection->visible && !$thissection->available &&
                 !empty($thissection->availableinfo));
             if (!$showsection) {
-                // If the hiddensections option is set to 'show hidden sections in collapsed
-                // form', then display the hidden section message - UNLESS the section is
-                // hidden by the availability system, which is set to hide the reason.
+                /* If the hiddensections option is set to 'show hidden sections in collapsed
+                   form', then display the hidden section message - UNLESS the section is
+                   hidden by the availability system, which is set to hide the reason. */
                 if (!$this->course->hiddensections && $thissection->available) {
                     echo $this->section_hidden($section, $this->course->id);
                 }
@@ -919,14 +903,8 @@ class format_vsf_renderer extends format_section_renderer_base {
                 // Display section summary only.
                 echo $this->section_summary($thissection, $this->course, null);
             } else {
-                // Display the section fully.
+                // Display the section.
                 echo $this->display_section($thissection);
-                /*echo $this->section_header($thissection, $this->course, false, 0);
-                if ($thissection->uservisible) {
-                    echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
-                    echo $this->courserenderer->course_section_add_cm_control($this->course, $section, 0);
-                }
-                echo $this->section_footer();*/
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
@@ -965,16 +943,17 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         if ($this->editing and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
-            if ($canbreak) {
+            if ($canbreak === true) {
                 echo $this->end_section_list();
                 if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
                     echo html_writer::end_tag('div');
+                    echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
                 }
                 echo $this->start_section_list();
             }
-            foreach ($modinfo->get_section_info_all() as $section => $thissection) {
+            foreach ($sectionsinfo as $section => $thissection) {
                 if ($section <= $numsections or empty($modinfo->sections[$section])) {
-                    // this is not stealth section or it is empty
+                    // This is not stealth section or it is empty.
                     continue;
                 }
                 echo $this->stealth_section_header($section);
@@ -982,11 +961,14 @@ class format_vsf_renderer extends format_section_renderer_base {
                 echo $this->stealth_section_footer();
             }
             echo $this->end_section_list();
+            if (($canbreak === true) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
+                echo html_writer::end_tag('div');
+            }
 
             echo $this->change_number_sections($this->course, 0);
         } else {
             echo $this->end_section_list();
-            if (($canbreak) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
+            if (($canbreak === true) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
                 echo html_writer::end_tag('div');
             }
         }
