@@ -202,6 +202,10 @@
     width: 50%;
 }
 
+.format-vsf .vsf-inline {
+    display: inline;
+}
+
 /* Module view */
 .format-vsf .moduleviewgap {
     margin-bottom: 10px;
@@ -222,10 +226,6 @@
     background-color: #fab;
     min-width: 3em;
     text-align: center;
-}
-
-.format-vsf .moduleviewinline {
-    display: inline;
 }
 
 .format-vsf .vsf-button-bottom {

@@ -225,7 +225,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart) {
         $o = html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
         if ($barchart) {
-            $titleattributes .= ' moduleviewinline';
+            $titleattributes .= ' vsf-inline';
             $o .= html_writer::start_tag('div', array('class' => 'row'));
             $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
         }
