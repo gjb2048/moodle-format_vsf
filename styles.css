@@ -231,6 +231,9 @@
 .format-vsf .vsf-button-bottom {
     bottom: 0;
     left: 0;
+    overflow: hidden;
     position: absolute;
     right: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
