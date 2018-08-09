@@ -213,6 +213,36 @@ class format_vsf_renderer extends format_section_renderer_base {
             return array_merge($controls, $parentcontrols);
         }
     }
+    
+    /**
+     * Generate the section header with optional barchart.
+     * 
+     * @param type $title Section header title.
+     * @param string $titleattributes Section header title attributes.
+     * @param type $activitysummary Contains the bar chart if $barchart is true.
+     * @param type $barchart States if the bar chart is shown.
+     */
+    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart) {
+        $o = html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+        if ($barchart) {
+            $titleattributes .= ' moduleviewinline';
+            $o .= html_writer::start_tag('div', array('class' => 'row'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
+        }
+
+        $o .= $this->output->heading($title, 3, $titleattributes);
+
+        if ($barchart) {
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
+            $o .= $activitysummary;
+            $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');
+        }
+        $o .= html_writer::end_tag('div');
+
+        return $o;
+    }
 
     /**
      * Generate the display of the header part of a section before
@@ -265,35 +295,20 @@ class format_vsf_renderer extends format_section_renderer_base {
         // When on a section page, we only display the general section title, if title is not the default one.
         $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
 
-        $headerclasses = ' accesshide';
+        $headerclasses = 'section-title';
         if ($hasnamenotsecpg || $hasnamesecpg) {
-            $headerclasses = '';
+            $activitysummary = $this->section_activity_summary($section, $this->course, null);
+            $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->barchart == 2)); // '2' is 'Yes'.
 
-            $moduleviewbar = ((!$this->editing) && (($this->moduleview) && ($this->course->moduleviewbar == 2))); // Moodle view and '2' is 'Yes'.
-
-            $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
-            if ($moduleviewbar) {
-                $headerclasses = 'moduleviewinline';
-                $o .= html_writer::start_tag('div', array('class' => 'row'));
-                $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
-            }
-
-            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
-
-            if ($moduleviewbar) {
-                $o .= html_writer::end_tag('div');
-                $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
-                $o .= $this->section_activity_summary($section, $this->course, null);
-                $o .= html_writer::end_tag('div');
-                $o .= html_writer::end_tag('div');
-            }
+            $o .= $this->section_header_helper($this->section_title($section, $this->course),
+                    $headerclasses, $activitysummary, $barchart);
         } else {
             // Hidden section name so don't output anything bar the header name.
+            $headerclasses .= ' accesshide';
             $o .= html_writer::start_tag('div', array('class' => 'sectionname'));
             $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
+            $o .= html_writer::end_tag('div');
         }
-
-        $o .= html_writer::end_tag('div');
 
         $summary = $this->format_summary_text($section);
         if (!empty($summary)) {
@@ -435,12 +450,12 @@ class format_vsf_renderer extends format_section_renderer_base {
             $title = html_writer::tag('a', $title,
                 array('href' => course_get_url($this->course, $section->section), 'class' => $linkclasses));
         }
-        $o .= html_writer::start_tag('div', array('class' => 'vsf-sectionname'));
-        $o .= $this->output->heading($title, 3, 'section-title');
-        $o .= html_writer::end_tag('div');
-
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
-        if (!empty($activitysummary)) {
+        $barchart = ((!empty($activitysummary)) && ($this->course->barchart == 2)); // '2' is 'Yes'.
+
+        $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart);
+
+        if ((!$barchart) && (!empty($activitysummary))) {
             static $summarychartlayout = array(
                 1 => array('summary' => 10, 'chart' => 2),
                 2 => array('summary' => 8, 'chart' => 4),
@@ -459,7 +474,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o.= $this->format_summary_text($section);
         $o.= html_writer::end_tag('div');
-        if (!empty($activitysummary)) {
+        if ((!$barchart) && (!empty($activitysummary))) {
             $o .= html_writer::end_tag('div');
             if ($this->bsnewgrid) {
                 $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
@@ -569,7 +584,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $this->sectioncompletionpercentage[$section->section] = $percentage;
 
                 $data = new \stdClass();
-                if (($this->moduleview) && ($this->course->moduleviewbar == 2)) { // Moodle view and '2' is 'Yes'.
+                if ($this->course->barchart == 2) { // '2' is 'Yes'.
                     $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
                     $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
                     $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-bar', $data);
@@ -651,8 +666,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     protected function display_section($section) {
         $o = $this->section_header($section, $this->course, false, 0);
 
-        $moduleviewbar = (($this->moduleview) && ($this->course->moduleviewbar == 2)); // Moodle view and '2' is 'Yes'.
-        if ((!$this->editing) && (!$moduleviewbar)) {
+        if ((!$this->editing) && ($this->course->barchart == 1)) {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             if (!empty($activitysummary)) {
                 static $summarychartlayout = array(
@@ -677,7 +691,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
-        if ((!$this->editing) && (!$moduleviewbar)) {
+        if ((!$this->editing) && ($this->course->barchart == 1)) {
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 if ($this->bsnewgrid) {

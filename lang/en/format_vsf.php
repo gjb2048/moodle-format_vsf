@@ -141,9 +141,9 @@ $string['defaultlayoutcolumns_desc'] = "Number of columns between one and four."
 $string['defaultlayoutcolumnorientation'] = 'Column orientation';
 $string['defaultlayoutcolumnorientation_desc'] = "The default column orientation: Vertical or Horizontal.";
 
-// Module view progress bar.
-$string['moduleviewbar'] = 'Module view bar chart';
-$string['moduleviewbar_help'] = 'State if the bar chart should be used instead of the donut when in \'Module view\', being \'Show all sections on one page\' for the \'Course layout\' setting.';
+// Progress bar chart.
+$string['barchart'] = 'Bar chart';
+$string['barchart_help'] = 'State if the bar chart should be used instead of the donut.';
 
 // Module view button.
 $string['moduleviewbutton'] = 'Module view button';
