@@ -67,7 +67,7 @@
     padding: 0 0 20px 0;
 }
 
-.format-vsf .course-content ul.sections li.section,
+/*.format-vsf .course-content ul.sections li.section,*/
 .format-vsf .course-content .single-section {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
@@ -231,9 +231,14 @@
 .format-vsf .vsf-button-bottom {
     bottom: 0;
     left: 0;
-    overflow: hidden;
     position: absolute;
     right: 0;
+}
+
+.format-vsf .vsf-button-bottom .btn.btn-primary {
+    display: block;
+    margin: 0 5px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }

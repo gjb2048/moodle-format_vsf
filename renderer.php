@@ -226,7 +226,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         $o = html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
-            $o .= html_writer::start_tag('div', array('class' => 'row'));
+            $o .= html_writer::start_tag('div', array('class' => 'row no-gutters'));
             $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
         }
 
@@ -282,11 +282,14 @@ class format_vsf_renderer extends format_section_renderer_base {
         );
         $o = html_writer::start_tag('li', $liattributes);
 
-        $leftcontent = $this->section_left_content($section, $this->course, $onsectionpage);
-        $o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
+        if ($this->editing) {
+            $leftcontent = $this->section_left_content($section, $this->course, $onsectionpage);
+            $o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
 
-        $rightcontent = $this->section_right_content($section, $this->course, $onsectionpage);
-        $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+            $rightcontent = $this->section_right_content($section, $this->course, $onsectionpage);
+            $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+        }
+
         $o .= html_writer::start_tag('div', array('class' => 'content'));
 
         // When not on a section page, we display the section titles except the general section if null.

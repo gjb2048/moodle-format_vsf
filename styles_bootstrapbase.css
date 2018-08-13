@@ -134,6 +134,15 @@ col-xl-8
 }
 
 /* Additional tweaks not related to Bootstrap itself.... */
-.format-vsf .vsf-button-bottom .btn.btn-primary {
-    width: 50%;
+.format-vsf .vsf-progress-bar {
+    margin-top: 10px;
+}
+
+.format-vsf .vsf-sectionname h3 {
+    margin-top: 0;
+}
+
+.jsenabled.format-vsf .vsf-sectionname .quickediticon.visibleifjs {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
 }
