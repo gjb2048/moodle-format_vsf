@@ -45,7 +45,7 @@ $string['markthissection'] = 'markeren';
 // Ga Verder.
 $string['continue'] = 'Ga Verder';
 $string['defaultcontinueshow'] = 'Toon de Ga Verder knop';
-$string['defaultcontinueshow_desc'] = 'Toon de Ga Verder knop op de hoofd cursuspagina. De standaard instelling is \'Ja\'.';
+$string['defaultcontinueshow_desc'] = 'Toon de Ga Verder knop op de hoofd cursuspagina.';
 $string['defaultcontinuebackgroundcolour'] = 'Stel de achtergrond kleur in van de Ga Verder knop';
 $string['defaultcontinuebackgroundcolour_desc'] = 'Stel de achtergrond kleur in van de Ga Verder knop in hexidecimal RGB. De standaard instelling is \'CE2E2B\'.';
 $string['defaultcontinuetextcolour'] = 'Stel de tekst kleur in van de Ga Verder knop';

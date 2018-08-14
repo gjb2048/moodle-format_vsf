@@ -238,11 +238,11 @@ class format_vsf extends format_base {
                     'type' => PARAM_INT
                 ),
                 'barchart' => array(
-                    'default' => 1, // No.
+                    'default' => get_config('format_vsf', 'defaultbarchart'),
                     'type' => PARAM_INT
                 ),
                 'moduleviewbutton' => array(
-                    'default' => 2, // Yes.
+                    'default' => get_config('format_vsf', 'defaultmoduleviewbutton'),
                     'type' => PARAM_INT
                 ),
                 // Continue button.

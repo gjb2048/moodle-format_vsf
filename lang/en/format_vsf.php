@@ -46,7 +46,7 @@ $string['markthissection'] = 'Highlight this section as the current section';
 // Continue.
 $string['continue'] = 'Continue';
 $string['defaultcontinueshow'] = 'Show the continue button';
-$string['defaultcontinueshow_desc'] = 'Show the continue button on the main course page.  The default is \'Yes\'.';
+$string['defaultcontinueshow_desc'] = 'Show the continue button on the main course page.';
 $string['defaultcontinuebackgroundcolour'] = 'Set the continue button background colour';
 $string['defaultcontinuebackgroundcolour_desc'] = 'Set the continue button background colour in hexidecimal RGB.  The default is \'CE2E2B\'.';
 $string['defaultcontinuetextcolour'] = 'Set the continue button text colour';
@@ -144,10 +144,14 @@ $string['defaultlayoutcolumnorientation_desc'] = "The default column orientation
 // Progress bar chart.
 $string['barchart'] = 'Bar chart';
 $string['barchart_help'] = 'State if the bar chart should be used instead of the donut.';
+$string['defaultbarchart'] = 'Bar chart default';
+$string['defaultbarchart_desc'] = 'Default setting to state if the bar chart should be used instead of the donut.  This only applies to new courses or ones that switch to the format.';
 
 // Module view button.
 $string['moduleviewbutton'] = 'Module view button';
 $string['moduleviewbutton_help'] = 'State if the button to access a module is present when in \'Module view\', being \'Show all sections on one page\' for the \'Course layout\' setting.';
+$string['defaultmoduleviewbutton'] = 'Module view button default';
+$string['defaultmoduleviewbutton_desc'] = 'Default setting to state if the button to access a module is present when in \'Module view\', being \'Show all sections on one page\' for the \'Course layout\' setting.  This only applies to new courses or ones that switch to the format.';
 
 // Privacy.
 $string['privacy:nop'] = 'The PSF format stores settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';
