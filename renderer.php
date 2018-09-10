@@ -313,6 +313,8 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= html_writer::end_tag('div');
         }
 
+        $o .= $this->section_availability($section);
+
         $summary = $this->format_summary_text($section);
         if (!empty($summary)) {
             $o .= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
@@ -322,10 +324,6 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
             $o .= html_writer::end_tag('div');
         }
-
-        $context = context_course::instance($this->course->id);
-        $o .= $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
 
         return $o;
     }
@@ -457,6 +455,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         $barchart = ((!empty($activitysummary)) && ($this->course->barchart == 2)); // '2' is 'Yes'.
 
         $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart);
+        $o .= $this->section_availability($section);
 
         if ((!$barchart) && (!empty($activitysummary))) {
             static $summarychartlayout = array(

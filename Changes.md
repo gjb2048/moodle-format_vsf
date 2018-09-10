@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.5.1.2
+  1. Fix missing 'section_availability' place holder for AJAX update when the section is hidden.
+
 Version 3.5.1.1
   1. Add new all sections on one page features, including a bar chart.
   2. Fix drag and drop of sections in M3.5.

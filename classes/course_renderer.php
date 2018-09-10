@@ -225,7 +225,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         } else {
             if ($section == 0) {
                 return parent::course_section_cm_list($course, $section, $sectionreturn, $displayoptions);
-            }                    
+            }
         }
         $output = '';
         $modinfo = get_fast_modinfo($course);
@@ -252,7 +252,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
                 } else if (($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf($course,
-                        $completioninfo, $mod, $sectionreturn, $displayoptions))) {
+                    $completioninfo, $mod, $sectionreturn, $displayoptions))) {
                     $moduleshtml[$modnumber] = $modulehtml;
                 }
             }
