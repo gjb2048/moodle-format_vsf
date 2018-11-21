@@ -1,13 +1,36 @@
-.format-vsf .course-content ul.sections {margin:0;}
-.format-vsf .course-content ul.sections li.section {list-style: none;margin:0 0 5px 0;padding:0;}
-.format-vsf .course-content ul.sections li.section .content {margin:0 10px;}
+.format-vsf .course-content ul.sections {
+    margin: 0;
+}
+
+.format-vsf .course-content ul.sections li.section {
+    list-style: none;
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.format-vsf .course-content ul.sections li.section .content {
+    margin: 0 10px;
+}
+
 .format-vsf .course-content ul.sections li.section .left,
-.format-vsf .course-content ul.sections li.section .right {padding: 0 6px;}
-.format-vsf .course-content ul.sections li.section .left {padding-top:22px;text-align: right;}
+.format-vsf .course-content ul.sections li.section .right {
+    padding: 0 6px;
+}
+
+.format-vsf .course-content ul.sections li.section .left {
+    padding-top: 22px;
+    text-align: right;
+}
+
 .format-vsf.jsenabled .course-content ul.sections li.section .left,
-.format-vsf.jsenabled .course-content ul.topics li.section .right {width:auto;}
+.format-vsf.jsenabled .course-content ul.topics li.section .right {
+    width: auto;
+}
+
 .format-vsf .course-content ul.sections li.section .section_action_menu .textmenu,
-.format-vsf .course-content ul.sections li.section .section_action_menu .menu-action-text { white-space: nowrap; }
+.format-vsf .course-content ul.sections li.section .section_action_menu .menu-action-text {
+    white-space: nowrap;
+}
 
 /* Specific styling. */
 .format-vsf .course-content ul li.section.main {
@@ -71,6 +94,7 @@
 .format-vsf .course-content .single-section {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
+
 .format-vsf .course-content .single-section ul.sections li.section {
     box-shadow: none;
 }
@@ -121,7 +145,7 @@
 
 /* Continue button */
 .format-vsf .vsf-continue {
-    box-shadow: 0 0 0 2px rgb(17, 17, 17);
+    box-shadow: 0 0 0 2px #111;
     padding: 4px 12px;
     margin-left: 2px;
 }
@@ -130,6 +154,7 @@
 .format-vsf .vsf-sectionname {
     padding: 0 12px;
 }
+
 .format-vsf .vsf-sectionname a {
     color: inherit;
 }
@@ -241,4 +266,455 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.format-vsf .progress-chart-container {
+    height: 70px;
+    width: 70px;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut {
+    position: relative;
+    height: 70px;
+    width: 70px;
+    background-clip: padding-box;
+    border: 15px solid #dee2e6;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #dee2e6;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-text.has-percent {
+    color: #ff7518;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    height: 70px;
+    width: 70px;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle {
+    stroke-width: 15px;
+    stroke: #ff7518;
+    fill: none;
+    stroke-dasharray: 173;
+    stroke-dashoffset: 173;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-1 {
+    stroke-dashoffset: 171.27;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-2 {
+    stroke-dashoffset: 169.54;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-3 {
+    stroke-dashoffset: 167.81;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-4 {
+    stroke-dashoffset: 166.08;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-5 {
+    stroke-dashoffset: 164.35;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-6 {
+    stroke-dashoffset: 162.62;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-7 {
+    stroke-dashoffset: 160.89;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-8 {
+    stroke-dashoffset: 159.16;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-9 {
+    stroke-dashoffset: 157.43;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-10 {
+    stroke-dashoffset: 155.7;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-11 {
+    stroke-dashoffset: 153.97;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-12 {
+    stroke-dashoffset: 152.24;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-13 {
+    stroke-dashoffset: 150.51;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-14 {
+    stroke-dashoffset: 148.78;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-15 {
+    stroke-dashoffset: 147.05;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-16 {
+    stroke-dashoffset: 145.32;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-17 {
+    stroke-dashoffset: 143.59;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-18 {
+    stroke-dashoffset: 141.86;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-19 {
+    stroke-dashoffset: 140.13;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-20 {
+    stroke-dashoffset: 138.4;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-21 {
+    stroke-dashoffset: 136.67;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-22 {
+    stroke-dashoffset: 134.94;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-23 {
+    stroke-dashoffset: 133.21;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-24 {
+    stroke-dashoffset: 131.48;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-25 {
+    stroke-dashoffset: 129.75;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-26 {
+    stroke-dashoffset: 128.02;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-27 {
+    stroke-dashoffset: 126.29;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-28 {
+    stroke-dashoffset: 124.56;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-29 {
+    stroke-dashoffset: 122.83;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-30 {
+    stroke-dashoffset: 121.1;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-31 {
+    stroke-dashoffset: 119.37;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-32 {
+    stroke-dashoffset: 117.64;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-33 {
+    stroke-dashoffset: 115.91;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-34 {
+    stroke-dashoffset: 114.18;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-35 {
+    stroke-dashoffset: 112.45;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-36 {
+    stroke-dashoffset: 110.72;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-37 {
+    stroke-dashoffset: 108.99;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-38 {
+    stroke-dashoffset: 107.26;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-39 {
+    stroke-dashoffset: 105.53;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-40 {
+    stroke-dashoffset: 103.8;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-41 {
+    stroke-dashoffset: 102.07;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-42 {
+    stroke-dashoffset: 100.34;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-43 {
+    stroke-dashoffset: 98.61;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-44 {
+    stroke-dashoffset: 96.88;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-45 {
+    stroke-dashoffset: 95.15;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-46 {
+    stroke-dashoffset: 93.42;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-47 {
+    stroke-dashoffset: 91.69;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-48 {
+    stroke-dashoffset: 89.96;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-49 {
+    stroke-dashoffset: 88.23;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-50 {
+    stroke-dashoffset: 86.5;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-51 {
+    stroke-dashoffset: 84.77;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-52 {
+    stroke-dashoffset: 83.04;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-53 {
+    stroke-dashoffset: 81.31;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-54 {
+    stroke-dashoffset: 79.58;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-55 {
+    stroke-dashoffset: 77.85;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-56 {
+    stroke-dashoffset: 76.12;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-57 {
+    stroke-dashoffset: 74.39;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-58 {
+    stroke-dashoffset: 72.66;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-59 {
+    stroke-dashoffset: 70.93;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-60 {
+    stroke-dashoffset: 69.2;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-61 {
+    stroke-dashoffset: 67.47;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-62 {
+    stroke-dashoffset: 65.74;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-63 {
+    stroke-dashoffset: 64.01;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-64 {
+    stroke-dashoffset: 62.28;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-65 {
+    stroke-dashoffset: 60.55;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-66 {
+    stroke-dashoffset: 58.82;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-67 {
+    stroke-dashoffset: 57.09;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-68 {
+    stroke-dashoffset: 55.36;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-69 {
+    stroke-dashoffset: 53.63;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-70 {
+    stroke-dashoffset: 51.9;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-71 {
+    stroke-dashoffset: 50.17;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-72 {
+    stroke-dashoffset: 48.44;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-73 {
+    stroke-dashoffset: 46.71;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-74 {
+    stroke-dashoffset: 44.98;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-75 {
+    stroke-dashoffset: 43.25;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-76 {
+    stroke-dashoffset: 41.52;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-77 {
+    stroke-dashoffset: 39.79;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-78 {
+    stroke-dashoffset: 38.06;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-79 {
+    stroke-dashoffset: 36.33;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-80 {
+    stroke-dashoffset: 34.6;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-81 {
+    stroke-dashoffset: 32.87;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-82 {
+    stroke-dashoffset: 31.14;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-83 {
+    stroke-dashoffset: 29.41;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-84 {
+    stroke-dashoffset: 27.68;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-85 {
+    stroke-dashoffset: 25.95;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-86 {
+    stroke-dashoffset: 24.22;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-87 {
+    stroke-dashoffset: 22.49;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-88 {
+    stroke-dashoffset: 20.76;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-89 {
+    stroke-dashoffset: 19.03;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-90 {
+    stroke-dashoffset: 17.3;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-91 {
+    stroke-dashoffset: 15.57;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-92 {
+    stroke-dashoffset: 13.84;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-93 {
+    stroke-dashoffset: 12.11;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-94 {
+    stroke-dashoffset: 10.38;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-95 {
+    stroke-dashoffset: 8.65;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-96 {
+    stroke-dashoffset: 6.92;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-97 {
+    stroke-dashoffset: 5.19;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-98 {
+    stroke-dashoffset: 3.46;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-99 {
+    stroke-dashoffset: 1.73;
+}
+
+.format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-100 {
+    stroke-dashoffset: 0;
 }

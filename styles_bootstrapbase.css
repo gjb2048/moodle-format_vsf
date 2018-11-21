@@ -45,7 +45,7 @@ col-xl-8
 }
 
 .format-vsf .justify-content-center {
-    justify-content: center !important;
+    justify-content: center !important; /* stylelint-disable declaration-no-important */
 }
 
 .format-vsf .col-sm-6,

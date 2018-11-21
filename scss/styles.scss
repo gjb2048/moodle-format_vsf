@@ -1,0 +1,270 @@
+.format-vsf .course-content ul.sections {
+    margin: 0;
+}
+
+.format-vsf .course-content ul.sections li.section {
+    list-style: none;
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.format-vsf .course-content ul.sections li.section .content {
+    margin: 0 10px;
+}
+
+.format-vsf .course-content ul.sections li.section .left,
+.format-vsf .course-content ul.sections li.section .right {
+    padding: 0 6px;
+}
+
+.format-vsf .course-content ul.sections li.section .left {
+    padding-top: 22px;
+    text-align: right;
+}
+
+.format-vsf.jsenabled .course-content ul.sections li.section .left,
+.format-vsf.jsenabled .course-content ul.topics li.section .right {
+    width: auto;
+}
+
+.format-vsf .course-content ul.sections li.section .section_action_menu .textmenu,
+.format-vsf .course-content ul.sections li.section .section_action_menu .menu-action-text {
+    white-space: nowrap;
+}
+
+
+/* Specific styling. */
+.format-vsf .course-content ul li.section.main {
+    border: 0 solid transparent;
+}
+
+.format-vsf .single-section h3.sectionname {
+    margin-bottom: 0;
+}
+
+.format-vsf .course-content .section-summary .section-title {
+    margin: 0 0 8px;
+}
+
+.format-vsf .course-content .section-summary .section-summary-activities .activity-count,
+.format-vsf .course-content .section-summary-activities .activity-count {
+    display: none;
+}
+
+.format-vsf .vsf-empty-summary {
+    padding-bottom: 10px;
+}
+
+.format-vsf .vsf-percentage {
+    font-size: 14px;
+    margin: 0;
+}
+
+.format-vsf .course-content {
+    background-color: transparent;
+    padding-top: 0;
+}
+
+.format-vsf .course-content ul.sections li.section,
+.format-vsf .course-content .single-section {
+    background-color: #fff;
+}
+
+.format-vsf .course-content .single-section {
+    margin-top: 0;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-top: 1em;
+}
+
+.format-vsf .course-content .single-section ul.section {
+    margin-top: 0;
+}
+
+.format-vsf .course-content {
+    box-shadow: none;
+}
+
+.format-vsf .course-content ul.sections li.section {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+}
+
+/*.format-vsf .course-content ul.sections li.section,*/
+.format-vsf .course-content .single-section {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+}
+.format-vsf .course-content .single-section ul.sections li.section {
+    box-shadow: none;
+}
+
+.format-vsf .course-content .single-section .section-navigation {
+    padding: 0;
+}
+
+.format-vsf .course-content .single-section .section-navigation.navigationtitle {
+    height: 20px;
+    margin: 0;
+}
+
+.format-vsf .course-content .single-section ul.sections li.section .left,
+.format-vsf .course-content .single-section ul.sections li.section .right {
+    padding: 0;
+    width: 0;
+}
+
+.format-vsf.editing .course-content .single-section ul.sections li.section .left,
+.format-vsf.editing .course-content .single-section ul.sections li.section .right {
+    padding: 6px 0;
+    width: 40px;
+}
+
+.format-vsf .course-content .single-section ul.sections li.section .content,
+.editing.format-vsf .course-content .single-section ul.sections li.section .content,
+.editing.format-vsf.lang-nl .course-content .single-section ul.sections li.section .content {
+    margin: 0;
+}
+
+.format-vsf.editing .course-content .single-section ul.sections li.section .content {
+    margin: 0 40px;
+}
+
+.editing.format-vsf .course-content ul.sections li.section .content {
+    margin: 0 60px;
+}
+
+.editing.format-vsf.lang-nl .course-content ul.sections li.section .content {
+    margin: 0 80px;
+}
+
+/* Progress chart */
+.format-vsf .vsf-progress {
+    float: right;
+}
+
+/* Continue button */
+.format-vsf .vsf-continue {
+    box-shadow: 0 0 0 2px #111;
+    padding: 4px 12px;
+    margin-left: 2px;
+}
+
+/* Section header background / foreground */
+.format-vsf .vsf-sectionname {
+    padding: 0 12px;
+}
+.format-vsf .vsf-sectionname a {
+    color: inherit;
+}
+
+/* Section header with navigation */
+.format-vsf .single-section .vsf-nav-bottom,
+.format-vsf .single-section .vsf-sectionname {
+    position: relative;
+}
+
+.format-vsf .single-section .vsf-sectionname .vsf-sectionname-nav {
+    bottom: 0;
+    color: inherit;
+    display: table;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
+    bottom: 0;
+    display: table;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left {
+    left: 10px;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
+    right: 10px;
+}
+
+.format-vsf .vsf-sectionname h3,
+.format-vsf .single-section .vsf-sectionname .vsf-sectionname-nav a .fa,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left a .fa,
+.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right a .fa {
+    color: inherit;
+}
+
+.format-vsf .single-section .vsf-sectionname h3 {
+    text-align: left;
+}
+
+/* Columns */
+.format-vsf [class*=vsf-col] {
+    display: block;
+    min-height: 30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+}
+
+.format-vsf .vsf-col4 {
+    width: 25%;
+}
+
+.format-vsf .vsf-col3 {
+    width: 33.3%;
+}
+
+.format-vsf .vsf-col2 {
+    width: 50%;
+}
+
+.format-vsf .vsf-inline {
+    display: inline;
+}
+
+/* Module view */
+.format-vsf .moduleviewgap {
+    margin-bottom: 10px;
+}
+
+.format-vsf .moduleviewgapwithbutton {
+    padding-bottom: 30px;
+}
+
+.format-vsf .vsf-progress-bar {
+    background-color: #ddd;
+    display: inline-block;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.format-vsf .vsf-progress-bar .vsf-bar {
+    background-color: #fab;
+    min-width: 3em;
+    text-align: center;
+}
+
+.format-vsf .vsf-button-bottom {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+.format-vsf .vsf-button-bottom .btn.btn-primary {
+    display: block;
+    margin: 0 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@import "progress_chart";

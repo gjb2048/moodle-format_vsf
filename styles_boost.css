@@ -1,5 +1,5 @@
 .format-vsf li.section:target {
-    padding-top: 50px!important;
+    padding-top: 50px !important; /* stylelint-disable declaration-no-important */
 }
 
 .format-vsf .jumpmenu .form-inline {
