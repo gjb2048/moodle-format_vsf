@@ -43,7 +43,7 @@
 }
 
 .format-vsf .course-content .section-summary .section-title {
-    margin: 0 0 8px;
+    margin: 0;
 }
 
 .format-vsf .course-content .section-summary .section-summary-activities .activity-count,
@@ -152,6 +152,7 @@
 
 /* Section header background / foreground */
 .format-vsf .vsf-sectionname {
+    margin-bottom: 8px;
     padding: 0 12px;
 }
 .format-vsf .vsf-sectionname a {
