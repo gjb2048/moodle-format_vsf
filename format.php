@@ -44,7 +44,7 @@ $context = context_course::instance($course->id);
 $courseformat = course_get_format($course);
 $course = $courseformat->get_course();
 
-if (($marker >=0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
+if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
     course_set_marker($course->id, $marker);
 }
@@ -119,5 +119,5 @@ if (!empty($displaysection)) {
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }
 
-// Include course format js module
+// Include course format js module.
 $PAGE->requires->js('/course/format/vsf/format.js');

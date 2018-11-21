@@ -100,13 +100,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
      */
     public function course_section_cm_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
         $output = '';
-        // We return empty string (because course module will not be displayed at all)
-        // if:
-        // 1) The activity is not visible to users
-        // and
-        // 2) The 'availableinfo' is empty, i.e. the activity was
-        //     hidden in a way that leaves no info, such as using the
-        //     eye icon.
+        /* We return empty string (because course module will not be displayed at all)
+           if:
+           1) The activity is not visible to users
+           and
+           2) The 'availableinfo' is empty, i.e. the activity was
+              hidden in a way that leaves no info, such as using the
+              eye icon. */
         if (!$mod->is_visible_on_course_page()) {
             return $output;
         }
@@ -162,7 +162,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
            (AFTER any icons). Otherwise it was displayed before. */
         if (!empty($url)) {
             $output .= $contentpart;
-            
+
             if (!$this->page->user_is_editing()) {
                 if ($this->moduleviewbutton) {
                     $output .= $this->course_section_cm_button($mod);
@@ -267,7 +267,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
             $sectionoutput .= html_writer::end_tag('li');
         }
-        
+
         if (!empty($aftermoduleshtml)) {
             foreach ($aftermoduleshtml as $modnumber => $modulehtml) {
                 $sectionoutput .= $modulehtml;

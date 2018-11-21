@@ -22,7 +22,7 @@
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -147,7 +147,7 @@ class format_vsf extends format_base {
      */
     public function extend_course_navigation($navigation, navigation_node $node) {
         global $PAGE;
-        // if section is specified in course/view.php, make sure it is expanded in navigation
+        // If section is specified in course/view.php, make sure it is expanded in navigation.
         if ($navigation->includesectionnum === false) {
             $selectedsection = optional_param('section', null, PARAM_INT);
             if ($selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
@@ -156,7 +156,7 @@ class format_vsf extends format_base {
             }
         }
 
-        // check if there are callbacks to extend course navigation
+        // Check if there are callbacks to extend course navigation.
         parent::extend_course_navigation($navigation, $node);
 
         // We want to remove the general section if it is empty.
@@ -180,7 +180,7 @@ class format_vsf extends format_base {
      *
      * @return array This will be passed in ajax respose
      */
-    function ajax_section_move() {
+    public function ajax_section_move() {
         global $PAGE;
         $titles = array();
         $course = $this->get_course();
@@ -485,7 +485,7 @@ class format_vsf extends format_base {
             $numsections = $numsections[0];
             if ($numsections > $maxsections) {
                 $element = $mform->getElement('numsections');
-                for ($i = $maxsections+1; $i <= $numsections; $i++) {
+                for ($i = $maxsections + 1; $i <= $numsections; $i++) {
                     $element->addOption("$i", $i);
                 }
             }
@@ -524,13 +524,13 @@ class format_vsf extends format_base {
                     if (array_key_exists($key, $oldcourse)) {
                         $data[$key] = $oldcourse[$key];
                     } else if ($key === 'numsections') {
-                        // If previous format does not have the field 'numsections'
-                        // and $data['numsections'] is not set,
-                        // we fill it with the maximum section number from the DB
+                        /* If previous format does not have the field 'numsections'
+                           and $data['numsections'] is not set,
+                           we fill it with the maximum section number from the DB. */
                         $maxsection = $DB->get_field_sql('SELECT max(section) from {course_sections}
                             WHERE course = ?', array($this->courseid));
                         if ($maxsection) {
-                            // If there are no sections, or just default 0-section, 'numsections' will be set to default
+                            // If there are no sections, or just default 0-section, 'numsections' will be set to default.
                             $data['numsections'] = $maxsection;
                         }
                     }
