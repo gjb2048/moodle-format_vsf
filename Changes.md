@@ -1,5 +1,7 @@
 Version Information
 ===================
+Version 3.6.0.1
+
 Version 3.5.1.2
   1. Fix missing 'section_availability' place holder for AJAX update when the section is hidden.
 
