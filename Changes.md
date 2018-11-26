@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.5.1.3
+  1. Fix position of continue button.
+
 Version 3.5.1.2
   1. Fix missing 'section_availability' place holder for AJAX update when the section is hidden.
 
