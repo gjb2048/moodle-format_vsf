@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.5.1.4
+  1. Apply MDL-64819.
+
 Version 3.5.1.3
   1. Fix position of continue button.
 
