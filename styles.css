@@ -183,28 +183,27 @@
 
 /* Columns */
 .format-vsf [class*=vsf-col] {
-    display: block;
-    min-height: 30px;
+    box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    display: block;
     float: left;
-}
-
-.format-vsf .vsf-col4 {
-    width: 25%;
-}
-
-.format-vsf .vsf-col3 {
-    width: 33.3%;
-}
-
-.format-vsf .vsf-col2 {
-    width: 50%;
-}
-
-.format-vsf .vsf-col1 {
+    min-height: 30px;
     width: 100%;
+}
+
+@media (min-width: 576px) {
+    .format-vsf .vsf-col4 {
+        width: 25%;
+    }
+
+    .format-vsf .vsf-col3 {
+        width: 33.3%;
+    }
+
+    .format-vsf .vsf-col2 {
+        width: 50%;
+    }
 }
 
 .format-vsf .vsf-inline {

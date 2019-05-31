@@ -4,6 +4,7 @@ Version 3.5.1.5
   1. Only one column when editing.
   2. Change 'barchart' setting to 'chart' to facilitate having no chart at all.
   3. Show all sections on one page section header not hyperlinked.
+  4. Only one column on mobiles, < 576px display width.
 
 Version 3.5.1.4
   1. Apply MDL-64819.
