@@ -997,8 +997,8 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     protected function get_column_class($columns) {
-        if ($columns == 1) {
-            return '';
+        if (($columns == 1) || ($this->editing)) {
+            return 'vsf-col1';
         }
 
         $colclasses = array(2 => 'vsf-col2', 3 => 'vsf-col3', 4 => 'vsf-col4');

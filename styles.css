@@ -203,6 +203,10 @@
     width: 50%;
 }
 
+.format-vsf .vsf-col1 {
+    width: 100%;
+}
+
 .format-vsf .vsf-inline {
     display: inline;
 }
