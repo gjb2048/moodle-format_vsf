@@ -141,11 +141,13 @@ $string['defaultlayoutcolumns_desc'] = "Number of columns between one and four."
 $string['defaultlayoutcolumnorientation'] = 'Column orientation';
 $string['defaultlayoutcolumnorientation_desc'] = "The default column orientation: Vertical or Horizontal.";
 
-// Progress bar chart.
+// Progress donut chart, bar chart or none.
 $string['barchart'] = 'Bar chart';
-$string['barchart_help'] = 'State if the bar chart should be used instead of the donut.';
-$string['defaultbarchart'] = 'Bar chart default';
-$string['defaultbarchart_desc'] = 'Default setting to state if the bar chart should be used instead of the donut.  This only applies to new courses or ones that switch to the format.';
+$string['donutchart'] = 'Donut chart';
+$string['chart'] = 'Donut chart, bar chart or none';
+$string['chart_help'] = 'State if the bar chart should be used instead of the donut.';
+$string['defaultchart'] = 'Donut chart, bar chart or none default';
+$string['defaultchart_desc'] = 'Default setting to state if a chart should be used and if so, which one.  This only applies to new courses or ones that switch to the format.';
 
 // Module view button.
 $string['moduleviewbutton'] = 'Module view button';

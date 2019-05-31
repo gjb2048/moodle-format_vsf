@@ -41,15 +41,16 @@ if ($ADMIN->fulltree) {
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
-    // Chart or bar?.
-    // 1 = no, 2 = yes.
-    $name = 'format_vsf/defaultbarchart';
-    $title = get_string('defaultbarchart', 'format_vsf');
-    $description = get_string('defaultbarchart_desc', 'format_vsf');
-    $default = 1;
+    // Donut, bar or none?.
+    // 1 = none, 2 = bar and 3 = donut.
+    $name = 'format_vsf/defaultchart';
+    $title = get_string('defaultchart', 'format_vsf');
+    $description = get_string('defaultchart_desc', 'format_vsf');
+    $default = 3;
     $choices = array(
-        1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes')   // Yes.
+        1 => new lang_string('none'),                    // None.
+        2 => new lang_string('barchart', 'format_vsf'),  // Bar.
+        3 => new lang_string('donutchart', 'format_vsf') // Donut.
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
