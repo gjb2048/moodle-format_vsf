@@ -1,5 +1,11 @@
-.format-vsf li.section:target {
-    padding-top: 50px!important;
+ul.sections :target::before { /* Ref: MDL-64894 */
+    pointer-events: none;
+    width: 0;
+}
+
+.course-content ul.sections .current::before { /* Ref: CONTRIB-7607 and MDL-64894 */
+    height: auto;
+    margin-top: 0;
 }
 
 .format-vsf .jumpmenu .form-inline {
