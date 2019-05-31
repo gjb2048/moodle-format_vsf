@@ -1,6 +1,7 @@
 Version Information
 ===================
 Version 3.6.0.2
+  1. Only one column when editing.
 
 Version 3.6.0.1
   1. Apply MDL-64819.
