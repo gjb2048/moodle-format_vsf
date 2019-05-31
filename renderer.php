@@ -299,10 +299,10 @@ class format_vsf_renderer extends format_section_renderer_base {
         $headerclasses = 'section-title';
         if ($hasnamenotsecpg || $hasnamesecpg) {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
-            $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->barchart == 2)); // '2' is 'Yes'.
+            $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
             $o .= $this->section_header_helper($this->section_title($section, $this->course),
-                    $headerclasses, $activitysummary, $barchart);
+                $headerclasses, $activitysummary, $barchart);
         } else {
             // Hidden section name so don't output anything bar the header name.
             $headerclasses .= ' accesshide';
@@ -387,13 +387,14 @@ class format_vsf_renderer extends format_section_renderer_base {
             'aria-label' => $this->courseformat->get_section_name($section)
         );
 
-        $o.= html_writer::start_tag('li', $liattributes);
-        $o.= html_writer::tag('div', '', array('class' => 'left side'));
-        $o.= html_writer::tag('div', '', array('class' => 'right side'));
-        $o.= html_writer::start_tag('div', array('class' => 'content'));
-        $o.= html_writer::tag('div', $strnotavailable);
-        $o.= html_writer::end_tag('div');
-        $o.= html_writer::end_tag('li');
+        $o .= html_writer::start_tag('li', $liattributes);
+        $o .= html_writer::tag('div', '', array('class' => 'left side'));
+        $o .= html_writer::tag('div', '', array('class' => 'right side'));
+        $o .= html_writer::start_tag('div', array('class' => 'content'));
+        $o .= html_writer::tag('div', $strnotavailable);
+        $o .= html_writer::end_tag('div');
+        $o .= html_writer::end_tag('li');
+
         return $o;
     }
 
@@ -407,15 +408,17 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     protected function section_summary($section, $course, $mods) {
         $classattr = 'section main section-summary clearfix';
-        $this->calculate_section_activity_summary($section, $course);
-        if (!empty($this->sectioncompletionpercentage[$section->section])) {
-            if ($this->sectioncompletionpercentage[$section->section] == 100) {
-                $classattr .= ' vsf-section-complete';
+        if ($this->course->chart > 1) { // Chart '1' is 'none'.
+            $this->calculate_section_activity_summary($section, $course);
+            if (!empty($this->sectioncompletionpercentage[$section->section])) {
+                if ($this->sectioncompletionpercentage[$section->section] == 100) {
+                    $classattr .= ' vsf-section-complete';
+                }
             }
         }
         $linkclasses = '';
 
-        // If section is hidden then display grey section link
+        // If section is hidden then display grey section link.
         if (!$section->visible) {
             $classattr .= ' hidden';
             $linkclasses .= ' dimmed_text';
@@ -450,12 +453,12 @@ class format_vsf_renderer extends format_section_renderer_base {
                 array('href' => course_get_url($this->course, $section->section), 'class' => $linkclasses));
         }
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
-        $barchart = ((!empty($activitysummary)) && ($this->course->barchart == 2)); // '2' is 'Yes'.
+        $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
         $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart);
         $o .= $this->section_availability($section);
 
-        if ((!$barchart) && (!empty($activitysummary))) {
+        if (($this->course->chart == 3) && (!empty($activitysummary))) { // Chart '3' is 'Donut chart'.
             static $summarychartlayout = array(
                 1 => array('summary' => 10, 'chart' => 2),
                 2 => array('summary' => 8, 'chart' => 4),
@@ -471,10 +474,10 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
             }
         }
-        $o.= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
-        $o.= $this->format_summary_text($section);
-        $o.= html_writer::end_tag('div');
-        if ((!$barchart) && (!empty($activitysummary))) {
+        $o .= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
+        $o .= $this->format_summary_text($section);
+        $o .= html_writer::end_tag('div');
+        if (($this->course->chart == 3) && (!empty($activitysummary))) {
             $o .= html_writer::end_tag('div');
             if ($this->bsnewgrid) {
                 $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
@@ -567,11 +570,11 @@ class format_vsf_renderer extends format_section_renderer_base {
 
             if (!$this->moduleview) {
                 // Output section activities summary.
-                $this->sectioncompletionmarkup[$section->section] =
-                    html_writer::start_tag('div', array('class' => 'section-summary-activities mdl-right'));
+                $this->sectioncompletionmarkup[$section->section] = html_writer::start_tag(
+                    'div', array('class' => 'section-summary-activities mdl-right'));
                 foreach ($sectionmods as $mod) {
-                    $this->sectioncompletionmarkup[$section->section] .=
-                        html_writer::start_tag('span', array('class' => 'activity-count'));
+                    $this->sectioncompletionmarkup[$section->section] .= html_writer::start_tag(
+                        'span', array('class' => 'activity-count'));
                     $this->sectioncompletionmarkup[$section->section] .= $mod['name'].': '.$mod['count'];
                     $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('span');
                 }
@@ -584,11 +587,11 @@ class format_vsf_renderer extends format_section_renderer_base {
                 $this->sectioncompletionpercentage[$section->section] = $percentage;
 
                 $data = new \stdClass();
-                if ($this->course->barchart == 2) { // '2' is 'Yes'.
+                if ($this->course->chart == 2) { // Chart '2' is 'Bar chart'.
                     $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
                     $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
                     $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-bar', $data);
-                } else {
+                } else if ($this->course->chart == 3) { // Chart '3' is 'Donut chart'.
                     $data->hasprogress = true;
                     $data->progress = $this->sectioncompletionpercentage[$section->section];
                     $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);
@@ -609,8 +612,12 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @return string HTML to output.
      */
     protected function section_activity_summary($section, $course, $mods) {
-        $this->calculate_section_activity_summary($section, $course);
-        return $this->sectioncompletionmarkup[$section->section];
+        if ($this->course->chart > 1) { // Chart '1' is 'none'.
+            $this->calculate_section_activity_summary($section, $course);
+            return $this->sectioncompletionmarkup[$section->section];
+        } else {
+            return parent::section_activity_summary($section, $course, $mods);
+        }
     }
 
     /**
@@ -666,7 +673,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     protected function display_section($section) {
         $o = $this->section_header($section, $this->course, false, 0);
 
-        if ((!$this->editing) && ($this->course->barchart == 1)) {
+        if ((!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             if (!empty($activitysummary)) {
                 static $summarychartlayout = array(
@@ -691,7 +698,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
-        if ((!$this->editing) && ($this->course->barchart == 1)) {
+        if ((!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 if ($this->bsnewgrid) {

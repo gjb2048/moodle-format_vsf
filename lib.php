@@ -237,8 +237,8 @@ class format_vsf extends format_base {
                     'default' => $courseconfig->coursedisplay,
                     'type' => PARAM_INT
                 ),
-                'barchart' => array(
-                    'default' => get_config('format_vsf', 'defaultbarchart'),
+                'chart' => array(
+                    'default' => get_config('format_vsf', 'defaultchart'),
                     'type' => PARAM_INT
                 ),
                 'moduleviewbutton' => array(
@@ -320,16 +320,17 @@ class format_vsf extends format_base {
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
                 ),
-                'barchart' => array(
-                    'label' => new lang_string('barchart', 'format_vsf'),
+                'chart' => array(
+                    'label' => new lang_string('chart', 'format_vsf'),
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(
-                            1 => new lang_string('no'),
-                            2 => new lang_string('yes')
+                            1 => new lang_string('none'),                    // None.
+                            2 => new lang_string('barchart', 'format_vsf'),  // Bar.
+                            3 => new lang_string('donutchart', 'format_vsf') // Donut.
                         )
                     ),
-                    'help' => 'barchart',
+                    'help' => 'chart',
                     'help_component' => 'format_vsf',
                 ),
                 'moduleviewbutton' => array(
