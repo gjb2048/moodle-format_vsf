@@ -244,12 +244,12 @@ class format_vsf_renderer extends format_section_renderer_base {
 
     /**
      * Generate the display of the header part of a section before
-     * course modules are included
+     * course modules are included.
      *
-     * @param stdClass $section The course_section entry from DB
-     * @param stdClass $course The course entry from DB
-     * @param bool $onsectionpage true if being printed on a single-section page
-     * @param int $sectionreturn The section to return to after an action
+     * @param stdClass $section The course_section entry from DB.
+     * @param stdClass $course The course entry from DB.
+     * @param bool $onsectionpage true if being printed on a single-section page.
+     * @param int $sectionreturn The section to return to after an action.
      * @return string HTML to output.
      */
     protected function section_header($section, $course, $onsectionpage, $sectionreturn=null) {
@@ -301,7 +301,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-            $o .= $this->section_header_helper($this->section_title($section, $this->course),
+            $o .= $this->section_header_helper($this->section_title_without_link($section, $this->course),
                 $headerclasses, $activitysummary, $barchart);
         } else {
             // Hidden section name so don't output anything bar the header name.
