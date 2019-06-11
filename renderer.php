@@ -863,7 +863,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
         }
 
-        $canbreak = ($this->course->layoutcolumns > 1);
+        $canbreak = (($this->course->layoutcolumns > 1) && (!$this->editing));
 
         $columncount = 1;
         $breaking = false; // Once the first section is shown we can decide if we break on another column.
