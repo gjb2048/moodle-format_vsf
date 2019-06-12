@@ -538,11 +538,6 @@ class format_vsf_renderer extends format_section_renderer_base {
             foreach ($modinfo->sections[$section->section] as $cmid) {
                 $thismod = $modinfo->cms[$cmid];
 
-                if ($thismod->modname == 'label') {
-                    // Labels are special (not interesting for students)!
-                    continue;
-                }
-
                 if ($thismod->uservisible) {
                     if (isset($sectionmods[$thismod->modname])) {
                         $sectionmods[$thismod->modname]['name'] = $thismod->modplural;

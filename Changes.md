@@ -5,6 +5,7 @@ Version 3.6.0.2
   2. Change 'barchart' setting to 'chart' to facilitate having no chart at all.
   3. Show all sections on one page section header not hyperlinked.
   4. Only one column on mobiles, < 576px display width.
+  5. Apply MDL-65853.
 
 Version 3.6.0.1
   1. Apply MDL-64819.
