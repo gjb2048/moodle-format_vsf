@@ -101,12 +101,12 @@ $string['defaultlayoutcolumnorientation'] = 'Kolom Orientatie';
 $string['defaultlayoutcolumnorientation_desc'] = "De standaard kolom orientatie: Verticaal of Horizontaal.";
 
 // Progress bar chart.
-$string['barchart'] = 'Bar chart';
-$string['donutchart'] = 'Donut chart';
-$string['chart'] = 'Donut chart, bar chart or none';
-$string['chart_help'] = 'State if the bar chart should be used instead of the donut.';
-$string['defaultchart'] = 'Donut chart, bar chart or none default';
-$string['defaultchart_desc'] = 'Default setting to state if a chart should be used and if so, which one.  This only applies to new courses or ones that switch to the format.';
+$string['barchart'] = 'Voortgangsbalk';
+$string['donutchart'] = 'Voortgangsradar';
+$string['chart'] = 'Voortgangsradar, Voortgangsbalk of geen voortgang';
+$string['chart_help'] = 'Geef aan of je de voortgang in een balk of radar wilt tonen of helemaal niet.';
+$string['defaultchart'] = 'Standaard voortgangsradar, Voortgangsbalk of geen voortgang';
+$string['defaultchart_desc'] = 'Standaard instelling of je de voortgang wilt tonen en op welke wijze. Deze instelling geeft alleen effect op nieuwe cursussen of waar gewisseld wordt in format.';
 
 // Module view button.
 $string['moduleviewbutton'] = 'Knop Module bekijken';
