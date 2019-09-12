@@ -12,19 +12,23 @@ matrix:
  include:
  - php: 7.0
    env: DB=mysqli
+   services:
+   - mysql
  - php: 7.0
    env: DB=pgsql
    addons:
-      postgresql: 9.3
+      postgresql: 9.4
  - php: 7.1
    env: DB=mysqli
+   services:
+   - mysql
  - php: 7.1
    env: DB=pgsql
    addons:
-      postgresql: 9.3
+      postgresql: 9.4
 env:
  global:
-  - MOODLE_BRANCH=master
+  - MOODLE_BRANCH=MOODLE_36_STABLE
   - IGNORE_NAMES=vsf_colourpopup.php,vsf_colourpopup.js
 
 before_install:
