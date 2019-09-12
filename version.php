@@ -27,8 +27,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018112101;
+$plugin->version   = 2019091201;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->requires  = 2018120301.00; // Moodle 3.6.1 (Build: 20181205).
+$plugin->requires  = 2019052000.00; // 3.7 (Build: 20190520).
 $plugin->component = 'format_vsf';
-$plugin->release = '3.6.0.2';
+$plugin->release = '3.7.1.0';

@@ -1,5 +1,9 @@
 Version Information
 ===================
+Version 3.7.1.0
+  1. Moodle 3.7 version.
+  2. Removed Essential and Bootstrapbase styles as no longer in M3.7.
+
 Version 3.6.0.2
   1. Only one column when editing.
   2. Change 'barchart' setting to 'chart' to facilitate having no chart at all.

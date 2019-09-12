@@ -4,11 +4,11 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 3.6beta+ version 2018112000.01 (Build: 20181120) and above within the 3.6 branch until the
+This version works with Moodle 3.7 version 2019052000.00 (Build: 20190520) and above within the 3.7 branch until the
 next release.
 
 Please ensure that your hardware and software complies with 'Requirements' in 'Installing Moodle' on
-'docs.moodle.org/36/en/Installing_Moodle'.
+'docs.moodle.org/37/en/Installing_Moodle'.
 
 Installation
 ============
