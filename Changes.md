@@ -1,5 +1,7 @@
 Version Information
 ===================
+Version 3.7.1.1
+
 Version 3.7.1.0
   1. Moodle 3.7 version.
   2. Removed Essential and Bootstrapbase styles as no longer in M3.7.
