@@ -47,23 +47,24 @@ class format_vsf_course_renderer extends \core_course_renderer {
             return $output;
         }
 
-        $avcontent = '';
-        if ($vsfavailability) {
-            // Show availability info (if module is not available).
-            $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
-            if (!empty($availabilityinfo)) {
-                $availabilityinfo = preg_replace('#<[^>]+>#', '\'', $availabilityinfo); // Replace tags with a single quote.
-                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo));
-                $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
-                    'class' => '', 'alt' => '', 'role' => 'presentation'));
-                $avcontent .= html_writer::end_tag('span');
-            }
-        }
-
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
-        $textclasses .= ' vsfmod';
         if ($mod->url && $mod->uservisible) {
+            $avcontent = '';
+            if ($vsfavailability) {
+                // Show availability info (if module is not available).
+                $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
+                if (!empty($availabilityinfo)) {
+                    $availabilityinfo = preg_replace('#<[^>]+>#', '\'', $availabilityinfo); // Replace tags with a single quote.
+                    $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo));
+                    $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
+                        'class' => '', 'alt' => '', 'role' => 'presentation'));
+                    $avcontent .= html_writer::end_tag('span');
+                }
+            }
+            if (!empty($avcontent)) {
+                $textclasses .= ' vsfavmod';
+            }
 
             $classes = array();
             if ($content) {
@@ -72,11 +73,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
                     $classes['class'] = $textclasses;
                 }
             } else {
-                $content = html_writer::tag('p',
-                    html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                    'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'))
-                );
-                $classes['class'] = trim('mdl-align '.$textclasses);
+                $content = html_writer::start_tag('p');
+                $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+                    'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
+                $content .= html_writer::end_tag('p');
+                $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
             }
             if ($this->moduleviewbutton) {
                 $output = html_writer::tag('div', $avcontent.$content, $classes);
@@ -87,8 +88,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
 
-            // No link, so display only content.
-            $output = html_writer::tag('div', $avcontent.$content . $groupinglabel,
+            // No link, so display only content.  Availability info should be done in 'course_section_cm_vsf'.
+            $output = html_writer::tag('div', $content . $groupinglabel,
                 array('class' => trim('contentwithoutlink '.$textclasses)));
         }
 
@@ -238,7 +239,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $ci = new \core_availability\info_module($mod);
                 $fullinfo = $ci->get_full_information();
                 if ($fullinfo) {
-                    error_log($fullinfo);
                     $formattedinfo = \core_availability\info::format_info(
                         $fullinfo, $mod->get_course());
                     $output .= $this->vsf_availability_info($formattedinfo, $hidinfoclass);

@@ -272,6 +272,35 @@
     white-space: nowrap;
 }
 
+.format-vsf .vsfavmod {
+    position: relative;
+}
+
+.format-vsf .vsfavmod .vsfai {
+    bottom: 15px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.format-vsf .vsfavmod .vsfai img {
+    width: 100%;
+}
+
+.format-vsf .vsfavmod.vsfmodicon .vsfai {
+    left: -5px;
+    top: -5px;
+}
+
+.format-vsf .vsfavmod.vsfmodicon .vsfai img {
+    width: 50px;
+}
+
+.format-vsf .activity .vsfavmod img.activityicon {
+    margin-right: 0;
+}
+
 .format-vsf .progress-chart-container {
     height: 70px;
     width: 70px;
