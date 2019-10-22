@@ -1,6 +1,7 @@
 Version Information
 ===================
 Version 3.6.1.0
+  1. Improved availability information.
 
 Version 3.6.0.2
   1. Only one column when editing.

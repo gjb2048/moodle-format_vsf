@@ -34,47 +34,125 @@ class format_vsf_course_renderer extends \core_course_renderer {
     /**
      * Renders html to display the module content on the course page (i.e. text of the labels)
      *
-     * @param cm_info $mod
-     * @param array $displayoptions
-     * @return string
+     * @param cm_info $mod.
+     * @param boolean $vsfavailability Use our availability.
+     * @param array $displayoptions.
+     *
+     * @return string.
      */
-    public function course_section_cm_text_vsf(cm_info $mod, $displayoptions = array()) {
+    public function course_section_cm_text_vsf(cm_info $mod, $vsfavailability = false, $displayoptions = array()) {
         $output = '';
         if (!$mod->is_visible_on_course_page()) {
             // Nothing to be displayed to the user.
             return $output;
         }
+
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
+
+        $avcontent = '';
+        if ($vsfavailability) {
+            // Show availability info (if module is not available).
+            $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
+            if (!empty($availabilityinfo)) {
+                $availabilityinfo = $this->process_availability($availabilityinfo);
+                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo['text']));
+                $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
+                    'class' => '', 'alt' => '', 'role' => 'presentation'));
+                $avcontent .= html_writer::end_tag('span');
+            }
+        }
+        if (!empty($avcontent)) {
+            $textclasses .= ' vsfavmod';
+        }
+
+        $classes = array();
+        if ($content) {
+            // If specified, display extra content after link.
+            if (!empty($textclasses)) {
+                $classes['class'] = $textclasses;
+            }
+        } else {
+            $content = html_writer::start_tag('p');
+            $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
+            $content .= html_writer::end_tag('p');
+            $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
+        }
+
         if ($mod->url && $mod->uservisible) {
-
-            $classes = array();
-            if ($content) {
-                // If specified, display extra content after link.
-                if (!empty($textclasses)) {
-                    $classes['class'] = $textclasses;
-                }
-            } else {
-                $content = html_writer::tag('p',
-                        html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                            'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation')));
-                $classes['class'] = trim('mdl-align '.$textclasses);
-            }
-            if ($this->moduleviewbutton) {
-                $output = html_writer::tag('div', $content, $classes);
-            } else {
-                $output = html_writer::link($mod->url, $content, $classes);
-            }
-
+            $groupinglabel = '';
         } else {
             $groupinglabel = $mod->get_grouping_label($textclasses);
+        }
 
-            // No link, so display only content.
-            $output = html_writer::tag('div', $content . $groupinglabel,
-                array('class' => trim('contentwithoutlink '.$textclasses)));
+        $output = html_writer::tag('div', $avcontent.$content.$groupinglabel, $classes);
+        if (!$this->moduleviewbutton) {
+            $output = html_writer::link($mod->url, $output);
+            if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
+                $output .= html_writer::tag('div', $availabilityinfo['button'], array('class' => 'mdl-align vsf-button-bottom'));
+            }
         }
 
         return $output;
+    }
+
+    /**
+     * Processes the availability markup into suitable text for the tool tip and separates out any link.
+     *
+     * @param string $availabilityinfo.
+     *
+     * @return array With separated 'text' and 'button' (if any).
+     */
+     private function process_availability($availabilityinfo) {
+        static $starttag = '<';
+        static $endtag = '>';
+        $intag = false;
+        $inpaymentlinktag = false;
+        $currenttag = '';
+        $lasttag = '';
+        $processed = array('text'  => '', 'button' => '');
+        $avilen = core_text::strlen($availabilityinfo);
+
+        for($charno = 0; $charno < $avilen; $charno++) {
+            $currentchar = $availabilityinfo[$charno];
+
+            if (ord($currentchar) == 10) {  // Ignore line feeds.
+                continue;
+            } else if (!$intag) {
+                if ($currentchar == $starttag) {
+                    $intag = true;
+                } else if ($inpaymentlinktag) {
+                    $processed['button'] .= $currentchar;
+                } else {
+                    $processed['text'] .= $currentchar;
+                }
+            } else {
+                if ($currentchar == $endtag) {
+                    if (($currenttag == 'strong') || ($currenttag == '/strong')) {
+                        $processed['text'] .= '\'';
+                    } else if (($currenttag == 'li') && (($lasttag == '/li'))) {
+                        $processed['text'] .= PHP_EOL.get_string('and', 'availability').PHP_EOL;
+                    } else if (($currenttag == 'li') && ($lasttag == 'ul')) {
+                        $processed['text'] .= PHP_EOL;
+                    } else if ((core_text::substr($currenttag, 0, 2) == 'a ') &&
+                        (strpos($currenttag, 'coursepayment') !== false)) {
+                        $inpaymentlinktag = true;
+                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                    } else if (($currenttag == '/a') && ($inpaymentlinktag)) {
+                        $inpaymentlinktag = false;
+                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                    }
+                    $intag = false;
+                    $lasttag = $currenttag;
+                    $currenttag = '';
+                } else {
+                    $currenttag .= $currentchar;
+                }
+            }
+        }
+
+        return $processed;
     }
 
     /**
@@ -150,18 +228,15 @@ class format_vsf_course_renderer extends \core_course_renderer {
            and for accessibility reasons, e.g. if you have a one-line label
            it should work similarly (at least in terms of ordering) to an
            activity. */
-        $contentpart = $this->course_section_cm_text_vsf($mod, $displayoptions);
         if (empty($url)) {
-            $output .= $contentpart;
+            $output .= $this->course_section_cm_text_vsf($mod, false, $displayoptions);
+            $output .= $this->course_section_cm_availability($mod, $displayoptions);
         }
-
-        // Show availability info (if module is not available).
-        $output .= $this->course_section_cm_availability($mod, $displayoptions);
 
         /* If there is content AND a link, then display the content here
            (AFTER any icons). Otherwise it was displayed before. */
         if (!empty($url)) {
-            $output .= $contentpart;
+            $output .= $this->course_section_cm_text_vsf($mod, true, $displayoptions);
 
             if (!$this->page->user_is_editing()) {
                 if ($this->moduleviewbutton) {
@@ -171,6 +246,94 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         return $output;
+    }
+
+    /**
+     * Renders HTML to show course module availability information (for someone who isn't allowed
+     * to see the activity itself, or for staff)
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function vsf_course_section_cm_availability(cm_info $mod, $displayoptions = array()) {
+        global $CFG;
+        $output = '';
+        if (!$mod->is_visible_on_course_page()) {
+            return $output;
+        }
+        if (!$mod->uservisible) {
+            /* This is a student who is not allowed to see the module but might be allowed
+               to see availability info (i.e. "Available from ...") */
+            if (!empty($mod->availableinfo)) {
+                $formattedinfo = \core_availability\info::format_info(
+                        $mod->availableinfo, $mod->get_course());
+                $output = $this->vsf_availability_info($formattedinfo, 'isrestricted');
+            }
+            return $output;
+        }
+        // this is a teacher who is allowed to see module but still should see the
+        // information that module is not available to all/some students
+        $modcontext = context_module::instance($mod->id);
+        $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $modcontext);
+        if ($canviewhidden && !$mod->visible) {
+            // This module is hidden but current user has capability to see it.
+            // Do not display the availability info if the whole section is hidden.
+            if ($mod->get_section_info()->visible) {
+                $output .= $this->vsf_availability_info(get_string('hiddenfromstudents'), 'ishidden');
+            }
+        } else if ($mod->is_stealth()) {
+            // This module is available but is normally not displayed on the course page
+            // (this user can see it because they can manage it).
+            $output .= $this->vsf_availability_info(get_string('hiddenoncoursepage'), 'isstealth');
+        }
+        if ($canviewhidden && !empty($CFG->enableavailability)) {
+            // Display information about conditional availability.
+            // Don't add availability information if user is not editing and activity is hidden.
+            if ($mod->visible || $this->page->user_is_editing()) {
+                $hidinfoclass = 'isrestricted isfullinfo';
+                if (!$mod->visible) {
+                    $hidinfoclass .= ' hide';
+                }
+                $ci = new \core_availability\info_module($mod);
+                $fullinfo = $ci->get_full_information();
+                if ($fullinfo) {
+                    $formattedinfo = \core_availability\info::format_info(
+                        $fullinfo, $mod->get_course());
+                    $output .= $this->vsf_availability_info($formattedinfo, $hidinfoclass);
+                }
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Displays availability info for a course section or course module
+     *
+     * @param string $text
+     * @param string $additionalclasses
+     * @return string
+     */
+    public function vsf_availability_info($text, $additionalclasses = '') {
+
+        $data = ['text' => $text, 'classes' => $additionalclasses];
+        $additionalclasses = array_filter(explode(' ', $additionalclasses));
+
+        if (in_array('ishidden', $additionalclasses)) {
+            $data['ishidden'] = 1;
+
+        } else if (in_array('isstealth', $additionalclasses)) {
+            $data['isstealth'] = 1;
+
+        } else if (in_array('isrestricted', $additionalclasses)) {
+            $data['isrestricted'] = 1;
+
+            if (in_array('isfullinfo', $additionalclasses)) {
+                $data['isfullinfo'] = 1;
+            }
+        }
+
+        return $this->render_from_template('format_vsf/availability_info', $data);
     }
 
     /**
