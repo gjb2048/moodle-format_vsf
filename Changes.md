@@ -1,6 +1,7 @@
 Version Information
 ===================
 Version 3.7.1.1
+  1. Improved availability information.
 
 Version 3.7.1.0
   1. Moodle 3.7 version.
