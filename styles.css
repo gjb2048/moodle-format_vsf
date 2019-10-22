@@ -240,9 +240,40 @@
 }
 
 .format-vsf .vsf-button-bottom .btn.btn-primary {
-    display: block;
+    display: inline-block;
     margin: 0 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.format-vsf .vsfavmod {
+    position: relative;
+}
+
+.format-vsf .vsfavmod .vsfai {
+    bottom: 20px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 20px;
+}
+
+.format-vsf .vsfavmod .vsfai img {
+    max-height: 100%;
+}
+
+.format-vsf .vsfavmod.vsfmodicon .vsfai {
+    left: -1px;
+    top: -10px;
+}
+
+.format-vsf .vsfavmod.vsfmodicon .vsfai img {
+    max-height: none;
+    width: 42px;
+}
+
+.format-vsf .activity .vsfavmod img.activityicon {
+    margin-right: 0;
 }
