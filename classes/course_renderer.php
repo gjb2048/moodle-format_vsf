@@ -49,48 +49,42 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
         list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
-        if ($mod->url && $mod->uservisible) {
-            $avcontent = '';
-            if ($vsfavailability) {
-                // Show availability info (if module is not available).
-                $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
-                if (!empty($availabilityinfo)) {
-                    $availabilityinfo = preg_replace('#<[^>]+>#', '\'', $availabilityinfo); // Replace tags with a single quote.
-                    $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo));
-                    $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
-                        'class' => '', 'alt' => '', 'role' => 'presentation'));
-                    $avcontent .= html_writer::end_tag('span');
-                }
-            }
-            if (!empty($avcontent)) {
-                $textclasses .= ' vsfavmod';
-            }
 
-            $classes = array();
-            if ($content) {
-                // If specified, display extra content after link.
-                if (!empty($textclasses)) {
-                    $classes['class'] = $textclasses;
-                }
-            } else {
-                $content = html_writer::start_tag('p');
-                $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                    'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
-                $content .= html_writer::end_tag('p');
-                $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
+        $avcontent = '';
+        if ($vsfavailability) {
+            // Show availability info (if module is not available).
+            $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
+            if (!empty($availabilityinfo)) {
+                $availabilityinfo = preg_replace('#<[^>]+>#', '\'', $availabilityinfo); // Replace tags with a single quote.
+                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo));
+                $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
+                    'class' => '', 'alt' => '', 'role' => 'presentation'));
+                $avcontent .= html_writer::end_tag('span');
             }
-            if ($this->moduleviewbutton) {
-                $output = html_writer::tag('div', $avcontent.$content, $classes);
-            } else {
-                $output = html_writer::link($mod->url, $avcontent.$content, $classes);
-            }
+        }
+        if (!empty($avcontent)) {
+            $textclasses .= ' vsfavmod';
+        }
 
+        $classes = array();
+        if ($content) {
+            // If specified, display extra content after link.
+            if (!empty($textclasses)) {
+                $classes['class'] = $textclasses;
+            }
         } else {
-            $groupinglabel = $mod->get_grouping_label($textclasses);
+            $content = html_writer::start_tag('p');
+            $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
+            $content .= html_writer::end_tag('p');
+            $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
+        }
 
-            // No link, so display only content.  Availability info should be done in 'course_section_cm_vsf'.
-            $output = html_writer::tag('div', $content . $groupinglabel,
-                array('class' => trim('contentwithoutlink '.$textclasses)));
+        $groupinglabel = $mod->get_grouping_label($textclasses);
+
+        $output = html_writer::tag('div', $avcontent.$content.$groupinglabel, $classes);
+        if (!$this->moduleviewbutton) {
+            $output = html_writer::link($mod->url, $output);
         }
 
         return $output;
