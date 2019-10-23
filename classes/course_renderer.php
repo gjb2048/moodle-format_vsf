@@ -80,7 +80,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
         }
 
-        $groupinglabel = $mod->get_grouping_label($textclasses);
+        if ($mod->url && $mod->uservisible) {
+            $groupinglabel = '';
+        } else {
+            $groupinglabel = $mod->get_grouping_label($textclasses);
+        }
 
         $output = html_writer::tag('div', $avcontent.$content.$groupinglabel, $classes);
         if (!$this->moduleviewbutton) {

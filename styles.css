@@ -281,20 +281,21 @@
     left: 0;
     position: absolute;
     right: 0;
-    top: 0;
+    text-align: center;
+    top: 20px;
 }
 
 .format-vsf .vsfavmod .vsfai img {
-    width: 100%;
+    width: 40%;
 }
 
 .format-vsf .vsfavmod.vsfmodicon .vsfai {
-    left: -5px;
-    top: -5px;
+    left: -1px;
+    top: -10px;
 }
 
 .format-vsf .vsfavmod.vsfmodicon .vsfai img {
-    width: 50px;
+    width: 42px;
 }
 
 .format-vsf .activity .vsfavmod img.activityicon {
