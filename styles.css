@@ -277,7 +277,7 @@
 }
 
 .format-vsf .vsfavmod .vsfai {
-    bottom: 15px;
+    bottom: 20px;
     left: 0;
     position: absolute;
     right: 0;
@@ -286,7 +286,7 @@
 }
 
 .format-vsf .vsfavmod .vsfai img {
-    width: 40%;
+    max-height: 100%;
 }
 
 .format-vsf .vsfavmod.vsfmodicon .vsfai {
@@ -295,6 +295,7 @@
 }
 
 .format-vsf .vsfavmod.vsfmodicon .vsfai img {
+    max-height: none;
     width: 42px;
 }
 
