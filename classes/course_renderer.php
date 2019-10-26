@@ -55,8 +55,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             // Show availability info (if module is not available).
             $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
             if (!empty($availabilityinfo)) {
-                $availabilityinfo = preg_replace('#<[^>]+>#', '\'', $availabilityinfo); // Replace tags with a single quote.
-                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo));
+                $availabilityinfo = $this->process_availability($availabilityinfo);
+                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo['text']));
                 $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
                     'class' => '', 'alt' => '', 'role' => 'presentation'));
                 $avcontent .= html_writer::end_tag('span');
@@ -89,9 +89,65 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $output = html_writer::tag('div', $avcontent.$content.$groupinglabel, $classes);
         if (!$this->moduleviewbutton) {
             $output = html_writer::link($mod->url, $output);
+            if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
+                $output .= html_writer::tag('div', $availabilityinfo['button'], array('class' => 'mdl-align vsf-button-bottom'));
+            }
         }
 
         return $output;
+    }
+
+    /**
+     * Processes the availability markup into suitable text for the tool tip and separates out any link.
+     *
+     * @param string $availabilityinfo.
+     *
+     * @return array With separated 'text' and 'button' (if any).
+     */
+     private function process_availability($availabilityinfo) {
+        static $starttag = '<';
+        static $endtag = '>';
+        $intag = false;
+        $inlinktag = false;
+        $currenttag = '';
+        $lasttag = '';
+        $processed = array('text'  => '', 'button' => '');
+
+        $avilen = core_text::strlen($availabilityinfo);
+
+        for($charno = 0; $charno < $avilen; $charno++) {
+            $currentchar = $availabilityinfo[$charno];
+            if (!$intag) {
+                if ($currentchar == $starttag) {
+                    $intag = true;
+                } else if ($inlinktag) {
+                    $processed['button'] .= $currentchar;
+                } else {
+                    $processed['text'] .= $currentchar;
+                }
+            } else {
+                if ($currentchar == $endtag) {
+                    if (($currenttag == 'strong') || ($currenttag == '/strong')) {
+                        $processed['text'] .= '\'';
+                    } else if (($currenttag == 'li') && (($lasttag == '/li'))) {
+                        $processed['text'] .= ' '.get_string('and', 'availability').' ';
+                    } else if (core_text::substr($currenttag, 0, 2) == 'a ') {
+                        $inlinktag = true;
+                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                    } else if ($currenttag == '/a') {
+                        $inlinktag = false;
+                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                    }
+                    $intag = false;
+                    $lasttag = $currenttag;
+                    $currenttag = '';
+                } else {
+                    $currenttag .= $currentchar;
+                }
+            }
+        }
+
+        return $processed;
     }
 
     /**
