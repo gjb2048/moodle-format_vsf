@@ -130,7 +130,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
                     if (($currenttag == 'strong') || ($currenttag == '/strong')) {
                         $processed['text'] .= '\'';
                     } else if (($currenttag == 'li') && (($lasttag == '/li'))) {
-                        $processed['text'] .= ' '.get_string('and', 'availability').' ';
+                        $processed['text'] .= PHP_EOL.get_string('and', 'availability');
+                    } else if (($currenttag == 'ul') || ($currenttag == 'br/')) {
+                        $processed['text'] .= PHP_EOL;
                     } else if (core_text::substr($currenttag, 0, 2) == 'a ') {
                         $inlinktag = true;
                         $processed['button'] .= $starttag.$currenttag.$endtag;
