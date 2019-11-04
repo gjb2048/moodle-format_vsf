@@ -108,19 +108,21 @@ class format_vsf_course_renderer extends \core_course_renderer {
         static $starttag = '<';
         static $endtag = '>';
         $intag = false;
-        $inlinktag = false;
+        $inpaymentlinktag = false;
         $currenttag = '';
         $lasttag = '';
         $processed = array('text'  => '', 'button' => '');
-
         $avilen = core_text::strlen($availabilityinfo);
 
         for($charno = 0; $charno < $avilen; $charno++) {
             $currentchar = $availabilityinfo[$charno];
-            if (!$intag) {
+
+            if (ord($currentchar) == 10) {  // Ignore line feeds.
+                continue;
+            } else if (!$intag) {
                 if ($currentchar == $starttag) {
                     $intag = true;
-                } else if ($inlinktag) {
+                } else if ($inpaymentlinktag) {
                     $processed['button'] .= $currentchar;
                 } else {
                     $processed['text'] .= $currentchar;
@@ -130,14 +132,15 @@ class format_vsf_course_renderer extends \core_course_renderer {
                     if (($currenttag == 'strong') || ($currenttag == '/strong')) {
                         $processed['text'] .= '\'';
                     } else if (($currenttag == 'li') && (($lasttag == '/li'))) {
-                        $processed['text'] .= PHP_EOL.get_string('and', 'availability');
-                    } else if (($currenttag == 'ul') || ($currenttag == 'br/')) {
+                        $processed['text'] .= PHP_EOL.get_string('and', 'availability').PHP_EOL;
+                    } else if (($currenttag == 'li') && ($lasttag == 'ul')) {
                         $processed['text'] .= PHP_EOL;
-                    } else if (core_text::substr($currenttag, 0, 2) == 'a ') {
-                        $inlinktag = true;
+                    } else if ((core_text::substr($currenttag, 0, 2) == 'a ') &&
+                        (strpos($currenttag, 'coursepayment') !== false)) {
+                        $inpaymentlinktag = true;
                         $processed['button'] .= $starttag.$currenttag.$endtag;
-                    } else if ($currenttag == '/a') {
-                        $inlinktag = false;
+                    } else if (($currenttag == '/a') && ($inpaymentlinktag)) {
+                        $inpaymentlinktag = false;
                         $processed['button'] .= $starttag.$currenttag.$endtag;
                     }
                     $intag = false;

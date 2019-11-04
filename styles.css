@@ -265,7 +265,7 @@
 }
 
 .format-vsf .vsf-button-bottom .btn.btn-primary {
-    display: block;
+    display: inline-block;
     margin: 0 5px;
     overflow: hidden;
     text-overflow: ellipsis;
