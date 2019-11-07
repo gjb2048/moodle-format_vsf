@@ -1,5 +1,7 @@
 Version Information
 ===================
+Version 3.5.1.6
+
 Version 3.5.1.5
   1. Only one column when editing.
   2. Change 'barchart' setting to 'chart' to facilitate having no chart at all.
