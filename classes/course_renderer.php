@@ -104,7 +104,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      *
      * @return array With separated 'text' and 'button' (if any).
      */
-     private function process_availability($availabilityinfo) {
+    private function process_availability($availabilityinfo) {
         static $starttag = '<';
         static $endtag = '>';
         $intag = false;
@@ -114,7 +114,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $processed = array('text'  => '', 'button' => '');
         $avilen = core_text::strlen($availabilityinfo);
 
-        for($charno = 0; $charno < $avilen; $charno++) {
+        for ($charno = 0; $charno < $avilen; $charno++) {
             $currentchar = $availabilityinfo[$charno];
 
             if (ord($currentchar) == 10) {  // Ignore line feeds.
