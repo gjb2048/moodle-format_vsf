@@ -90,7 +90,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if (!$this->moduleviewbutton) {
             $output = html_writer::link($mod->url, $output);
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
-                $output .= html_writer::tag('div', $availabilityinfo['button'], array('class' => 'mdl-align vsf-button-bottom'));
+                $output .= html_writer::tag('div', $availabilityinfo['button'], array('class' => 'mdl-align vsf-button-bottom vsf-aib'));
             }
         }
 
