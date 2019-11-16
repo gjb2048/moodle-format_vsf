@@ -265,11 +265,15 @@
 }
 
 .format-vsf .vsf-button-bottom .btn.btn-primary {
-    display: inline-block;
+    display: block;
     margin: 0 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.format-vsf .vsf-button-bottom.vsf-aib .btn.btn-primary {
+    display: inline-block;
 }
 
 .format-vsf .vsfavmod {
