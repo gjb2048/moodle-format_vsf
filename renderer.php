@@ -863,7 +863,6 @@ class format_vsf_renderer extends format_section_renderer_base {
         $columncount = 1;
         $breaking = false; // Once the first section is shown we can decide if we break on another column.
         $breakpoint = 0;
-        $loopsection = 0;
         $shownsectioncount = 0;
 
         // Now the list of sections..
@@ -888,6 +887,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
         }
 
+        $sectiondisplayarray = array();
         foreach ($sectionsinfo as $section => $thissection) {
             if ($section == 0) {
                 // Already output above.
@@ -897,7 +897,6 @@ class format_vsf_renderer extends format_section_renderer_base {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
-            $loopsection++;
             /* Show the section if the user is permitted to access it, OR if it's not available
                but there is some available info text which explains the reason & should display. */
             $showsection = $thissection->uservisible ||
@@ -909,18 +908,30 @@ class format_vsf_renderer extends format_section_renderer_base {
                    hidden by the availability system, which is set to hide the reason. */
                 if (!$this->course->hiddensections && $thissection->available) {
                     echo $this->section_hidden($section, $this->course->id);
+                    $thissection->ishidden = true;
+                    $sectiondisplayarray[] = $thissection;
                 }
 
                 continue;
-            }
-            $shownsectioncount++;
-
-            if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
-                // Display section summary only.
-                echo $this->section_summary($thissection, $this->course, null);
             } else {
-                // Display the section.
-                echo $this->display_section($thissection);
+                $thissection->isshown = true;
+                $sectiondisplayarray[] = $thissection;
+            }
+        }
+
+        $numshownsections = count($sectiondisplayarray);
+        foreach ($sectiondisplayarray as $thissection) {
+            $shownsectioncount++;
+            if (!empty($thissection->ishidden)) {
+                echo $this->section_hidden($thissection);
+            } else if (!empty($thissection->isshown)) {
+                if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+                    // Display section summary only.
+                    echo $this->section_summary($thissection, $this->course, null);
+                } else {
+                    // Display the section.
+                    echo $this->display_section($thissection);
+                }
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
@@ -929,7 +940,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                     if ($breaking == false) {
                         $breaking = true;
                         // Divide the number of sections by the number of columns.
-                        $breakpoint = $numsections / $this->course->layoutcolumns;
+                        $breakpoint = $numshownsections / $this->course->layoutcolumns;
                     }
 
                     if (($breaking == true) && ($shownsectioncount >= $breakpoint) &&
@@ -938,7 +949,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                         echo $this->start_columns_section_list();
                         $columncount++;
                         // Next breakpoint is...
-                        $breakpoint += $numsections / $this->course->layoutcolumns;
+                        $breakpoint += $numshownsections / $this->course->layoutcolumns;
                     }
                 } else { // Horizontal mode.
                     if ($breaking == false) {
@@ -947,7 +958,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                         $breakpoint = $this->course->layoutcolumns;
                     }
 
-                    if (($breaking == true) && ($shownsectioncount >= $breakpoint) && ($loopsection < $this->course->numsections)) {
+                    if (($breaking == true) && ($shownsectioncount >= $breakpoint)) {
                         echo $this->end_section_list();
                         echo $this->start_columns_section_list();
                         // Next breakpoint is...

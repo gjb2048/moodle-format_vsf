@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 3.7.1.2
+  1. Improved column code after CONTRIB-8008 on Collapsed Topics.
+
 Version 3.7.1.1
   1. Improved availability information.
 
