@@ -1,5 +1,11 @@
 Version Information
 ===================
+Version 3.9.0.1
+  1. Apply MDL-65539.
+  2. Apply MDL-68231.
+  3. Apply MDL-68235.
+  4. Apply MDL-69065.
+
 Version 3.7.1.2
   1. Improved column code after CONTRIB-8008 on Collapsed Topics.
 

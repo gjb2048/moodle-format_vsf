@@ -219,8 +219,9 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @param string $titleattributes Section header title attributes.
      * @param type $activitysummary Contains the bar chart if $barchart is true.
      * @param type $barchart States if the bar chart is shown.
+     * @param type $sectionid Section id.
      */
-    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart) {
+    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid) {
         $o = html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
@@ -228,7 +229,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
         }
 
-        $o .= $this->output->heading($title, 3, $titleattributes);
+        $o .= $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
 
         if ($barchart) {
             $o .= html_writer::end_tag('div');
@@ -276,7 +277,9 @@ class format_vsf_renderer extends format_section_renderer_base {
             'id' => 'section-'.$section->section,
             'class' => 'section main clearfix'.$sectionstyle,
             'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($section)
+            'aria-labelledby' => "sectionid-{$section->id}-title",
+            'data-sectionid' => $section->section, // MDL-68235.
+            'data-sectionreturnid' => $sectionreturn // MDL-69065.
         );
         $o = html_writer::start_tag('li', $liattributes);
 
@@ -302,12 +305,13 @@ class format_vsf_renderer extends format_section_renderer_base {
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
             $o .= $this->section_header_helper($this->section_title_without_link($section, $this->course),
-                $headerclasses, $activitysummary, $barchart);
+                $headerclasses, $activitysummary, $barchart, $section->id);
         } else {
             // Hidden section name so don't output anything bar the header name.
             $headerclasses .= ' accesshide';
             $o .= html_writer::start_tag('div', array('class' => 'sectionname'));
-            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses);
+            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses,
+                "sectionid-{$section->id}-title");
             $o .= html_writer::end_tag('div');
         }
 
@@ -341,7 +345,8 @@ class format_vsf_renderer extends format_section_renderer_base {
             'id' => 'section-'.$sectionno,
             'class' => 'section main clearfix orphaned hidden',
             'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($sectionno)
+            'aria-label' => $this->courseformat->get_section_name($sectionno),
+            'data-sectionid' => $sectionno
         );
         $o .= html_writer::start_tag('li', $liattributes);
         $o .= html_writer::tag('div', '', array('class' => 'left side'));
@@ -384,7 +389,8 @@ class format_vsf_renderer extends format_section_renderer_base {
             'id' => 'section-'.$sectionno,
             'class' => $sectionstyle,
             'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($section)
+            'aria-label' => $this->courseformat->get_section_name($section),
+            'data-sectionid' => $sectionno
         );
 
         $o .= html_writer::start_tag('li', $liattributes);
@@ -439,7 +445,8 @@ class format_vsf_renderer extends format_section_renderer_base {
             'id' => 'section-'.$section->section,
             'class' => $classattr,
             'role' => 'region',
-            'aria-label' => $title
+            'aria-labelledby' => "sectionid-{$section->id}-title",
+            'data-sectionid' => $section->section
         );
         $o = html_writer::start_tag('li', $liattributes);
 
@@ -455,7 +462,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
         $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-        $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart);
+        $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section->id);
         $o .= $this->section_availability($section);
 
         if (($this->course->chart == 3) && (!empty($activitysummary))) { // Chart '3' is 'Donut chart'.
