@@ -278,9 +278,11 @@ class format_vsf_renderer extends format_section_renderer_base {
             'class' => 'section main clearfix'.$sectionstyle,
             'role' => 'region',
             'aria-labelledby' => "sectionid-{$section->id}-title",
-            'data-sectionid' => $section->section, // MDL-68235.
-            'data-sectionreturnid' => $sectionreturn // MDL-69065.
+            'data-sectionid' => $section->section // MDL-68235.
         );
+        if (!empty($sectionreturn)) {
+            $liattributes['data-sectionreturnid'] = $sectionreturn; // MDL-69065.
+        }
         $o = html_writer::start_tag('li', $liattributes);
 
         if ($this->editing) {
