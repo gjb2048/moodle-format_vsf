@@ -40,8 +40,6 @@ class format_vsf_renderer extends format_section_renderer_base {
     private $courseformat = null; // Our course format object as defined in lib.php.
     private $course; // Course with settings.
 
-    protected $bsnewgrid = false; // Using new BS4 grid system.
-
     private $moduleview; // Showing the modules in a grid.
 
     protected $editing; // Are we editing?
@@ -62,14 +60,6 @@ class format_vsf_renderer extends format_section_renderer_base {
            is on we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other
            managing capability. */
         $page->set_other_editing_capability('moodle/course:setcurrentsection');
-
-        if (strcmp($page->theme->name, 'boost') === 0) {
-            $this->bsnewgrid = true;
-        } else if (!empty($page->theme->parents)) {
-            if (in_array('boost', $page->theme->parents) === true) {
-                $this->bsnewgrid = true;
-            }
-        }
 
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
@@ -475,37 +465,23 @@ class format_vsf_renderer extends format_section_renderer_base {
                 4 => array('summary' => 6, 'chart' => 6)
             );
 
-            if ($this->bsnewgrid) {
-                $o .= html_writer::start_tag('div', array('class' => 'row'));
-                $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
-            } else {
-                $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-                $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
-            }
+            $o .= html_writer::start_tag('div', array('class' => 'row'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
         }
         $o .= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
         $o .= $this->format_summary_text($section);
         $o .= html_writer::end_tag('div');
         if (($this->course->chart == 3) && (!empty($activitysummary))) {
             $o .= html_writer::end_tag('div');
-            if ($this->bsnewgrid) {
-                $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-            } else {
-                $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-            }
+            $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
             $o .= $activitysummary;
             $o .= html_writer::end_tag('div');
             $o .= html_writer::end_tag('div');
         }
 
         if (($section->uservisible) && ($this->showcontinuebutton == 2)) {
-            if ($this->bsnewgrid) {
-                $o .= html_writer::start_tag('div', array('class' => 'row'));
-                $o .= html_writer::start_tag('div', array('class' => 'col-md-12'));
-            } else {
-                $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-                $o .= html_writer::start_tag('div', array('class' => 'span12'));
-            }
+            $o .= html_writer::start_tag('div', array('class' => 'row'));
+            $o .= html_writer::start_tag('div', array('class' => 'col-md-12'));
             $o .= html_writer::start_tag('a', array('href' => course_get_url($this->course, $section->section), 'class' => 'vsf-continue'));
             $o .= get_string('continue', 'format_vsf');
             $o .= html_writer::end_tag('a');
@@ -687,13 +663,8 @@ class format_vsf_renderer extends format_section_renderer_base {
                     4 => array('summary' => 7, 'chart' => 5)
                 );
 
-                if ($this->bsnewgrid) {
-                    $o .= html_writer::start_tag('div', array('class' => 'row'));
-                    $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
-                } else {
-                    $o .= html_writer::start_tag('div', array('class' => 'row-fluid'));
-                    $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
-                }
+                $o .= html_writer::start_tag('div', array('class' => 'row'));
+                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
             }
         }
 
@@ -705,11 +676,7 @@ class format_vsf_renderer extends format_section_renderer_base {
         if ((!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
-                if ($this->bsnewgrid) {
-                    $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-                } else {
-                    $o .= html_writer::start_tag('div', array('class' => 'span'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-                }
+                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
                 $o .= $activitysummary;
                 $o .= html_writer::end_tag('div');
                 $o .= html_writer::end_tag('div');
@@ -1011,11 +978,7 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     protected function get_row_class() {
-        if ($this->bsnewgrid) {
-            return 'row';
-        } else {
-            return 'row-fluid';
-        }
+        return 'row';
     }
 
     protected function get_column_class($columns) {
