@@ -15,7 +15,7 @@
     "url": "https://github.com/gjb2048/moodle-format_vsf/issues"
   },
   "devDependencies": {
-    "grunt": "1.0.1",
+    "grunt": "1.4.0",
     "grunt-exec": "~0.4.6",
     "grunt-sass": "2.1.0",
     "grunt-stylelint": "0.6.0",
