@@ -1,0 +1,27 @@
+ul.sections :target::before { /* Ref: MDL-64894 */
+    pointer-events: none;
+    width: 0;
+}
+
+.course-content ul.sections .current::before { /* Ref: CONTRIB-7607 and MDL-64894 */
+    height: auto;
+    margin-top: 0;
+}
+
+.format-vsf .jumpmenu .form-inline {
+    display: block;
+}
+
+.format-vsf .course-content ul.section,
+.format-vsf .course-content ul.sections {
+    padding: 0;
+}
+
+.format-vsf .course-content ul.section {
+    margin: 0;
+}
+
+/* Module view */
+.format-vsf .moduleview.section {
+    padding-left: 0;
+}
