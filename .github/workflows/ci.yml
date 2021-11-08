@@ -80,6 +80,7 @@ jobs:
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          CODECHECKER_IGNORE_PATHS: 'node_modules'
           CODECHECKER_IGNORE_NAMES: 'vsf_colourpopup.php,vsf_colourpopup.js'
 
       - name: PHP Lint
