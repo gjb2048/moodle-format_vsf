@@ -40,7 +40,7 @@ module.exports = function(grunt) { // jshint ignore:line
     var path = require('path'),
         tasks = {},
         cwd = process.env.PWD || process.cwd(), // jshint ignore:line
-        DOMParser = require('xmldom').DOMParser,
+        DOMParser = require('@xmldom/xmldom').DOMParser,
         xpath = require('xpath'),
         semver = require('semver');
 
@@ -110,6 +110,8 @@ module.exports = function(grunt) { // jshint ignore:line
     decachephp += 'require(\'' + configfile + '\');';
     decachephp += 'purge_all_caches();';
 
+    const sass = require('node-sass');
+
     // Project configuration.
     grunt.initConfig({
         sass: {
@@ -119,6 +121,7 @@ module.exports = function(grunt) { // jshint ignore:line
                 }
             },
             options: { // https://github.com/sass/node-sass#options
+                implementation: sass,
                 includePaths: ["scss/"],
                 indentWidth: 4,
                 outputStyle: 'expanded'
