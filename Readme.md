@@ -4,11 +4,11 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 3.9 version 2020061500.00 (Build: 20200615) and above within the 3.9 branch until the
+This version works with Moodle 3.11 version 2021051700.00 (Build: 20210517) and above within the 3.11 branch until the
 next release.
 
 Please ensure that your hardware and software complies with 'Requirements' in 'Installing Moodle' on
-'docs.moodle.org/39/en/Installing_Moodle'
+'docs.moodle.org/311/en/Installing_Moodle'
 
 Installation
 ============
@@ -32,7 +32,7 @@ Uninstallation
 Usage
 =====
 1. When creating a new course, select the course format as 'Progress Section Format' from the list of available options.
-2. To change an existing course, edit the course settings (http://docs.moodle.org/39/en/course/edit) and select the
+2. To change an existing course, edit the course settings (http://docs.moodle.org/311/en/course/edit) and select the
    'Progress Section Format' from the list of available options.
 
 Notes
