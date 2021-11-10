@@ -222,27 +222,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        // Fetch completion details.
-        global $USER;
-        $completion = '';
-        $showcompletionconditions = $course->showcompletionconditions == COMPLETION_SHOW_CONDITIONS;
-        $completiondetails = \core_completion\cm_completion_details::get_instance($mod, $USER->id, $showcompletionconditions);
-        $ismanualcompletion = $completiondetails->has_completion() && !$completiondetails->is_automatic();
-
-        // Fetch activity dates.
-        $activitydates = [];
-        if ($course->showactivitydates) {
-            $activitydates = \core\activity_dates::get_dates_for_module($mod, $USER->id);
-        }
-
-        /* Show the activity information if:
-           - The course's showcompletionconditions setting is enabled; or
-           - The activity tracks completion manually; or
-           - There are activity dates to be shown. */
-        if ($showcompletionconditions || $ismanualcompletion || $activitydates) {
-            $completion = $this->output->activity_information($mod, $completiondetails, $activitydates);
-        }
-
         /* If there is content but NO link (eg label), then display the
            content here (BEFORE any icons). In this case cons must be
            displayed after the content so that it makes more sense visually
@@ -252,12 +231,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if (empty($url)) {
             $output .= $this->course_section_cm_text_vsf($mod, false, $displayoptions);
             $output .= $this->course_section_cm_availability($mod, $displayoptions);
-            $output .= $completion;
         } else {
             /* If there is content AND a link, then display the content here
                (AFTER any icons). Otherwise it was displayed before. */
             $output .= $this->course_section_cm_text_vsf($mod, true, $displayoptions);
-            $output .= $completion;
 
             if (!$this->page->user_is_editing()) {
                 if ($this->moduleviewbutton) {
