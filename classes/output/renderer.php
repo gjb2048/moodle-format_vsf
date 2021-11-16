@@ -228,7 +228,7 @@ class renderer extends \format_section_renderer_base {
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
             $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
-        }        
+        }
 
         $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
 
@@ -579,8 +579,10 @@ class renderer extends \format_section_renderer_base {
         $showcompletioninfo = false, $checkchart = true) {
 
         $displaysectioncontext = array(
+            'sectionavailabilty' => $this->section_availability($section),
             'sectionid' => $section->id,
             'sectionno' => $section->section,
+            'summary' => $this->format_summary_text($section)
         );
 
         $sectionstyle = '';
@@ -601,9 +603,9 @@ class renderer extends \format_section_renderer_base {
             ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
-        
+
         $displaysectioncontext['sectionstyle'] = $sectionstyle;
-        
+
         /*$liattributes = array(
             'id' => 'section-'.$section->section,
             'class' => 'section main clearfix'.$sectionstyle,
@@ -629,8 +631,6 @@ class renderer extends \format_section_renderer_base {
 
         //$o .= html_writer::start_tag('div', array('class' => 'content'));
 
-        $o = $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
-
         // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
 
@@ -642,23 +642,18 @@ class renderer extends \format_section_renderer_base {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-            $o .= $this->section_header_helper($this->section_title_without_link($section, $this->course),
+            $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
                 $headerclasses, $activitysummary, $barchart, $section->id);
         } else {
             // Hidden section name so don't output anything bar the header name.
-            //$headerclasses .= ' accesshide';
-            $headerclasses .= ' dimmed_text';
-            $o .= $this->section_header_helper($this->section_title_without_link($section, $this->course),
+            $headerclasses .= ' accesshide';
+            $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
                 $headerclasses, '', false, $section->id, false);
-            /*$o .= html_writer::start_tag('div', array('class' => 'sectionname'));
-            $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses,
-                "sectionid-{$section->id}-title");
-            $o .= html_writer::end_tag('div');*/
         }
 
-        $o .= $this->section_availability($section);
+        //$o .= $this->section_availability($section);
 
-        $summary = $this->format_summary_text($section);
+        /*$summary = $this->format_summary_text($section);
         if (!empty($summary)) {
             $o .= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
             $o .= $summary;
@@ -666,18 +661,36 @@ class renderer extends \format_section_renderer_base {
         } else {
             $o .= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
             $o .= html_writer::end_tag('div');
-        }
+        }*/
 
         if ($showcompletioninfo) {
             // Show completion help icon.
             $completioninfo = new \completion_info($this->course);
-            $o .= $completioninfo->display_help_icon();
+            $displaysectioncontext['completioninfo'] = $completioninfo->display_help_icon();
         }
         
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
-            $activitysummary = $this->section_activity_summary($section, $this->course, null);
+            if (empty($activitysummary)) {
+                $activitysummary = $this->section_activity_summary($section, $this->course, null);
+            }
             if (!empty($activitysummary)) {
-                static $summarychartlayout = array(
+                $displaysectioncontext['chartas'] = true;
+                $displaysectioncontext['activitysummary'] = $activitysummary;
+                switch($this->course->layoutcolumns) {
+                    case 1:
+                        $displaysectioncontext['chartcol1'] = true;
+                    break;
+                    case 2:
+                        $displaysectioncontext['chartcol2'] = true;
+                    break;
+                    case 3:
+                        $displaysectioncontext['chartcol3'] = true;
+                    break;
+                    case 4:
+                        $displaysectioncontext['chartcol4'] = true;
+                    break;
+                }
+                /*static $summarychartlayout = array(
                     1 => array('summary' => 10, 'chart' => 2),
                     2 => array('summary' => 9, 'chart' => 3),
                     3 => array('summary' => 8, 'chart' => 4),
@@ -685,16 +698,16 @@ class renderer extends \format_section_renderer_base {
                 );
 
                 $o .= html_writer::start_tag('div', array('class' => 'row'));
-                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
+                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));*/
             }
         }
 
         if ($section->uservisible) {
-            $o .= $this->courserenderer->course_section_cm_list($this->course, $section, 0);
-            $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
+            $displaysectioncontext['cmlist'] = $this->courserenderer->course_section_cm_list($this->course, $section, 0);
+            $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
-        if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
+        /*if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
@@ -702,11 +715,12 @@ class renderer extends \format_section_renderer_base {
                 $o .= html_writer::end_tag('div');
                 $o .= html_writer::end_tag('div');
             }
-        }
+        }*/
 
-        $o .= $this->section_footer();
 
-        return $o;
+        //$o .= $this->section_footer();
+
+        return $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
     }
 
     /**
