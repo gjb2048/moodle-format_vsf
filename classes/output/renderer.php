@@ -219,8 +219,11 @@ class renderer extends \format_section_renderer_base {
      * @param type $barchart States if the bar chart is shown.
      * @param type $sectionid Section id.
      */
-    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid) {
-        $sectionheaderhelpercontext = array('hasbarchart' => $barchart);
+    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid, $vsfsectionname = true) {
+        $sectionheaderhelpercontext = array(
+            'hasbarchart' => $barchart,
+            'vsfsectionname' => $vsfsectionname
+        );
 
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
@@ -572,9 +575,15 @@ class renderer extends \format_section_renderer_base {
      *
      * @return string HTML to output.
      */
-    protected function display_section($section, $onsectionpage, $sectionreturn = null, $showcompletioninfo = false, $checkchart = true) {
-        $sectionstyle = '';
+    protected function display_section($section, $onsectionpage, $sectionreturn = null,
+        $showcompletioninfo = false, $checkchart = true) {
 
+        $displaysectioncontext = array(
+            'sectionid' => $section->id,
+            'sectionno' => $section->section,
+        );
+
+        $sectionstyle = '';
         if ($section->section != 0) {
             // Only in the non-general sections.
             if (!$section->visible) {
@@ -592,27 +601,35 @@ class renderer extends \format_section_renderer_base {
             ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
-        $liattributes = array(
+        
+        $displaysectioncontext['sectionstyle'] = $sectionstyle;
+        
+        /*$liattributes = array(
             'id' => 'section-'.$section->section,
             'class' => 'section main clearfix'.$sectionstyle,
             'role' => 'region',
             'aria-labelledby' => "sectionid-{$section->id}-title",
             'data-sectionid' => $section->section // MDL-68235.
-        );
+        );*/
         if (!empty($sectionreturn)) {
-            $liattributes['data-sectionreturnid'] = $sectionreturn; // MDL-69065.
+            //$liattributes['data-sectionreturnid'] = $sectionreturn; // MDL-69065.
+            $displaysectioncontext['sectionreturnid'] = $sectionstyle;
         }
-        $o = html_writer::start_tag('li', $liattributes);
+        //$o = html_writer::start_tag('li', $liattributes);
 
         if ($this->editing) {
             $leftcontent = $this->section_left_content($section, $this->course, $onsectionpage);
-            $o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
+            $displaysectioncontext['leftcontent'] = $this->section_left_content($section, $this->course, $onsectionpage);
+            //$o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
 
             $rightcontent = $this->section_right_content($section, $this->course, $onsectionpage);
-            $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+            $displaysectioncontext['rightcontent'] = $this->section_right_content($section, $this->course, $onsectionpage);
+            //$o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
         }
 
-        $o .= html_writer::start_tag('div', array('class' => 'content'));
+        //$o .= html_writer::start_tag('div', array('class' => 'content'));
+
+        $o = $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
 
         // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
@@ -629,11 +646,14 @@ class renderer extends \format_section_renderer_base {
                 $headerclasses, $activitysummary, $barchart, $section->id);
         } else {
             // Hidden section name so don't output anything bar the header name.
-            $headerclasses .= ' accesshide';
-            $o .= html_writer::start_tag('div', array('class' => 'sectionname'));
+            //$headerclasses .= ' accesshide';
+            $headerclasses .= ' dimmed_text';
+            $o .= $this->section_header_helper($this->section_title_without_link($section, $this->course),
+                $headerclasses, '', false, $section->id, false);
+            /*$o .= html_writer::start_tag('div', array('class' => 'sectionname'));
             $o .= $this->output->heading($this->section_title($section, $this->course), 3, $headerclasses,
                 "sectionid-{$section->id}-title");
-            $o .= html_writer::end_tag('div');
+            $o .= html_writer::end_tag('div');*/
         }
 
         $o .= $this->section_availability($section);

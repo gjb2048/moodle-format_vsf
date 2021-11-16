@@ -25,29 +25,26 @@
   @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 }}
 {{!
-    @template format_vsf/section-header-helper
+    @template format_vsf/display_section
 
-    This template renders the section header helper.
+    This template renders the section.
 
     Example context (json):
     {
-        "activitysummary": "Activity summary markup if hasbarchart is true",
-        "hasbarchart": true,
-        "heading": "Heading markup",
-        "vsfsectionname": true
+        "leftcontent": "Left content markup if any",
+        "rightcontent": "Right content markup if any",
+        "sectionid": "1",
+        "sectionno": "1",
+        "sectionstyle", " current"
     }
 }}
-<div class="sectionname{{#vsfsectionname}} vsf-sectionname{{/vsfsectionname}}">
-{{#hasbarchart}}
-    <div class="row no-gutters">
-        <div class="col-sm-6 col-lg-7 col-xl-8">
-{{/hasbarchart}}
-    {{{heading}}}
-{{#hasbarchart}}
-        </div>
-        <div class="col-sm-6 col-lg-5 col-xl-4">
-            {{{activitysummary}}}
-        </div>
-    </div>
-{{/hasbarchart}}
-</div>
+<li id="section-{{sectonno}}" class="section main clearfix{{sectionstyle}}" role="region" aria-labelledby="sectionid-{{sectionid}}-title" data-sectionid="{{sectionno}}" {{#sectionreturnid}}data-sectionreturnid="{{sectionreturnid}}"{{/sectionreturnid}}>
+    {{#leftcontent}}
+        <div class="left side">{{{leftcontent}}}</div>
+    {{/leftcontent}}
+    {{#rightcontent}}
+        <div class="right side">{{{rightcontent}}}</div>
+    {{/rightcontent}}
+    <div class="content">
+    {{! </div> }}
+{{! </li> }}
