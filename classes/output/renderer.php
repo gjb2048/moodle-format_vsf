@@ -26,10 +26,18 @@
  *
  */
 
-defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/course/format/renderer.php');
+namespace format_vsf\output;
 
-class format_vsf_renderer extends format_section_renderer_base {
+defined('MOODLE_INTERNAL') || die();
+
+use context_course;
+use course_get_url;
+use html_writer;
+
+require_once($CFG->dirroot.'/course/format/renderer.php'); // For format_section_renderer_base.
+require_once($CFG->dirroot.'/course/format/lib.php'); // For course_get_format.
+
+class renderer extends \format_section_renderer_base {
 
     private $sectioncompletionpercentage = array();
     private $sectioncompletionmarkup = array();
@@ -50,7 +58,7 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @param moodle_page $page
      * @param string $target one of rendering target constants
      */
-    public function __construct(moodle_page $page, $target) {
+    public function __construct(\moodle_page $page, $target) {
         parent::__construct($page, $target);
         $this->courseformat = course_get_format($page->course); // Needed for settings retrieval.
 
@@ -76,47 +84,6 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Generate the starting container html for a list of sections
-     * @return string HTML to output.
-     */
-    protected function start_section_list() {
-        return html_writer::start_tag('ul', array('class' => 'sections'));
-    }
-
-    /**
-     * Generate the starting container html for a list of sections in columns.
-     * @return string HTML to output.
-     */
-    protected function start_columns_section_list() {
-        $classes = 'sections';
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-        if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
-            $classes .= ' '.$this->get_column_class($this->course->layoutcolumns);
-        } else {
-            $classes .= ' '.$this->get_row_class();
-        }
-        return html_writer::start_tag('ul', array('class' => $classes));
-    }
-
-    /**
-     * Generate the closing container html for a list of sections
-     * @return string HTML to output.
-     */
-    protected function end_section_list() {
-        return html_writer::end_tag('ul');
-    }
-
-    /**
-     * Generate the title for this section page
-     * @return string the page title
-     */
-    protected function page_title() {
-        return get_string('topicoutline');
-    }
-
-    /**
      * Generate the section title, wraps it in a link to the section page if page is to be displayed on a separate page
      *
      * @param stdClass $section The course_section entry from DB
@@ -136,6 +103,47 @@ class format_vsf_renderer extends format_section_renderer_base {
      */
     public function section_title_without_link($section, $course) {
         return $this->render($this->courseformat->inplace_editable_render_section_name($section, false));
+    }
+
+    /**
+     * Generate the starting container html for a list of sections
+     * @return string HTML to output.
+     */
+    protected function start_section_list() {
+        return html_writer::start_tag('ul', array('class' => 'sections'));
+    }
+
+    /**
+     * Generate the starting container html for a list of sections in columns.
+     * @return string HTML to output.
+     */
+    protected function start_columns_section_list() {
+        $classes = 'sections ';
+        if (empty($this->course)) {
+            $this->course = $this->courseformat->get_course();
+        }
+        if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
+            $classes .= $this->get_column_class($this->course->layoutcolumns);
+        } else {
+            $classes .= $this->get_row_class();
+        }
+        return html_writer::start_tag('ul', array('class' => $classes));
+    }
+
+    /**
+     * Generate the closing container html for a list of sections
+     * @return string HTML to output.
+     */
+    protected function end_section_list() {
+        return html_writer::end_tag('ul');
+    }
+
+    /**
+     * Generate the title for this section page
+     * @return string the page title
+     */
+    protected function page_title() {
+        return get_string('topicoutline');
     }
 
     /**
@@ -212,25 +220,16 @@ class format_vsf_renderer extends format_section_renderer_base {
      * @param type $sectionid Section id.
      */
     protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid) {
-        $o = html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
+        $sectionheaderhelpercontext = array('hasbarchart' => $barchart);
+        
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
-            $o .= html_writer::start_tag('div', array('class' => 'row no-gutters'));
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-7 col-xl-8'));
-        }
-
-        $o .= $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
-
-        if ($barchart) {
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-6 col-lg-5 col-xl-4'));
-            $o .= $activitysummary;
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::end_tag('div');
-        }
-        $o .= html_writer::end_tag('div');
-
-        return $o;
+            $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
+        }        
+        
+        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
+        
+        return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
     }
 
     /**
@@ -519,7 +518,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $total = 0;
             $complete = 0;
             $cancomplete = isloggedin() && !isguestuser();
-            $completioninfo = new completion_info($course);
+            $completioninfo = new \completion_info($course);
             foreach ($modinfo->sections[$section->section] as $cmid) {
                 $thismod = $modinfo->cms[$cmid];
 
@@ -700,7 +699,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             $context->id, 'course', 'section', $section->id);
 
         if (!empty($summarytext)) {
-            $options = new stdClass();
+            $options = new \stdClass();
             $options->noclean = true;
             $options->overflowdiv = true;
             return format_text($summarytext, $section->summaryformat, $options);
@@ -770,7 +769,7 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         echo $this->section_header($thissection, $this->course, true, $displaysection);
         // Show completion help icon.
-        $completioninfo = new completion_info($this->course);
+        $completioninfo = new \completion_info($this->course);
         echo $completioninfo->display_help_icon();
 
         echo $this->courserenderer->course_section_cm_list($this->course, $thissection, $displaysection);
@@ -805,7 +804,7 @@ class format_vsf_renderer extends format_section_renderer_base {
 
         $context = context_course::instance($course->id);
         // Title with completion help icon.
-        $completioninfo = new completion_info($course);
+        $completioninfo = new \completion_info($course);
         echo $completioninfo->display_help_icon();
         echo $this->output->heading($this->page_title(), 2, 'accesshide');
 
