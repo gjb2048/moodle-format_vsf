@@ -606,30 +606,17 @@ class renderer extends \format_section_renderer_base {
 
         $displaysectioncontext['sectionstyle'] = $sectionstyle;
 
-        /*$liattributes = array(
-            'id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle,
-            'role' => 'region',
-            'aria-labelledby' => "sectionid-{$section->id}-title",
-            'data-sectionid' => $section->section // MDL-68235.
-        );*/
         if (!empty($sectionreturn)) {
-            //$liattributes['data-sectionreturnid'] = $sectionreturn; // MDL-69065.
-            $displaysectioncontext['sectionreturnid'] = $sectionstyle;
+            $displaysectioncontext['sectionreturnid'] = $sectionstyle; // MDL-69065.
         }
-        //$o = html_writer::start_tag('li', $liattributes);
 
         if ($this->editing) {
             $leftcontent = $this->section_left_content($section, $this->course, $onsectionpage);
             $displaysectioncontext['leftcontent'] = $this->section_left_content($section, $this->course, $onsectionpage);
-            //$o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
 
             $rightcontent = $this->section_right_content($section, $this->course, $onsectionpage);
             $displaysectioncontext['rightcontent'] = $this->section_right_content($section, $this->course, $onsectionpage);
-            //$o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
         }
-
-        //$o .= html_writer::start_tag('div', array('class' => 'content'));
 
         // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
@@ -651,24 +638,12 @@ class renderer extends \format_section_renderer_base {
                 $headerclasses, '', false, $section->id, false);
         }
 
-        //$o .= $this->section_availability($section);
-
-        /*$summary = $this->format_summary_text($section);
-        if (!empty($summary)) {
-            $o .= html_writer::start_tag('div', array('class' => 'summary vsf-summary'));
-            $o .= $summary;
-            $o .= html_writer::end_tag('div');
-        } else {
-            $o .= html_writer::start_tag('div', array('class' => 'summary vsf-empty-summary'));
-            $o .= html_writer::end_tag('div');
-        }*/
-
         if ($showcompletioninfo) {
             // Show completion help icon.
             $completioninfo = new \completion_info($this->course);
             $displaysectioncontext['completioninfo'] = $completioninfo->display_help_icon();
         }
-        
+
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             if (empty($activitysummary)) {
                 $activitysummary = $this->section_activity_summary($section, $this->course, null);
@@ -690,15 +665,6 @@ class renderer extends \format_section_renderer_base {
                         $displaysectioncontext['chartcol4'] = true;
                     break;
                 }
-                /*static $summarychartlayout = array(
-                    1 => array('summary' => 10, 'chart' => 2),
-                    2 => array('summary' => 9, 'chart' => 3),
-                    3 => array('summary' => 8, 'chart' => 4),
-                    4 => array('summary' => 7, 'chart' => 5)
-                );
-
-                $o .= html_writer::start_tag('div', array('class' => 'row'));
-                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));*/
             }
         }
 
@@ -706,19 +672,6 @@ class renderer extends \format_section_renderer_base {
             $displaysectioncontext['cmlist'] = $this->courserenderer->course_section_cm_list($this->course, $section, 0);
             $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
-
-        /*if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
-            if (!empty($activitysummary)) {
-                $o .= html_writer::end_tag('div');
-                $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-                $o .= $activitysummary;
-                $o .= html_writer::end_tag('div');
-                $o .= html_writer::end_tag('div');
-            }
-        }*/
-
-
-        //$o .= $this->section_footer();
 
         return $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
     }
