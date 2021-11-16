@@ -221,14 +221,14 @@ class renderer extends \format_section_renderer_base {
      */
     protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid) {
         $sectionheaderhelpercontext = array('hasbarchart' => $barchart);
-        
+
         if ($barchart) {
             $titleattributes .= ' vsf-inline';
             $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
         }        
-        
+
         $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
-        
+
         return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
     }
 
@@ -649,10 +649,28 @@ class renderer extends \format_section_renderer_base {
         return $links;
     }
 
-    protected function display_section($section) {
-        $o = $this->section_header($section, $this->course, false, 0);
+    /**
+     * Generate the display of the header part of a section before
+     * course modules are included.
+     *
+     * @param stdClass $section The course_section entry from DB.
+     * @param bool $onsectionpage true if being printed on a single-section page.
+     * @param int $sectionreturn The section to return to after an action.
+     * @param bool $showcompletioninfo Show the completion information.
+     * @param bool $checkchart Check to see if a chart can be displayed.
+     *
+     * @return string HTML to output.
+     */
+    protected function display_section($section, $onsectionpage, $sectionreturn = null, $showcompletioninfo = false, $checkchart = true) {
+        $o = $this->section_header($section, $this->course, $onsectionpage, $sectionreturn);
 
-        if ((!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
+        if ($showcompletioninfo) {
+            // Show completion help icon.
+            $completioninfo = new \completion_info($this->course);
+            $o .= $completioninfo->display_help_icon();
+        }
+        
+        if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             if (!empty($activitysummary)) {
                 static $summarychartlayout = array(
@@ -672,7 +690,7 @@ class renderer extends \format_section_renderer_base {
             $o .= $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
-        if ((!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
+        if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
             if (!empty($activitysummary)) {
                 $o .= html_writer::end_tag('div');
                 $o .= html_writer::start_tag('div', array('class' => 'col-lg-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
@@ -727,8 +745,8 @@ class renderer extends \format_section_renderer_base {
         // Can we view the section in question?
         if (!($sectioninfo = $modinfo->get_section_info($displaysection))) {
             // This section doesn't exist.
-            print_error('unknowncoursesection', 'error', null, $course->fullname);
-            return;
+            throw new \moodle_exception('unknowncoursesection', 'error', '',
+                get_string('unknowncoursesection', 'error', $course->fullname));
         }
 
         if (!$sectioninfo->uservisible) {
@@ -767,14 +785,7 @@ class renderer extends \format_section_renderer_base {
         // Now the list of sections.
         echo $this->start_section_list();
 
-        echo $this->section_header($thissection, $this->course, true, $displaysection);
-        // Show completion help icon.
-        $completioninfo = new \completion_info($this->course);
-        echo $completioninfo->display_help_icon();
-
-        echo $this->courserenderer->course_section_cm_list($this->course, $thissection, $displaysection);
-        echo $this->courserenderer->course_section_add_cm_control($this->course, $displaysection, $displaysection);
-        echo $this->section_footer();
+        echo $this->display_section($thissection, true, $displaysection, true, false);
         echo $this->end_section_list();
 
         // Display section bottom navigation.
@@ -848,10 +859,7 @@ class renderer extends \format_section_renderer_base {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
             if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                echo $this->section_header($thissection, $this->course, false, 0);
-                echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
-                echo $this->courserenderer->course_section_add_cm_control($this->course, 0, 0);
-                echo $this->section_footer();
+                echo $this->display_section($thissection, false, 0, false, false);
             }
             if ($canbreak === true) {
                 echo $this->end_section_list();
@@ -905,7 +913,7 @@ class renderer extends \format_section_renderer_base {
                     echo $this->section_summary($thissection, $this->course, null);
                 } else {
                     // Display the section.
-                    echo $this->display_section($thissection);
+                    echo $this->display_section($thissection, false, 0);
                 }
             }
 
