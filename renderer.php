@@ -353,50 +353,6 @@ class format_vsf_renderer extends format_section_renderer_base {
     }
 
     /**
-     * Generate the html for a hidden section
-     *
-     * @param int $sectionno The section number in the course which is being displayed
-     * @param int|stdClass $courseorid The course to get the section name for (object or just course id)
-     * @return string HTML to output.
-     */
-    protected function section_hidden($sectionno, $courseorid = null) {
-        if ($courseorid) {
-            $sectionname = get_section_name($courseorid, $sectionno);
-            $strnotavailable = get_string('notavailablecourse', '', $sectionname);
-        } else {
-            $strnotavailable = get_string('notavailable');
-        }
-
-        $o = '';
-        $sectionstyle = 'section main clearfix hidden';
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-        if (($section->section != 0) &&
-            ($this->course->layoutcolumns > 1) &&
-            ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
-            $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
-        }
-        $liattributes = array(
-            'id' => 'section-'.$sectionno,
-            'class' => $sectionstyle,
-            'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($section),
-            'data-sectionid' => $sectionno
-        );
-
-        $o .= html_writer::start_tag('li', $liattributes);
-        $o .= html_writer::tag('div', '', array('class' => 'left side'));
-        $o .= html_writer::tag('div', '', array('class' => 'right side'));
-        $o .= html_writer::start_tag('div', array('class' => 'content'));
-        $o .= html_writer::tag('div', $strnotavailable);
-        $o .= html_writer::end_tag('div');
-        $o .= html_writer::end_tag('li');
-
-        return $o;
-    }
-
-    /**
      * Generate a summary of a section for display on the 'course index page'
      *
      * @param stdClass $section The course_section entry from DB
@@ -733,11 +689,6 @@ class format_vsf_renderer extends format_section_renderer_base {
         }
 
         if (!$sectioninfo->uservisible) {
-            if (!$this->course->hiddensections) {
-                echo $this->start_section_list();
-                echo $this->section_hidden($displaysection, $this->course->id);
-                echo $this->end_section_list();
-            }
             // Can't view this section.
             return;
         }
@@ -875,22 +826,9 @@ class format_vsf_renderer extends format_section_renderer_base {
             }
             /* Show the section if the user is permitted to access it, OR if it's not available
                but there is some available info text which explains the reason & should display. */
-            $showsection = $thissection->uservisible ||
+            if ($thissection->uservisible ||
                 ($thissection->visible && !$thissection->available &&
-                !empty($thissection->availableinfo));
-            if (!$showsection) {
-                /* If the hiddensections option is set to 'show hidden sections in collapsed
-                   form', then display the hidden section message - UNLESS the section is
-                   hidden by the availability system, which is set to hide the reason. */
-                if (!$this->course->hiddensections && $thissection->available) {
-                    echo $this->section_hidden($section, $this->course->id);
-                    $thissection->ishidden = true;
-                    $sectiondisplayarray[] = $thissection;
-                }
-
-                continue;
-            } else {
-                $thissection->isshown = true;
+                !empty($thissection->availableinfo))) {
                 $sectiondisplayarray[] = $thissection;
             }
         }
@@ -898,16 +836,12 @@ class format_vsf_renderer extends format_section_renderer_base {
         $numshownsections = count($sectiondisplayarray);
         foreach ($sectiondisplayarray as $thissection) {
             $shownsectioncount++;
-            if (!empty($thissection->ishidden)) {
-                echo $this->section_hidden($thissection);
-            } else if (!empty($thissection->isshown)) {
-                if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
-                    // Display section summary only.
-                    echo $this->section_summary($thissection, $this->course, null);
-                } else {
-                    // Display the section.
-                    echo $this->display_section($thissection);
-                }
+            if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+                // Display section summary only.
+                echo $this->section_summary($thissection, $this->course, null);
+            } else {
+                // Display the section.
+                echo $this->display_section($thissection);
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
