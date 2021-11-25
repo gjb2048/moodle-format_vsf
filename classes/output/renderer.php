@@ -236,6 +236,26 @@ class renderer extends \format_section_renderer_base {
     }
 
     /**
+     * Generate the stealth section.
+     *
+     * @param stdClass $section The course_section entry from DB.
+     * @param stdClass $course The course entry from DB.
+     * @return string HTML to output.
+     */
+    protected function stealth_section($section, $course) {
+        $stealthsectioncontext = array(
+            'cscml' => $this->courserenderer->course_section_cm_list($course, $section->section, 0),
+            'heading' => $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $section->section),
+                3, 'sectionname vsf-sectionname', "sectionid-{$section->id}-title"),
+            'rightcontent' => $this->section_right_content($section, $course, false),
+            'sectionid' => $section->id,
+            'sectionno' => $section->section
+        );
+
+        return $this->render_from_template('format_vsf/stealthsection', $stealthsectioncontext);
+    }
+
+    /**
      * Generate the header html of a stealth section.
      *
      * @param int $sectionno The section number in the course which is being displayed
@@ -937,9 +957,7 @@ class renderer extends \format_section_renderer_base {
                     // This is not stealth section or it is empty.
                     continue;
                 }
-                echo $this->stealth_section_header($section);
-                echo $this->courserenderer->course_section_cm_list($this->course, $thissection, 0);
-                echo $this->stealth_section_footer();
+                echo $this->stealth_section($thissection, $this->course);
             }
             echo $this->end_section_list();
             if (($canbreak === true) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
