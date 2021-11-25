@@ -1,0 +1,70 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_vsf/sectionsummary
+
+    Progress Section Format section summary template.
+
+    Context variables required for this template:
+    * activitysummary - Section activity summary.
+    * chartas - Chart with activity summary.
+    * formatsummarytext - The format summary text.
+    * heading - The heading.
+    * sectionavailability - Section availability.
+    * sectionno - Section number.
+    * title - The title.
+
+    Example context (json):
+    {
+        "activitysummary": "Activity summary markup if any",
+        "chartas": true,
+        "formatsummarytext": '<div class="no-overflow"><p dir="ltr" style="text-align: left;">Section 1 summary</p></div>',
+        "heading": '<h3 class="section-title"><a href="https://moodle.local/course/view.php?id=24#section-1" class="">Section 1</a></h3>',
+        "sectionavailability": '<div class="section_availability"></div>',
+        "sectionno": "1"
+    }
+}}
+<li id="section-{{sectionno}}" class="section main section-summary clearfix{{#classattrextra}}{{classattrextra}}{{/classattrextra}} role="region" aria-labeled-by="sectionid-{{sectionid}}-title" data-sectionid="{{sectionno}}">
+    <div class="left side"></div>
+    <div class="right side"></div>
+    <div class="content">
+        {{{heading}}}
+        {{{sectionavailability}}}
+        {{#chartas}}
+        <div class="row">
+            <div class="col-lg-{{#chartcol1}}10{{/chartcol1}}{{#chartcol2}}9{{/chartcol2}}{{#chartcol3}}8{{/chartcol3}}{{#chartcol4}}7{{/chartcol4}}">
+        {{/chartas}}
+        <div class="summarytext vsf-summary">
+            {{{formatsummarytext}}}
+        </div>
+        {{#chartas}}
+            </div>
+            <div class="col-lg-{{#chartcol1}}2{{/chartcol1}}{{#chartcol2}}3{{/chartcol2}}{{#chartcol3}}4{{/chartcol3}}{{#chartcol4}}5{{/chartcol4}}">
+                {{{activitysummary}}}
+            </div>
+        </div>
+        {{/chartas}}
+        {{#continuebutton}}
+        <div class="row">
+            <div class="col-md-12">
+                {{{continuebutton}}}
+            </div>
+        </div>
+        {{/continuebutton}}
+        {{{sectionavailabilitymessage}}}
+    </div>
+</li>

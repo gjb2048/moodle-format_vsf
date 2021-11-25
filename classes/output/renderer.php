@@ -275,7 +275,7 @@ class renderer extends \format_section_renderer_base {
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        if (($section->section != 0) &&
+        if (($sectionno != 0) &&
             ($this->course->layoutcolumns > 1) &&
             ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
@@ -284,7 +284,7 @@ class renderer extends \format_section_renderer_base {
             'id' => 'section-'.$sectionno,
             'class' => $sectionstyle,
             'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($section),
+            'aria-label' => $this->courseformat->get_section_name($sectionno),
             'data-sectionid' => $sectionno
         );
 
@@ -300,7 +300,7 @@ class renderer extends \format_section_renderer_base {
     }
 
     /**
-     * Generate a summary of a section for display on the 'course index page'
+     * Generate a summary of a section for display on the 'course index page'.
      *
      * @param stdClass $section The course_section entry from DB
      * @param stdClass $course The course entry from DB
@@ -308,12 +308,18 @@ class renderer extends \format_section_renderer_base {
      * @return string HTML to output.
      */
     protected function section_summary($section, $course, $mods) {
-        $classattr = 'section main section-summary clearfix';
+        $sectionsummarycontext = array(
+            'formatsummarytext' => $this->format_summary_text($section),
+            'sectionavailability' => $this->section_availability($section),
+            'sectionno' => $section->section
+        );
+
+        $classattrextra = '';
         if ($this->course->chart > 1) { // Chart '1' is 'none'.
             $this->calculate_section_activity_summary($section, $course);
             if (!empty($this->sectioncompletionpercentage[$section->section])) {
                 if ($this->sectioncompletionpercentage[$section->section] == 100) {
-                    $classattr .= ' vsf-section-complete';
+                    $classattrextra .= ' vsf-section-complete';
                 }
             }
         }
@@ -321,10 +327,10 @@ class renderer extends \format_section_renderer_base {
 
         // If section is hidden then display grey section link.
         if (!$section->visible) {
-            $classattr .= ' hidden';
+            $classattrextra .= ' hidden';
             $linkclasses .= ' dimmed_text';
         } else if ($this->courseformat->is_section_current($section)) {
-            $classattr .= ' current';
+            $classattrextra .= ' current';
         }
 
         $title = $this->courseformat->get_section_name($section);
@@ -334,21 +340,9 @@ class renderer extends \format_section_renderer_base {
         if (($section->section != 0) &&
             ($this->course->layoutcolumns > 1) &&
             ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
-            $classattr .= ' '.$this->get_column_class($this->course->layoutcolumns);
+            $classattrextra .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
-        $liattributes = array(
-            'id' => 'section-'.$section->section,
-            'class' => $classattr,
-            'role' => 'region',
-            'aria-labelledby' => "sectionid-{$section->id}-title",
-            'data-sectionid' => $section->section
-        );
-        $o = html_writer::start_tag('li', $liattributes);
-
-        $o .= html_writer::tag('div', '', array('class' => 'left side'));
-        $o .= html_writer::tag('div', '', array('class' => 'right side'));
-
-        $o .= html_writer::start_tag('div', array('class' => 'content'));
+        $sectionsummarycontext['classattrextra'] = $classattrextra;
 
         if ($section->uservisible) {
             $title = html_writer::tag('a', $title,
@@ -357,49 +351,42 @@ class renderer extends \format_section_renderer_base {
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
         $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-        $o .= $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section->id);
-        $o .= $this->section_availability($section);
+        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section->id);
 
-        if (($this->course->chart == 3) && (!empty($activitysummary))) { // Chart '3' is 'Donut chart'.
-            static $summarychartlayout = array(
-                1 => array('summary' => 10, 'chart' => 2),
-                2 => array('summary' => 8, 'chart' => 4),
-                3 => array('summary' => 7, 'chart' => 5),
-                4 => array('summary' => 6, 'chart' => 6)
-            );
-
-            $o .= html_writer::start_tag('div', array('class' => 'row'));
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['summary']));
-        }
-        $o .= html_writer::start_tag('div', array('class' => 'summarytext vsf-summary'));
-        $o .= $this->format_summary_text($section);
-        $o .= html_writer::end_tag('div');
-        if (($this->course->chart == 3) && (!empty($activitysummary))) {
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::start_tag('div', array('class' => 'col-sm-'.$summarychartlayout[$this->course->layoutcolumns]['chart']));
-            $o .= $activitysummary;
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::end_tag('div');
+        if ($this->course->chart == 3) { // Donut chart.
+            if (!empty($activitysummary)) {
+                $sectionsummarycontext['chartas'] = true;
+                $sectionsummarycontext['activitysummary'] = $activitysummary;
+                switch($this->course->layoutcolumns) {
+                    case 1:
+                        $sectionsummarycontext['chartcol1'] = true;
+                    break;
+                    case 2:
+                        $sectionsummarycontext['chartcol2'] = true;
+                    break;
+                    case 3:
+                        $sectionsummarycontext['chartcol3'] = true;
+                    break;
+                    case 4:
+                        $sectionsummarycontext['chartcol4'] = true;
+                    break;
+                }
+            }
         }
 
         if (($section->uservisible) && ($this->showcontinuebutton == 2)) {
-            $o .= html_writer::start_tag('div', array('class' => 'row'));
-            $o .= html_writer::start_tag('div', array('class' => 'col-md-12'));
-            $o .= html_writer::start_tag('a', array('href' => course_get_url($this->course, $section->section), 'class' => 'vsf-continue'));
-            $o .= get_string('continue', 'format_vsf');
-            $o .= html_writer::end_tag('a');
-            $o .= html_writer::end_tag('div');
-            $o .= html_writer::end_tag('div');
+            $sectionsummarycontext['continuebutton'] = html_writer::tag(
+                'a',
+                get_string('continue', 'format_vsf'),
+                array('href' => course_get_url($this->course, $section->section), 'class' => 'vsf-continue')
+            );
         }
 
         $context = context_course::instance($this->course->id);
-        $o .= $this->section_availability_message($section,
-                has_capability('moodle/course:viewhiddensections', $context));
+        $sectionsummarycontext['sectionavailabilitymessage'] = $this->section_availability_message($section,
+            has_capability('moodle/course:viewhiddensections', $context));
 
-        $o .= html_writer::end_tag('div');
-        $o .= html_writer::end_tag('li');
-
-        return $o;
+        return $this->render_from_template('format_vsf/sectionsummary', $sectionsummarycontext);
     }
 
     /**
@@ -602,7 +589,6 @@ class renderer extends \format_section_renderer_base {
 
         if ($this->editing) {
             $displaysectioncontext['leftcontent'] = $this->section_left_content($section, $this->course, $onsectionpage);
-
             $displaysectioncontext['rightcontent'] = $this->section_right_content($section, $this->course, $onsectionpage);
         }
 
