@@ -256,36 +256,6 @@ class renderer extends \format_section_renderer_base {
     }
 
     /**
-     * Generate the header html of a stealth section.
-     *
-     * @param int $sectionno The section number in the course which is being displayed
-     * @return string HTML to output.
-     */
-    protected function stealth_section_header($sectionno) {
-        $o = '';
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-        $liattributes = array(
-            'id' => 'section-'.$sectionno,
-            'class' => 'section main clearfix orphaned hidden',
-            'role' => 'region',
-            'aria-label' => $this->courseformat->get_section_name($sectionno),
-            'data-sectionid' => $sectionno
-        );
-        $o .= html_writer::start_tag('li', $liattributes);
-        $o .= html_writer::tag('div', '', array('class' => 'left side'));
-        $section = $this->courseformat->get_section($sectionno);
-        $rightcontent = $this->section_right_content($section, $this->course, false);
-        $o .= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
-        $o .= html_writer::start_tag('div', array('class' => 'content'));
-        $o .= html_writer::start_tag('div', array('class' => 'sectionname vsf-sectionname'));
-        $o .= $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $sectionno), 3);
-        $o .= html_writer::end_tag('div');
-        return $o;
-    }
-
-    /**
      * Generate the html for a hidden section
      *
      * @param int $sectionno The section number in the course which is being displayed
@@ -631,10 +601,8 @@ class renderer extends \format_section_renderer_base {
         }
 
         if ($this->editing) {
-            $leftcontent = $this->section_left_content($section, $this->course, $onsectionpage);
             $displaysectioncontext['leftcontent'] = $this->section_left_content($section, $this->course, $onsectionpage);
 
-            $rightcontent = $this->section_right_content($section, $this->course, $onsectionpage);
             $displaysectioncontext['rightcontent'] = $this->section_right_content($section, $this->course, $onsectionpage);
         }
 
