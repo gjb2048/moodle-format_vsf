@@ -574,6 +574,7 @@ class format_vsf_renderer extends format_section_renderer_base {
             or !$this->course->hiddensections;
 
         $links = array('previous' => '', 'next' => '');
+        $linkicons = $this->get_nav_link_icons();
         $back = $sectionno - 1;
         while ($back > 0 and empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
@@ -581,7 +582,7 @@ class format_vsf_renderer extends format_section_renderer_base {
                 if (!$sections[$back]->visible) {
                     $params = array('class' => 'dimmed_text');
                 }
-                $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-left')).' ';
+                $previouslink = html_writer::tag('span', '', array('class' => $linkicons['previous'])).' ';
                 $previouslink .= get_section_name($this->course, $sections[$back]);
                 $links['previous'] = html_writer::link(course_get_url($this->course, $back), $previouslink, $params);
             }
@@ -597,13 +598,20 @@ class format_vsf_renderer extends format_section_renderer_base {
                     $params = array('class' => 'dimmed_text');
                 }
                 $nextlink = get_section_name($this->course, $sections[$forward]).' ';
-                $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-right'));
+                $nextlink .= html_writer::tag('span', '', array('class' => $linkicons['next']));
                 $links['next'] = html_writer::link(course_get_url($this->course, $forward), $nextlink, $params);
             }
             $forward++;
         }
 
         return $links;
+    }
+
+    protected function get_nav_link_icons() {
+        return array(
+            'next' => 'fa fa-arrow-circle-o-right',
+            'previous' => 'fa fa-arrow-circle-o-left'
+        );
     }
 
     protected function display_section($section) {
