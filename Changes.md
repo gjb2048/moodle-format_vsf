@@ -16,6 +16,9 @@ Version 3.9.0.1
   3. Apply MDL-68235.
   4. Apply MDL-69065.
   5. Remove 'bsnewgrid' as no longer need BS2.3.2 support.
+  6. Foundation theme support.
+  7. Section_hidden's are not shown.
+  8. Add support for custom icons in a theme.
 
 Version 3.7.1.2
   1. Improved column code after CONTRIB-8008 on Collapsed Topics.
