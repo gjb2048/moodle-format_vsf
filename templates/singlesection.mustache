@@ -1,0 +1,75 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_vsf/singlesection
+
+    Progress Section Format single section template.
+
+    Context variables required for this template:
+    * activityclipboard = Activity clipboard.
+    * sectionnavnext - Next navigation links.
+    * sectionnavprevious - Previous navigation links.
+    * sectionnavselection - Jump to menu.
+    * sectiontitle - Section title.
+    * thissection - The actual section.
+
+    Example context (json):
+    {
+        "activityclipboard": "",
+        "sectionnavnext": '<a href="https://moodle.localhost/course/view.php?id=14&section=4"><span class="fa fa-arrow-circle-o-left"></span> Section 4</a>',
+        "sectionnavprevious": '<a href="https://moodle.localhost/course/view.php?id=14&section=2"><span class="fa fa-arrow-circle-o-left"></span> Section 2</a>',
+        "sectionnavselection":
+            '<div class="jumpmenu">
+                <form method="post" action="https://moodle.localhost/course/jumpto.php" class="form-inline" id="sectionmenu">
+                    <input type="hidden" name="sesskey" value="sessionkey">
+                    <select class="custom-select jumpmenu" name="jump" data-init-value="">
+                        <option value="" selected="">Jump to...</option>
+                        <option value="/course/view.php?id=14">Main course page</option>
+                        <option value="/course/view.php?id=14&amp;section=1">Section 1</option>
+                        <option value="/course/view.php?id=14&amp;section=3">Section 3</option>
+                        <option value="/course/view.php?id=14&amp;section=4">Section 4</option>
+                        <option value="/course/view.php?id=14&amp;section=5">Section 5</option>
+                        <option value="/course/view.php?id=14&amp;section=6">Section 6</option>
+                        <option value="/course/view.php?id=14&amp;section=7">Section 7</option>
+                        <option value="/course/view.php?id=14&amp;section=8">Section 8</option>
+                        <option value="/course/view.php?id=14&amp;section=9">Section 9</option>
+                        <option value="/course/view.php?id=14&amp;section=10">Section 10</option>
+                    </select>
+                    <noscript>
+                        <input type="submit" class="btn btn-secondary ml-1" value="Go">
+                    </noscript>
+                </form>
+            </div>',
+        "sectiontitle": '<h3 class="sectionname">Section 2</h3>',
+        "thissection": 'Section two markup'
+    }
+}}
+{{{activityclipboard}}}
+<div class="single-section">
+    <div class="vsf-sectionname">
+        {{{sectiontitle}}}
+        <span class="vsf-sectionname-nav">{{{sectionnavnext}}}</span>
+    </div>
+    <ul class="sections">
+        {{{thissection}}}
+    </ul>
+    <div class="section-navigation vsf-nav-bottom">
+        <span class="vsf-nav-left">{{{sectionnavprevious}}}</span>
+        <span class="vsf-nav-right">{{{sectionnavnext}}}</span>
+        <div class="mdl-align">{{{sectionnavselection}}}</div>
+    </div>
+</div>

@@ -454,7 +454,7 @@ class renderer extends \format_section_renderer_base {
      * @param int $sectionno The section number in the coruse which is being dsiplayed
      * @return array associative array with previous and next section link
      */
-    protected function get_nav_links($course, $sections, $sectionno) {
+    protected function vsf_get_nav_links($course, $sections, $sectionno) {
         // FIXME: This is really evil and should by using the navigation API.
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
@@ -473,7 +473,7 @@ class renderer extends \format_section_renderer_base {
                 }
                 $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-left')).' ';
                 $previouslink .= get_section_name($this->course, $sections[$back]);
-                $links['previous'] = html_writer::link(course_get_url($this->course, $back), $previouslink, $params);
+                $links['previous'] = html_writer::link(course_get_url($this->course, $back)->out(false), $previouslink, $params);
             }
             $back--;
         }
@@ -488,7 +488,7 @@ class renderer extends \format_section_renderer_base {
                 }
                 $nextlink = get_section_name($this->course, $sections[$forward]).' ';
                 $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-right'));
-                $links['next'] = html_writer::link(course_get_url($this->course, $forward), $nextlink, $params);
+                $links['next'] = html_writer::link(course_get_url($this->course, $forward)->out(false), $nextlink, $params);
             }
             $forward++;
         }
@@ -655,46 +655,28 @@ class renderer extends \format_section_renderer_base {
             return;
         }
 
-        // Copy activity clipboard.
-        echo $this->course_activity_clipboard($this->course, $displaysection);
-
-        // Start single-section div.
-        echo html_writer::start_tag('div', array('class' => 'single-section'));
-
         // The requested section page.
         $thissection = $modinfo->get_section_info($displaysection);
 
-        // Title with section navigation links.
-        $sectionnavlinks = $this->get_nav_links($this->course, $modinfo->get_section_info_all(), $displaysection);
+        // Section navigation links.
+        $sectionnavlinks = $this->vsf_get_nav_links($this->course, $modinfo->get_section_info_all(), $displaysection);
+
         // Title attributes.
-        $classes = 'sectionname';
+        $titleclasses = 'sectionname';
         if (!$thissection->visible) {
-            $classes .= ' dimmed_text';
+            $titleclasses .= ' dimmed_text';
         }
 
-        $sectiontitle = html_writer::start_tag('div', array('class' => 'vsf-sectionname'));
-        $sectiontitle .= $this->output->heading(get_section_name($this->course, $displaysection), 3, $classes);
-        $sectiontitle .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'vsf-sectionname-nav'));
-        $sectiontitle .= html_writer::end_tag('div');
-        echo $sectiontitle;
+        $singlesectioncontext = array(
+            'activityclipboard' => $this->course_activity_clipboard($course, $displaysection),
+            'sectionnavnext' => $sectionnavlinks['next'],
+            'sectionnavprevious' => $sectionnavlinks['previous'],
+            'sectionnavselection' => $this->section_nav_selection($course, null, $displaysection),
+            'sectiontitle' => $this->output->heading(get_section_name($this->course, $displaysection), 3, $titleclasses),
+            'thissection' => $this->display_section($thissection, true, $displaysection, true, false)
+        );
 
-        // Now the list of sections.
-        echo $this->start_section_list();
-
-        echo $this->display_section($thissection, true, $displaysection, true, false);
-        echo $this->end_section_list();
-
-        // Display section bottom navigation.
-        $sectionbottomnav = html_writer::start_tag('div', array('class' => 'section-navigation vsf-nav-bottom'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'vsf-nav-left'));
-        $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'vsf-nav-right'));
-        $sectionbottomnav .= html_writer::tag('div', $this->section_nav_selection($this->course, $sections, $displaysection),
-            array('class' => 'mdl-align'));
-        $sectionbottomnav .= html_writer::end_tag('div');
-        echo $sectionbottomnav;
-
-        // Close single-section div.
-        echo html_writer::end_tag('div');
+        echo $this->render_from_template('format_vsf/singlesection', $singlesectioncontext);
     }
 
     /**
