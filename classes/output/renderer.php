@@ -216,7 +216,7 @@ class renderer extends \format_section_renderer_base {
      */
     protected function course_styles() {
         $coursestylescontext = array();
-        
+
         if ($this->course->continuebackgroundcolour[0] != '#') {
             $coursestylescontext['continuebackgroundcolour'] = '#'.$this->course->continuebackgroundcolour;
         } else {
@@ -228,7 +228,7 @@ class renderer extends \format_section_renderer_base {
         } else {
             $coursestylescontext['continuetextcolour'] = $this->course->continuetextcolour;
         }
-        
+
         if ($this->course->sectionheaderbackgroundcolour[0] != '#') {
             $coursestylescontext['sectionheaderbackgroundcolour'] = '#'.$this->course->sectionheaderbackgroundcolour;
         } else {
@@ -516,6 +516,7 @@ class renderer extends \format_section_renderer_base {
             or !$this->course->hiddensections;
 
         $links = array('previous' => '', 'next' => '');
+        $linkicons = $this->vsf_get_nav_link_icons();
         $back = $sectionno - 1;
         while ($back > 0 and empty($links['previous'])) {
             if ($canviewhidden || $sections[$back]->uservisible) {
@@ -523,7 +524,7 @@ class renderer extends \format_section_renderer_base {
                 if (!$sections[$back]->visible) {
                     $params = array('class' => 'dimmed_text');
                 }
-                $previouslink = html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-left')).' ';
+                $previouslink = html_writer::tag('span', '', array('class' => $linkicons['previous'])).' ';
                 $previouslink .= get_section_name($this->course, $sections[$back]);
                 $links['previous'] = html_writer::link(course_get_url($this->course, $back)->out(false), $previouslink, $params);
             }
@@ -539,13 +540,20 @@ class renderer extends \format_section_renderer_base {
                     $params = array('class' => 'dimmed_text');
                 }
                 $nextlink = get_section_name($this->course, $sections[$forward]).' ';
-                $nextlink .= html_writer::tag('span', '', array('class' => 'fa fa-arrow-circle-o-right'));
+                $nextlink .= html_writer::tag('span', '', array('class' => $linkicons['next']));
                 $links['next'] = html_writer::link(course_get_url($this->course, $forward)->out(false), $nextlink, $params);
             }
             $forward++;
         }
 
         return $links;
+    }
+
+    protected function vsf_get_nav_link_icons() {
+        return array(
+            'next' => 'fa fa-arrow-circle-o-right',
+            'previous' => 'fa fa-arrow-circle-o-left'
+        );
     }
 
     /**
