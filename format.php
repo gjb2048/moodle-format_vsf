@@ -54,65 +54,6 @@ course_create_sections_if_missing($course, range(0, $course->numsections));
 
 $renderer = $PAGE->get_renderer('format_vsf');
 
-echo '<style type="text/css" media="screen">';
-echo '/* <![CDATA[ */';
-// Continue button.
-echo '.format-vsf .vsf-continue {';
-echo 'background-color: ';
-if ($course->continuebackgroundcolour[0] != '#') {
-    echo '#';
-}
-echo $course->continuebackgroundcolour.';';
-
-echo 'color: ';
-if ($course->continuetextcolour[0] != '#') {
-    echo '#';
-}
-echo $course->continuetextcolour.';';
-echo '}';
-
-// Section header.
-echo '.format-vsf .vsf-sectionname {';
-echo 'background-color: ';
-if ($course->sectionheaderbackgroundcolour[0] != '#') {
-    echo '#';
-}
-echo $course->sectionheaderbackgroundcolour.';';
-
-// Site wide configuration Site Administration -> Plugins -> Course formats -> Progress Section Format.
-$vsfborderradiustl = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustl'), PARAM_TEXT);
-$vsfborderradiustr = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustr'), PARAM_TEXT);
-$vsfborderradiusbr = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
-$vsfborderradiusbl = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
-echo 'border-top-left-radius: '.$vsfborderradiustl.'em;';
-echo 'border-top-right-radius: '.$vsfborderradiustr.'em;';
-echo 'border-bottom-right-radius: '.$vsfborderradiusbr.'em;';
-echo 'border-bottom-left-radius: '.$vsfborderradiusbl.'em;';
-
-echo 'color: ';
-if ($course->sectionheaderforegroundcolour[0] != '#') {
-    echo '#';
-}
-echo $course->sectionheaderforegroundcolour.';';
-
-echo '}';
-
-echo '.format-vsf .vsf-sectionname:hover {';
-echo 'background-color: ';
-if ($course->sectionheaderbackgroundhvrcolour[0] != '#') {
-    echo '#';
-}
-echo $course->sectionheaderbackgroundhvrcolour.';';
-echo 'color: ';
-if ($course->sectionheaderforegroundhvrcolour[0] != '#') {
-    echo '#';
-}
-echo $course->sectionheaderforegroundhvrcolour.';';
-echo '}';
-
-echo '/* ]]> */';
-echo '</style>';
-
 if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {

@@ -1,0 +1,73 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_vsf/coursestyles
+
+    Progress Section Format course styles template.
+
+    Context variables required for this template:
+    * continuebackgroundcolour - Continue button background colour.
+    * continuetextcolour - Continue button text colour.
+    * sectionheaderbackgroundcolour - Section header background colour.
+    * sectionheaderforegroundcolour - Section header foreground colour.
+    * sectionheaderbackgroundhvrcolour - Section header background hover colour.
+    * sectionheaderforegroundhvrcolour - Section header foreground hover colour.
+    * vsfborderradiustl - Border radius top left.
+    * vsfborderradiustr - Border radius top right.
+    * vsfborderradiusbr - Border radius bottom right.
+    * vsfborderradiusbl - Border radius bottom left.
+
+    Example context (json):
+    {
+        "continuebackgroundcolour": "#CE2E2B",
+        "continuetextcolour": "#FFFFFF",
+        "sectionheaderbackgroundcolour": "#777777",
+        "sectionheaderforegroundcolour": "#FFFFFF",
+        "sectionheaderbackgroundhvrcolour": "#D93913",
+        "sectionheaderforegroundhvrcolour": "#FFFFFF",
+        "vsfborderradiustl": "0.7",
+        "vsfborderradiustr": "0.7",
+        "vsfborderradiusbr": "0.7",
+        "vsfborderradiusbl": "0.7"
+    }
+}}
+<style type="text/css" media="screen">
+    /* <![CDATA[ */
+
+    /* Continue button */
+    .format-vsf .vsf-continue {
+        background-color: {{continuebackgroundcolour}};
+        color: {{continuetextcolour}};
+    }
+
+    /* Section header */
+    .format-vsf .vsf-sectionname {
+        background-color: {{sectionheaderbackgroundcolour}};
+        border-top-left-radius: {{vsfborderradiustl}}em;
+        border-top-right-radius: {{vsfborderradiustr}}em;
+        border-bottom-right-radius: {{vsfborderradiusbr}}em;
+        border-bottom-left-radius: {{vsfborderradiusbl}}em;
+        color: {{sectionheaderforegroundcolour}};
+    }
+
+    .format-vsf .vsf-sectionname:hover {
+        background-color: {{sectionheaderbackgroundhvrcolour}};
+        color: {{sectionheaderforegroundhvrcolour}};
+    }
+
+    /* ]]> */
+</style>

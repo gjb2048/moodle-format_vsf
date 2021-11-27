@@ -211,6 +211,58 @@ class renderer extends \format_section_renderer_base {
     }
 
     /**
+     * The course styles.
+     * @return string HTML to output.
+     */
+    protected function course_styles() {
+        $coursestylescontext = array();
+        
+        if ($this->course->continuebackgroundcolour[0] != '#') {
+            $coursestylescontext['continuebackgroundcolour'] = '#'.$this->course->continuebackgroundcolour;
+        } else {
+            $coursestylescontext['continuebackgroundcolour'] = $this->course->continuebackgroundcolour;
+        }
+
+        if ($this->course->continuetextcolour[0] != '#') {
+            $coursestylescontext['continuetextcolour'] = '#'.$this->course->continuetextcolour;
+        } else {
+            $coursestylescontext['continuetextcolour'] = $this->course->continuetextcolour;
+        }
+        
+        if ($this->course->sectionheaderbackgroundcolour[0] != '#') {
+            $coursestylescontext['sectionheaderbackgroundcolour'] = '#'.$this->course->sectionheaderbackgroundcolour;
+        } else {
+            $coursestylescontext['sectionheaderbackgroundcolour'] = $this->course->sectionheaderbackgroundcolour;
+        }
+
+        // Site wide configuration Site Administration -> Plugins -> Course formats -> Collapsed Topics.
+        $coursestylescontext['vsfborderradiustl'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustl'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiustr'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustr'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbr'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbl'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
+
+        if ($this->course->sectionheaderforegroundcolour[0] != '#') {
+            $coursestylescontext['sectionheaderforegroundcolour'] = '#'.$this->course->sectionheaderforegroundcolour;
+        } else {
+            $coursestylescontext['sectionheaderforegroundcolour'] = $this->course->sectionheaderforegroundcolour;
+        }
+
+        if ($this->course->sectionheaderbackgroundhvrcolour[0] != '#') {
+            $coursestylescontext['sectionheaderbackgroundhvrcolour'] = '#'.$this->course->sectionheaderbackgroundhvrcolour;
+        } else {
+            $coursestylescontext['sectionheaderbackgroundhvrcolour'] = $this->course->sectionheaderbackgroundhvrcolour;
+        }
+
+        if ($this->course->sectionheaderforegroundhvrcolour[0] != '#') {
+            $coursestylescontext['sectionheaderforegroundhvrcolour'] = '#'.$this->course->sectionheaderforegroundhvrcolour;
+        } else {
+            $coursestylescontext['sectionheaderforegroundhvrcolour'] = $this->course->sectionheaderforegroundhvrcolour;
+        }
+
+        return $this->render_from_template('format_vsf/coursestyles', $coursestylescontext);
+    }
+
+    /**
      * Generate the section header with optional barchart.
      *
      * @param type $title Section header title.
@@ -655,6 +707,8 @@ class renderer extends \format_section_renderer_base {
             return;
         }
 
+        echo $this->course_styles();
+
         // The requested section page.
         $thissection = $modinfo->get_section_info($displaysection);
 
@@ -692,6 +746,9 @@ class renderer extends \format_section_renderer_base {
         $modinfo = get_fast_modinfo($course);
 
         $context = context_course::instance($course->id);
+
+        echo $this->course_styles();
+
         // Title with completion help icon.
         $completioninfo = new \completion_info($course);
         echo $completioninfo->display_help_icon();
