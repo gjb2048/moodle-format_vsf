@@ -435,6 +435,11 @@ class renderer extends section_renderer {
         }
     }
 
+    protected function render_sectionselector($widget) {
+        $data = $widget->export_for_template($this);
+        return $this->render_from_template('format_vsf/vsfsectionselector', $data);
+    }
+
     public function vsf_get_nav_link_icons() {
         return array(
             'next' => 'fa fa-arrow-circle-o-right',
@@ -446,7 +451,7 @@ class renderer extends section_renderer {
      * Generate the display of the header part of a section before
      * course modules are included.
      *
-     * @param stdClass $section The course_section entry from DB.
+     * @param section_info $section The section.
      * @param bool $onsectionpage true if being printed on a single-section page.
      * @param int $sectionreturn The section to return to after an action.
      * @param bool $showcompletioninfo Show the completion information.
@@ -545,7 +550,7 @@ class renderer extends section_renderer {
         }
 
         if ($section->uservisible) {
-            $displaysectioncontext['cmlist'] = $this->course_section_cmlist($this->course, $section, 0);
+            $displaysectioncontext['cmlist'] = $this->course_section_cmlist($section);
             $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
@@ -586,21 +591,18 @@ class renderer extends section_renderer {
         }
 
         // Can we view the section in question?
-        if (!($sectioninfo = $modinfo->get_section_info($displaysection))) {
+        if (!($thissection = $modinfo->get_section_info($displaysection))) {
             // This section doesn't exist.
             throw new \moodle_exception('unknowncoursesection', 'error', '',
                 get_string('unknowncoursesection', 'error', $course->fullname));
         }
 
-        if (!$sectioninfo->uservisible) {
+        if (!$thissection->uservisible) {
             // Can't view this section.
             return;
         }
 
         echo $this->course_styles();
-
-        // The requested section page.
-        $thissection = $modinfo->get_section_info($displaysection);
 
         // Title attributes.
         $titleclasses = 'sectionname';
@@ -608,9 +610,22 @@ class renderer extends section_renderer {
             $titleclasses .= ' dimmed_text';
         }
 
+        $sectionnavigationclass = $this->courseformat->get_output_classname('content\\sectionnavigation');
+        $sectionnavigation = new $sectionnavigationclass($this->courseformat, $this->courseformat->get_section_number(), $this);
+        $sectionselectorclass = $this->courseformat->get_output_classname('content\\sectionselector');
+        $sectionselector = new $sectionselectorclass($this->courseformat, $sectionnavigation);
+        // Do now so that the selection selector export, exports the navigation data.
+        $sectionnavselectionmarkup = $this->render($sectionselector);
+        $navdata = $sectionselector->get_nav_data();
+
         $singlesectioncontext = array(
+            'hasnext' => $navdata->hasnext,
+            'nextclasses' => $navdata->nextclasses,
+            'nexthidden' => $navdata->nexthidden,
+            'nextname' => $navdata->nextname,
+            'nexturl' => $navdata->nexturl,
             // Title with section navigation links and jump to menu.
-            'sectionnavselection' => $this->section_nav_selection($course, null, $displaysection),
+            'sectionnavselection' => $sectionnavselectionmarkup,
             'sectiontitle' => $this->output->heading(get_section_name($this->course, $displaysection), 3, $titleclasses),
             'thissection' => $this->display_section($thissection, true, $displaysection, true, false)
         );

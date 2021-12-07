@@ -62,14 +62,17 @@
 <div class="single-section">
     <div class="vsf-sectionname">
         {{{sectiontitle}}}
+        {{#hasnext}}
+        <div class="nextsection vsf-sectionname-nav">
+            <a href="{{{nexturl}}}"{{#nexthidden}} class="dimmed_text"{{/nexthidden}}>
+                {{{nextname}}}<span class="{{nextclasses}} ml-1"></span>
+            </a>
+        </div>
+        {{/hasnext}}
         <span class="vsf-sectionname-nav">{{{sectionnavnext}}}</span>
     </div>
     <ul class="sections">
         {{{thissection}}}
     </ul>
-    <div class="section-navigation vsf-nav-bottom">
-        <span class="vsf-nav-left">{{{sectionnavprevious}}}</span>
-        <span class="vsf-nav-right">{{{sectionnavnext}}}</span>
-        <div class="mdl-align">{{{sectionnavselection}}}</div>
-    </div>
+    {{{sectionnavselection}}}
 </div>

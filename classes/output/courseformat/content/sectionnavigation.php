@@ -32,6 +32,8 @@
 namespace format_vsf\output\courseformat\content;
 
 use context_course;
+use core_courseformat\base as course_format;
+use core_courseformat\output\section_renderer;
 use stdClass;
 
 /**
@@ -42,6 +44,20 @@ class sectionnavigation extends \core_courseformat\output\local\content\sectionn
     /** @var stdClass the calculated data to prevent calculations when rendered several times */
     private $data = null;
 
+    /** @var section_renderer the section renderer */
+    private $sectionrenderer = null;
+
+    /**
+     * Constructor.
+     *
+     * @param course_format $format the course format
+     * @param int $sectionno the section number
+     */
+    public function __construct(course_format $format, int $sectionno, section_renderer $sectionrenderer) {
+        parent::__construct($format, $sectionno);
+        $this->sectionrenderer = $sectionrenderer;
+    }
+
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
@@ -49,7 +65,7 @@ class sectionnavigation extends \core_courseformat\output\local\content\sectionn
      * @return stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output): stdClass {
-        global $PAGE, $USER;
+        global $USER;
 
         if ($this->data !== null) {
             return $this->data;
@@ -62,18 +78,19 @@ class sectionnavigation extends \core_courseformat\output\local\content\sectionn
         $modinfo = $this->format->get_modinfo();
         $sections = $modinfo->get_section_info_all();
 
-        $renderer = $PAGE->get_renderer('format_vsf');
-        $links = array('previous' => '', 'next' => '');
-        $linkicons = $renderer->vsf_get_nav_link_icons();
+        $linkicons = $this->sectionrenderer->vsf_get_nav_link_icons();
 
         // FIXME: This is really evil and should by using the navigation API.
         $canviewhidden = has_capability('moodle/course:viewhiddensections', $context, $USER);
 
         $data = (object)[
-            'previousurl' => '',
+            'hasnext' => false,
+            'nextclasses' => $linkicons['next'],
+            'nexthidden' => false,
+            'nextname' => '',
             'nexturl' => '',
-            'larrow' => $output->larrow(),
-            'rarrow' => $output->rarrow(),
+            'previousclasses' => $linkicons['previous'],
+            'previousurl' => '',
             'currentsection' => $this->sectionno,
         ];
 
@@ -97,7 +114,7 @@ class sectionnavigation extends \core_courseformat\output\local\content\sectionn
                 if (!$sections[$forward]->visible) {
                     $data->nexthidden = true;
                 }
-                $data->nextname = get_section_name($course, $sections[$forward]).'Meee';
+                $data->nextname = get_section_name($course, $sections[$forward]);
                 $data->nexturl = course_get_url($course, $forward);
                 $data->hasnext = true;
             }
@@ -106,56 +123,5 @@ class sectionnavigation extends \core_courseformat\output\local\content\sectionn
 
         $this->data = $data;
         return $data;
-    }
-
-    /**
-     * Generate next/previous section links for naviation
-     *
-     * @param stdClass $course The course entry from DB
-     * @param array $sections The course_sections entries from the DB
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
-     * @return array associative array with previous and next section link
-     */
-    protected function vsf_get_nav_links($course, $sections, $sectionno) {
-        // FIXME: This is really evil and should by using the navigation API.
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-
-        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($this->course->id))
-            or !$this->course->hiddensections;
-
-        $links = array('previous' => '', 'next' => '');
-        $linkicons = $this->vsf_get_nav_link_icons();
-        $back = $sectionno - 1;
-        while ($back > 0 and empty($links['previous'])) {
-            if ($canviewhidden || $sections[$back]->uservisible) {
-                $params = array();
-                if (!$sections[$back]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-                $previouslink = html_writer::tag('span', '', array('class' => $linkicons['previous'])).' ';
-                $previouslink .= get_section_name($this->course, $sections[$back]);
-                $links['previous'] = html_writer::link(course_get_url($this->course, $back)->out(false), $previouslink, $params);
-            }
-            $back--;
-        }
-
-        $forward = $sectionno + 1;
-        $numsections = course_get_format($this->course)->get_last_section_number();
-        while ($forward <= $numsections and empty($links['next'])) {
-            if ($canviewhidden || $sections[$forward]->uservisible) {
-                $params = array();
-                if (!$sections[$forward]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-                $nextlink = get_section_name($this->course, $sections[$forward]).' ';
-                $nextlink .= html_writer::tag('span', '', array('class' => $linkicons['next']));
-                $links['next'] = html_writer::link(course_get_url($this->course, $forward)->out(false), $nextlink, $params);
-            }
-            $forward++;
-        }
-
-        return $links;
     }
 }
