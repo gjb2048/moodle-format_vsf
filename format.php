@@ -55,9 +55,10 @@ course_create_sections_if_missing($course, range(0, $course->numsections));
 $renderer = $PAGE->get_renderer('format_vsf');
 
 if (!empty($displaysection)) {
-    $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
+    $courseformat->set_section_number($displaysection);
+    $renderer->single_section_page($course, $displaysection);
 } else {
-    $renderer->print_multiple_section_page($course, null, null, null, null);
+    $renderer->multiple_section_page($course);
 }
 
 // Include course format js module.

@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.0.0.1
+-----------------------------
+  1. Moodle 4.0 version.
+
 Version 3.11.0.2
 -----------------------------
   1. Moodle 3.11 version refactored to mustache.

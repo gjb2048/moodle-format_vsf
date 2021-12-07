@@ -31,13 +31,14 @@ namespace format_vsf\output;
 defined('MOODLE_INTERNAL') || die();
 
 use context_course;
+use core_courseformat\output\section_renderer;
 use course_get_url;
 use html_writer;
 
-require_once($CFG->dirroot.'/course/format/renderer.php'); // For format_section_renderer_base.
 require_once($CFG->dirroot.'/course/format/lib.php'); // For course_get_format.
 
-class renderer extends \format_section_renderer_base {
+class renderer extends section_renderer {
+    use format_renderer_migration_toolbox;
 
     private $sectioncompletionpercentage = array();
     private $sectioncompletionmarkup = array();
@@ -147,70 +148,6 @@ class renderer extends \format_section_renderer_base {
     }
 
     /**
-     * Generate the edit control items of a section
-     *
-     * @param stdClass $course The course entry from DB
-     * @param stdClass $section The course_section entry from DB
-     * @param bool $onsectionpage true if being printed on a section page
-     * @return array of edit control items
-     */
-    protected function section_edit_control_items($course, $section, $onsectionpage = false) {
-        if (!$this->editing) {
-            return array();
-        }
-
-        $coursecontext = context_course::instance($course->id);
-
-        if ($onsectionpage) {
-            $url = course_get_url($course, $section->section);
-        } else {
-            $url = course_get_url($course);
-        }
-        $url->param('sesskey', sesskey());
-
-        $controls = array();
-        if ($section->section && has_capability('moodle/course:setcurrentsection', $coursecontext)) {
-            if ($course->marker == $section->section) {  // Show the "light globe" on/off.
-                $url->param('marker', 0);
-                $highlightoff = get_string('highlightoff');
-                $controls['highlight'] = array('url' => $url, "icon" => 'i/marked',
-                                               'name' => $highlightoff,
-                                               'pixattr' => array('class' => ''),
-                                               'attr' => array('class' => 'editing_highlight',
-                                                   'data-action' => 'removemarker'));
-            } else {
-                $url->param('marker', $section->section);
-                $highlight = get_string('highlight');
-                $controls['highlight'] = array('url' => $url, "icon" => 'i/marker',
-                                               'name' => $highlight,
-                                               'pixattr' => array('class' => ''),
-                                               'attr' => array('class' => 'editing_highlight',
-                                                   'data-action' => 'setmarker'));
-            }
-        }
-
-        $parentcontrols = parent::section_edit_control_items($course, $section, $onsectionpage);
-
-        // If the edit key exists, we are going to insert our controls after it.
-        if (array_key_exists("edit", $parentcontrols)) {
-            $merged = array();
-            // We can't use splice because we are using associative arrays.
-            // Step through the array and merge the arrays.
-            foreach ($parentcontrols as $key => $action) {
-                $merged[$key] = $action;
-                if ($key == "edit") {
-                    // If we have come to the edit key, merge these controls here.
-                    $merged = array_merge($merged, $controls);
-                }
-            }
-
-            return $merged;
-        } else {
-            return array_merge($controls, $parentcontrols);
-        }
-    }
-
-    /**
      * The course styles.
      * @return string HTML to output.
      */
@@ -296,7 +233,7 @@ class renderer extends \format_section_renderer_base {
      */
     protected function stealth_section($section, $course) {
         $stealthsectioncontext = array(
-            'cscml' => $this->courserenderer->course_section_cm_list($course, $section->section, 0),
+            'cscml' => $this->course_section_cm_list($course, $section->section, 0),
             'heading' => $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $section->section),
                 3, 'sectionname vsf-sectionname', "sectionid-{$section->id}-title"),
             'rightcontent' => $this->section_right_content($section, $course, false),
@@ -498,58 +435,7 @@ class renderer extends \format_section_renderer_base {
         }
     }
 
-    /**
-     * Generate next/previous section links for naviation
-     *
-     * @param stdClass $course The course entry from DB
-     * @param array $sections The course_sections entries from the DB
-     * @param int $sectionno The section number in the coruse which is being dsiplayed
-     * @return array associative array with previous and next section link
-     */
-    protected function vsf_get_nav_links($course, $sections, $sectionno) {
-        // FIXME: This is really evil and should by using the navigation API.
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-
-        $canviewhidden = has_capability('moodle/course:viewhiddensections', context_course::instance($this->course->id))
-            or !$this->course->hiddensections;
-
-        $links = array('previous' => '', 'next' => '');
-        $linkicons = $this->vsf_get_nav_link_icons();
-        $back = $sectionno - 1;
-        while ($back > 0 and empty($links['previous'])) {
-            if ($canviewhidden || $sections[$back]->uservisible) {
-                $params = array();
-                if (!$sections[$back]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-                $previouslink = html_writer::tag('span', '', array('class' => $linkicons['previous'])).' ';
-                $previouslink .= get_section_name($this->course, $sections[$back]);
-                $links['previous'] = html_writer::link(course_get_url($this->course, $back)->out(false), $previouslink, $params);
-            }
-            $back--;
-        }
-
-        $forward = $sectionno + 1;
-        $numsections = course_get_format($this->course)->get_last_section_number();
-        while ($forward <= $numsections and empty($links['next'])) {
-            if ($canviewhidden || $sections[$forward]->uservisible) {
-                $params = array();
-                if (!$sections[$forward]->visible) {
-                    $params = array('class' => 'dimmed_text');
-                }
-                $nextlink = get_section_name($this->course, $sections[$forward]).' ';
-                $nextlink .= html_writer::tag('span', '', array('class' => $linkicons['next']));
-                $links['next'] = html_writer::link(course_get_url($this->course, $forward)->out(false), $nextlink, $params);
-            }
-            $forward++;
-        }
-
-        return $links;
-    }
-
-    protected function vsf_get_nav_link_icons() {
+    public function vsf_get_nav_link_icons() {
         return array(
             'next' => 'fa fa-arrow-circle-o-right',
             'previous' => 'fa fa-arrow-circle-o-left'
@@ -659,7 +545,7 @@ class renderer extends \format_section_renderer_base {
         }
 
         if ($section->uservisible) {
-            $displaysectioncontext['cmlist'] = $this->courserenderer->course_section_cm_list($this->course, $section, 0);
+            $displaysectioncontext['cmlist'] = $this->course_section_cmlist($this->course, $section, 0);
             $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
         }
 
@@ -691,13 +577,9 @@ class renderer extends \format_section_renderer_base {
      * Output the html for a single section page .
      *
      * @param stdClass $course The course entry from DB
-     * @param array $sections (argument not used)
-     * @param array $mods (argument not used)
-     * @param array $modnames (argument not used)
-     * @param array $modnamesused (argument not used)
      * @param int $displaysection The section number in the course which is being displayed
      */
-    public function print_single_section_page($course, $sections, $mods, $modnames, $modnamesused, $displaysection) {
+    public function single_section_page($course, $displaysection) {
         $modinfo = get_fast_modinfo($course);
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
@@ -720,9 +602,6 @@ class renderer extends \format_section_renderer_base {
         // The requested section page.
         $thissection = $modinfo->get_section_info($displaysection);
 
-        // Section navigation links.
-        $sectionnavlinks = $this->vsf_get_nav_links($this->course, $modinfo->get_section_info_all(), $displaysection);
-
         // Title attributes.
         $titleclasses = 'sectionname';
         if (!$thissection->visible) {
@@ -730,9 +609,7 @@ class renderer extends \format_section_renderer_base {
         }
 
         $singlesectioncontext = array(
-            'activityclipboard' => $this->course_activity_clipboard($course, $displaysection),
-            'sectionnavnext' => $sectionnavlinks['next'],
-            'sectionnavprevious' => $sectionnavlinks['previous'],
+            // Title with section navigation links and jump to menu.
             'sectionnavselection' => $this->section_nav_selection($course, null, $displaysection),
             'sectiontitle' => $this->output->heading(get_section_name($this->course, $displaysection), 3, $titleclasses),
             'thissection' => $this->display_section($thissection, true, $displaysection, true, false)
@@ -745,12 +622,8 @@ class renderer extends \format_section_renderer_base {
      * Output the html for a multiple section page
      *
      * @param stdClass $course The course entry from DB
-     * @param array $sections (argument not used)
-     * @param array $mods (argument not used)
-     * @param array $modnames (argument not used)
-     * @param array $modnamesused (argument not used)
      */
-    public function print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused) {
+    public function multiple_section_page($course) {
         $modinfo = get_fast_modinfo($course);
 
         $context = context_course::instance($course->id);
@@ -761,9 +634,6 @@ class renderer extends \format_section_renderer_base {
         $completioninfo = new \completion_info($course);
         echo $completioninfo->display_help_icon();
         echo $this->output->heading($this->page_title(), 2, 'accesshide');
-
-        // Copy activity clipboard..
-        echo $this->course_activity_clipboard($this->course, 0);
 
         $numsections = $this->course->numsections; // Because we want to manipulate this for column breakpoints.
         if ($this->course->numsections > 0) {
