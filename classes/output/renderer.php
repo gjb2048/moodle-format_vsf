@@ -327,10 +327,6 @@ class renderer extends section_renderer {
             );
         }
 
-        $context = context_course::instance($this->course->id);
-        $sectionsummarycontext['sectionavailabilitymessage'] = $this->section_availability_message($section,
-            has_capability('moodle/course:viewhiddensections', $context));
-
         return $this->render_from_template('format_vsf/sectionsummary', $sectionsummarycontext);
     }
 
@@ -454,13 +450,12 @@ class renderer extends section_renderer {
      * @param section_info $section The section.
      * @param bool $onsectionpage true if being printed on a single-section page.
      * @param int $sectionreturn The section to return to after an action.
-     * @param bool $showcompletioninfo Show the completion information.
      * @param bool $checkchart Check to see if a chart can be displayed.
      *
      * @return string HTML to output.
      */
     protected function display_section($section, $onsectionpage, $sectionreturn = null,
-        $showcompletioninfo = false, $checkchart = true) {
+        $checkchart = true) {
 
         $displaysectioncontext = array(
             'sectionavailabilty' => $this->section_availability($section),
@@ -517,12 +512,6 @@ class renderer extends section_renderer {
             $headerclasses .= ' accesshide';
             $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
                 $headerclasses, '', false, $section->id, false);
-        }
-
-        if ($showcompletioninfo) {
-            // Show completion help icon.
-            $completioninfo = new \completion_info($this->course);
-            $displaysectioncontext['completioninfo'] = $completioninfo->display_help_icon();
         }
 
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
@@ -627,7 +616,7 @@ class renderer extends section_renderer {
             // Title with section navigation links and jump to menu.
             'sectionnavselection' => $sectionnavselectionmarkup,
             'sectiontitle' => $this->output->heading(get_section_name($this->course, $displaysection), 3, $titleclasses),
-            'thissection' => $this->display_section($thissection, true, $displaysection, true, false)
+            'thissection' => $this->display_section($thissection, $displaysection, true, false)
         );
 
         echo $this->render_from_template('format_vsf/singlesection', $singlesectioncontext);
@@ -645,9 +634,7 @@ class renderer extends section_renderer {
 
         echo $this->course_styles();
 
-        // Title with completion help icon.
-        $completioninfo = new \completion_info($course);
-        echo $completioninfo->display_help_icon();
+        // Title.
         echo $this->output->heading($this->page_title(), 2, 'accesshide');
 
         $numsections = $this->course->numsections; // Because we want to manipulate this for column breakpoints.
@@ -687,7 +674,7 @@ class renderer extends section_renderer {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
             if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                echo $this->display_section($thissection, false, 0, false, false);
+                echo $this->display_section($thissection, 0, false, false);
             }
             if ($canbreak === true) {
                 echo $this->end_section_list();
@@ -725,7 +712,7 @@ class renderer extends section_renderer {
                 echo $this->section_summary($thissection, $this->course, null);
             } else {
                 // Display the section.
-                echo $this->display_section($thissection, false, 0);
+                echo $this->display_section($thissection, 0);
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.

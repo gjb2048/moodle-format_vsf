@@ -206,7 +206,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $url = $mod->url;
         if (($this->page->user_is_editing()) || (empty($url))) {
-            // Display the link to the module (or do nothing if module has no url)
+            // Display the link to the module (or do nothing if module has no url).
             $cmname = $this->course_section_cm_name($mod, $displayoptions);
 
             if (!empty($cmname)) {
@@ -214,11 +214,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $output .= html_writer::start_tag('div', array('class' => 'activityinstance'));
                 $output .= $cmname;
 
-                // Module can put text after the link (e.g. forum unread)
+                // Module can put text after the link (e.g. forum unread).
                 $output .= $mod->afterlink;
 
                 // Closing the tag which contains everything but edit icons. Content part of the module should not be part of this.
-                $output .= html_writer::end_tag('div'); // .activityinstance
+                $output .= html_writer::end_tag('div'); // End .activityinstance.
             }
         }
 
@@ -270,8 +270,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
             return $output;
         }
-        // this is a teacher who is allowed to see module but still should see the
-        // information that module is not available to all/some students
+        /* This is a teacher who is allowed to see module but still should see the
+           information that module is not available to all/some students. */
         $modcontext = context_module::instance($mod->id);
         $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $modcontext);
         if ($canviewhidden && !$mod->visible) {

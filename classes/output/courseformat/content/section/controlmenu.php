@@ -42,12 +42,6 @@ use context_course;
  */
 class controlmenu extends controlmenu_base {
 
-    /** @var course_format the course format class */
-    //protected $format;
-
-    /** @var section_info the course section class */
-    //protected $section;
-
     /**
      * Generate the edit control items of a section.
      *
@@ -96,7 +90,7 @@ class controlmenu extends controlmenu_base {
                         'data-action' => 'setmarker')
                 );
             }
-        }        
+        }
 
         $parentcontrols = parent::section_control_items();
 

@@ -42,7 +42,7 @@ class sectionselector extends \core_courseformat\output\local\content\sectionsel
 
     /** @var stdClass the calculated data to prevent calculations when rendered several times */
     private $data = null;
-    
+
     /** @var stdClass the navigation data */
     private $navdata = null;
 
