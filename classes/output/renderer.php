@@ -85,7 +85,7 @@ class renderer extends section_renderer {
         } else {
             $this->moduleview = false;
         }
-        
+
         if (empty($this->hidecontrols)) {
             $this->controlmenuclass = $this->courseformat->get_output_classname('content\\section\\controlmenu');
         }
