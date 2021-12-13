@@ -53,6 +53,9 @@ class renderer extends section_renderer {
 
     protected $editing; // Are we editing?
 
+    /** @var section control menu output class */
+    protected $controlmenuclass;
+
     /**
      * Constructor method, calls the parent constructor
      *
@@ -81,6 +84,10 @@ class renderer extends section_renderer {
             $this->moduleview = true;
         } else {
             $this->moduleview = false;
+        }
+        
+        if (empty($this->hidecontrols)) {
+            $this->controlmenuclass = $this->courseformat->get_output_classname('content\\section\\controlmenu');
         }
     }
 
@@ -206,11 +213,12 @@ class renderer extends section_renderer {
      * @param string $titleattributes Section header title attributes.
      * @param type $activitysummary Contains the bar chart if $barchart is true.
      * @param type $barchart States if the bar chart is shown.
-     * @param type $sectionid Section id.
+     * @param type $thissection Section.
      */
-    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $sectionid, $vsfsectionname = true) {
+    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $thissection, $vsfsectionname = true) {
         $sectionheaderhelpercontext = array(
             'hasbarchart' => $barchart,
+            'restrictionlock' => !empty($thissection->availableinfo),
             'vsfsectionname' => $vsfsectionname
         );
 
@@ -219,7 +227,12 @@ class renderer extends section_renderer {
             $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
         }
 
-        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$sectionid}-title");
+        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$thissection->id}-title");
+
+        if (empty($this->hidecontrols)) {
+            $controlmenu = new $this->controlmenuclass($this->courseformat, $thissection);
+            $sectionheaderhelpercontext['controlmenu'] = $controlmenu->export_for_template($this);
+        }
 
         return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
     }
@@ -489,11 +502,6 @@ class renderer extends section_renderer {
             $displaysectioncontext['sectionreturnid'] = $sectionstyle; // MDL-69065.
         }
 
-        if ($this->editing) {
-            $displaysectioncontext['leftcontent'] = $this->section_left_content($section, $this->course, $onsectionpage);
-            $displaysectioncontext['rightcontent'] = $this->section_right_content($section, $this->course, $onsectionpage);
-        }
-
         // When not on a section page, we display the section titles except the general section if null.
         $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
 
@@ -506,12 +514,12 @@ class renderer extends section_renderer {
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
             $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
-                $headerclasses, $activitysummary, $barchart, $section->id);
+                $headerclasses, $activitysummary, $barchart, $section);
         } else {
             // Hidden section name so don't output anything bar the header name.
             $headerclasses .= ' accesshide';
             $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
-                $headerclasses, '', false, $section->id, false);
+                $headerclasses, '', false, $section, false);
         }
 
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.

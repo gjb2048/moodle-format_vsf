@@ -22,7 +22,6 @@
     Context variables required for this template:
     * cscml - Course section course module list.
     * heading - The heading.
-    * rightcontent - Right column content.
     * sectionid - Section id.
     * sectionno - Section number.
 
@@ -30,16 +29,13 @@
     {
         "cscml": "",
         "heading": '<h3 id="sectionid-124-title" class="sectionname vsf-sectionname">Section 1</h3>',
-        "rightcontent": "",
         "sectionid": "124",
         "sectionno": "1"
     }
 }}
 <li id="section-{{sectionno}}" class="section main clearfix orphaned hidden role="region" aria-labeled-by="sectionid-{{sectionid}}-title" data-sectionid="{{sectionno}}">
-    <div class="left side"></div>
-    <div class="right side">{{{rightcontent}}}</div>
+    {{{heading}}}
     <div class="content">
-        {{{heading}}}
         {{{cscml}}}
     </div>
 </li>

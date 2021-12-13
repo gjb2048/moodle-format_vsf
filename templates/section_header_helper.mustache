@@ -32,17 +32,31 @@
     Example context (json):
     {
         "activitysummary": "Activity summary markup if hasbarchart is true",
+        "controlmenu": "Control menu markup if any",
         "hasbarchart": true,
         "heading": "Heading markup",
+        "restrictionlock: false,
         "vsfsectionname": true
     }
 }}
+{{#controlmenu}}
+<div class="row">
+    <div class="col-sm-8 col-md-9 col-lg-10 col-xl-11">
+{{/controlmenu}}
 <div class="sectionname{{#vsfsectionname}} vsf-sectionname{{/vsfsectionname}}">
 {{#hasbarchart}}
     <div class="row no-gutters">
         <div class="col-sm-6 col-lg-7 col-xl-8">
 {{/hasbarchart}}
     {{{heading}}}
+    {{#restrictionlock}}
+    <div class="align-self-center ml-2">
+       {{#pix}}t/unlock, core{{/pix}}
+    </div>
+    {{/restrictionlock}}
+    <div data-region="sectionbadges" class="sectionbadges d-flex align-items-center">
+        {{> core_courseformat/local/content/section/badges }}
+    </div>
 {{#hasbarchart}}
         </div>
         <div class="col-sm-6 col-lg-5 col-xl-4">
@@ -51,3 +65,10 @@
     </div>
 {{/hasbarchart}}
 </div>
+{{#controlmenu}}
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-2 col-xl-1">
+        {{> core_courseformat/local/content/section/controlmenu }}
+    </div>
+</div>
+{{/controlmenu}}
