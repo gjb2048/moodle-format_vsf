@@ -246,10 +246,9 @@ class renderer extends section_renderer {
      */
     protected function stealth_section($section, $course) {
         $stealthsectioncontext = array(
-            'cscml' => $this->course_section_cm_list($course, $section->section, 0),
+            'cscml' => $this->course_section_cmlist($section),
             'heading' => $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $section->section),
                 3, 'sectionname vsf-sectionname', "sectionid-{$section->id}-title"),
-            'rightcontent' => $this->section_right_content($section, $course, false),
             'sectionid' => $section->id,
             'sectionno' => $section->section
         );
