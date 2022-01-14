@@ -308,7 +308,7 @@ class renderer extends section_renderer {
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
         $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section->id);
+        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section);
 
         if ($this->course->chart == 3) { // Donut chart.
             if (!empty($activitysummary)) {
