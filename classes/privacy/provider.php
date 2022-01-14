@@ -27,8 +27,6 @@
 
 namespace format_vsf\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * The PSF format does not store any user data.
  */

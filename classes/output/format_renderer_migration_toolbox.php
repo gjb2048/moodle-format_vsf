@@ -28,8 +28,6 @@
 
 namespace format_vsf\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 trait format_renderer_migration_toolbox {
 
     /**
