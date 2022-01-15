@@ -86,8 +86,10 @@ class renderer extends section_renderer {
             $this->moduleview = false;
         }
 
-        if (empty($this->hidecontrols)) {
-            $this->controlmenuclass = $this->courseformat->get_output_classname('content\\section\\controlmenu');
+        if ($this->courseformat->show_editor()) {
+            if (empty($this->hidecontrols)) {
+                $this->controlmenuclass = $this->courseformat->get_output_classname('content\\section\\controlmenu');
+            }
         }
     }
 
@@ -229,9 +231,11 @@ class renderer extends section_renderer {
 
         $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$thissection->id}-title");
 
-        if (empty($this->hidecontrols)) {
-            $controlmenu = new $this->controlmenuclass($this->courseformat, $thissection);
-            $sectionheaderhelpercontext['controlmenu'] = $controlmenu->export_for_template($this);
+        if ($this->courseformat->show_editor()) {
+            if (empty($this->hidecontrols)) {
+                $controlmenu = new $this->controlmenuclass($this->courseformat, $thissection);
+                $sectionheaderhelpercontext['controlmenu'] = $controlmenu->export_for_template($this);
+            }
         }
 
         return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
