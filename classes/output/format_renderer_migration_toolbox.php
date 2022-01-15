@@ -17,8 +17,7 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
+ * @package    course/format_vsf
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2021-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -86,8 +85,12 @@ trait format_renderer_migration_toolbox {
     }
 
     protected function course_section_cmlist($section) {
+        if ((!$this->editing) && ($section->section != 0)) {
+            return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, 0);
+        }
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
-        return $this->render_cmlist(new $cmlistclass($this->courseformat, $section));
+        return $this->render(new $cmlistclass($this->courseformat, $section));
+        //return $this->render_cmlist(new $cmlistclass($this->courseformat, $section));
     }
 
     protected function render_cmlist(\renderable $widget) {

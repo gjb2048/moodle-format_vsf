@@ -30,6 +30,35 @@ class format_vsf_course_renderer extends \core_course_renderer {
     protected $moduleviewbutton = false;
 
     /**
+     * Returns the CSS classes for the activity name/content
+     *
+     * @deprecated since Moodle 4.0 MDL-72656 - please do not use this function any more.
+     *
+     * For items which are hidden, unavailable or stealth but should be displayed
+     * to current user ($mod->is_visible_on_course_page()), we show those as dimmed.
+     * Students will also see as dimmed activities names that are not yet available
+     * but should still be displayed (without link) with availability info.
+     *
+     * @param cm_info $mod
+     * @return array array of two elements ($linkclasses, $textclasses)
+     */
+    protected function course_section_cm_classes_vsf(cm_info $mod) {
+
+        $format = course_get_format($mod->course);
+
+        $cmclass = $format->get_output_classname('content\\cm');
+        $cmoutput = new $cmclass(
+            $format,
+            $mod->get_section_info(),
+            $mod,
+        );
+        return [
+            $cmoutput->get_link_classes(),
+            $cmoutput->get_text_classes(),
+        ];
+    }
+
+    /**
      * Renders html to display the module content on the course page (i.e. text of the labels)
      *
      * @param cm_info $mod.
@@ -46,7 +75,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
-        list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
+        list($linkclasses, $textclasses) = $this->course_section_cm_classes_vsf($mod);
 
         $avcontent = '';
         if ($vsfavailability) {
@@ -365,6 +394,66 @@ class format_vsf_course_renderer extends \core_course_renderer {
     }
 
     /**
+     * Renders HTML to display one course module for display within a section.
+     *
+     * @deprecated since 4.0 - use core_course output components or course_format::course_section_updated_cm_item instead.
+     *
+     * This function calls:
+     * {@link core_course_renderer::course_section_cm()}
+     *
+     * @param stdClass $course
+     * @param completion_info $completioninfo
+     * @param cm_info $mod
+     * @param int|null $sectionreturn
+     * @param array $displayoptions
+     * @return String
+     */
+    public function course_section_cm_list_label_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = []) {
+        $output = '';
+        if ($modulehtml = $this->course_section_label_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
+            $output .= html_writer::tag('li', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
+        }
+        return $output;
+    }
+
+    /**
+     * Renders HTML to display one course module in a course section
+     *
+     * This includes link, content, availability, completion info and additional information
+     * that module type wants to display (i.e. number of unread forum posts)
+     *
+     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
+     *
+     * @param stdClass $course
+     * @param completion_info $completioninfo
+     * @param cm_info $mod
+     * @param int|null $sectionreturn
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_label_cm_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = []) {
+        if (!$mod->is_visible_on_course_page()) {
+            return '';
+        }
+
+        $format = course_get_format($course);
+        $modinfo = $format->get_modinfo();
+        // Output renderers works only with real section_info objects.
+        if ($sectionreturn) {
+            $format->set_section_number($sectionreturn);
+        }
+        $section = $modinfo->get_section_info($format->get_section_number());
+
+        $cmclass = $format->get_output_classname('content\\cm');
+        $cm = new $cmclass($format, $section, $mod, $displayoptions);
+        // The course outputs works with format renderers, not with course renderers.
+        $renderer = $format->get_renderer($this->page);
+        $data = $cm->export_for_template($renderer);
+        return $this->output->render_from_template('core_courseformat/local/content/cm', $data);
+    }
+
+    /**
      * Renders HTML to display a list of course modules in a course section
      * Also displays "move here" controls in Javascript-disabled mode
      *
@@ -376,16 +465,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param int $displayoptions
      * @return void
      */
-    public function course_section_cm_list($course, $section, $sectionreturn = null, $displayoptions = array()) {
-        if (is_object($section)) {
-            if ($section->section == 0) {
-                return parent::course_section_cm_list($course, $section, $sectionreturn, $displayoptions);
-            }
-        } else {
-            if ($section == 0) {
-                return parent::course_section_cm_list($course, $section, $sectionreturn, $displayoptions);
-            }
-        }
+    public function course_section_cm_list_vsf($course, $section, $sectionreturn = null, $displayoptions = array()) {
         $output = '';
         $modinfo = get_fast_modinfo($course);
         if (is_object($section)) {
@@ -406,7 +486,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $mod = $modinfo->cms[$modnumber];
 
                 if ($mod->modname == 'label') {
-                    if ($modulehtml = $this->course_section_cm_list_item($course,
+                    if ($modulehtml = $this->course_section_cm_list_label_item_vsf($course,
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
