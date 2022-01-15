@@ -257,6 +257,11 @@ class renderer extends section_renderer {
             'sectionno' => $section->section
         );
 
+        if ($this->courseformat->show_editor()) {
+            $stealthsectioncontext['cmcontrols'] =
+                $this->courserenderer->course_section_add_cm_control($course, $section->section, $section->section);
+        }
+
         return $this->render_from_template('format_vsf/stealthsection', $stealthsectioncontext);
     }
 
@@ -551,7 +556,7 @@ class renderer extends section_renderer {
 
         if ($section->uservisible) {
             $displaysectioncontext['cmlist'] = $this->course_section_cmlist($section);
-            $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, 0);
+            $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, $sectionreturn);
         }
 
         return $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
@@ -627,7 +632,7 @@ class renderer extends section_renderer {
             // Title with section navigation links and jump to menu.
             'sectionnavselection' => $sectionnavselectionmarkup,
             'sectiontitle' => $this->output->heading(get_section_name($this->course, $displaysection), 3, $titleclasses),
-            'thissection' => $this->display_section($thissection, $displaysection, true, false)
+            'thissection' => $this->display_section($thissection, true, $displaysection, false)
         );
 
         echo $this->render_from_template('format_vsf/singlesection', $singlesectioncontext);
@@ -685,7 +690,7 @@ class renderer extends section_renderer {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
             if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                echo $this->display_section($thissection, 0, false, false);
+                echo $this->display_section($thissection, false, 0, false);
             }
             if ($canbreak === true) {
                 echo $this->end_section_list();
@@ -723,7 +728,7 @@ class renderer extends section_renderer {
                 echo $this->section_summary($thissection, $this->course, null);
             } else {
                 // Display the section.
-                echo $this->display_section($thissection, 0);
+                echo $this->display_section($thissection, false, $thissection->section);
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
