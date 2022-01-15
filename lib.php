@@ -38,6 +38,14 @@ class format_vsf extends core_courseformat\base {
         return true;
     }
 
+    public function uses_course_index() {
+        return true;
+    }
+
+    public function uses_indentation(): bool {
+        return true;
+    }
+
     /**
      * Returns the display name of the given section that the course prefers.
      *
