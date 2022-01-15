@@ -556,7 +556,10 @@ class renderer extends section_renderer {
 
         if ($section->uservisible) {
             $displaysectioncontext['cmlist'] = $this->course_section_cmlist($section);
-            $displaysectioncontext['cmcontrol'] = $this->courserenderer->course_section_add_cm_control($this->course, $section->section, $sectionreturn);
+            if ($this->courseformat->show_editor()) {
+                $displaysectioncontext['cmcontrol'] =
+                    $this->courserenderer->course_section_add_cm_control($this->course, $section->section, $sectionreturn);
+            }
         }
 
         return $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
