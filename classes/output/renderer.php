@@ -704,21 +704,18 @@ class renderer extends \format_section_renderer_base {
         }
 
         // Can we view the section in question?
-        if (!($sectioninfo = $modinfo->get_section_info($displaysection))) {
+        if (!($thissection = $modinfo->get_section_info($displaysection))) {
             // This section doesn't exist.
             throw new \moodle_exception('unknowncoursesection', 'error', '',
                 get_string('unknowncoursesection', 'error', $course->fullname));
         }
 
-        if (!$sectioninfo->uservisible) {
+        if (!$thissection->uservisible) {
             // Can't view this section.
             return;
         }
 
         echo $this->course_styles();
-
-        // The requested section page.
-        $thissection = $modinfo->get_section_info($displaysection);
 
         // Section navigation links.
         $sectionnavlinks = $this->vsf_get_nav_links($this->course, $modinfo->get_section_info_all(), $displaysection);
