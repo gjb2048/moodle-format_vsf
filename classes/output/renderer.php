@@ -662,9 +662,9 @@ class renderer extends section_renderer {
                 $this->course->layoutcolumns = $numsections;  // Help to ensure a reasonable display.
             }
             if ($this->course->layoutcolumns > 1) {
-                if ($this->course->layoutcolumns > 4) {
+                if ($this->course->layoutcolumns > 2) {
                     // Default or database has been changed incorrectly.
-                    $this->course->layoutcolumns = 4;
+                    $this->course->layoutcolumns = 2;
 
                     // Update....
                     $this->courseformat->update_vsf_columns_setting($this->course->layoutcolumns);

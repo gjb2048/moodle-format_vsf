@@ -186,16 +186,14 @@ if ($ADMIN->fulltree) {
     $default = '0.7';
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
-    // Default number of columns between 1 and 4.
+    // Default number of columns between 1 and 2.
     $name = 'format_vsf/defaultlayoutcolumns';
     $title = get_string('defaultlayoutcolumns', 'format_vsf');
     $description = get_string('defaultlayoutcolumns_desc', 'format_vsf');
     $default = 1;
     $choices = array(
         1 => new lang_string('one', 'format_vsf'), // Default.
-        2 => new lang_string('two', 'format_vsf'), // Two.
-        3 => new lang_string('three', 'format_vsf'), // Three.
-        4 => new lang_string('four', 'format_vsf')   // Four.
+        2 => new lang_string('two', 'format_vsf') // Two.
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 

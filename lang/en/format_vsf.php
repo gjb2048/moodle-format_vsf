@@ -128,8 +128,6 @@ $string['em4_0'] = '4.0em';
 // Columns enhancement.
 $string['one'] = 'One';
 $string['two'] = 'Two';
-$string['three'] = 'Three';
-$string['four'] = 'Four';
 $string['columnvertical'] = 'Vertical';
 $string['columnhorizontal'] = 'Horizontal';
 $string['setlayoutcolumns'] = 'Columns';

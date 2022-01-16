@@ -416,9 +416,7 @@ class format_vsf extends core_courseformat\base {
                     'element_type' => 'select',
                     'element_attributes' => array(
                         array(1 => new lang_string('one', 'format_vsf'),   // Default.
-                              2 => new lang_string('two', 'format_vsf'),   // Two.
-                              3 => new lang_string('three', 'format_vsf'), // Three.
-                              4 => new lang_string('four', 'format_vsf'))  // Four.
+                              2 => new lang_string('two', 'format_vsf'))   // Two.
                     )
                 ),
                 'layoutcolumnorientation' => array(

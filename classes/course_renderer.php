@@ -17,8 +17,7 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
+ * @package    course/format_vsf
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2018-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -68,10 +67,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @return string.
      */
     public function course_section_cm_text_vsf(cm_info $mod, $vsfavailability = false, $displayoptions = array()) {
-        $output = '';
         if (!$mod->is_visible_on_course_page()) {
             // Nothing to be displayed to the user.
-            return $output;
+            return '';
         }
 
         $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
@@ -302,19 +300,19 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $modcontext = context_module::instance($mod->id);
         $canviewhidden = has_capability('moodle/course:viewhiddenactivities', $modcontext);
         if ($canviewhidden && !$mod->visible) {
-            // This module is hidden but current user has capability to see it.
-            // Do not display the availability info if the whole section is hidden.
+            /* This module is hidden but current user has capability to see it.
+               Do not display the availability info if the whole section is hidden. */
             if ($mod->get_section_info()->visible) {
                 $output .= $this->vsf_availability_info(get_string('hiddenfromstudents'), 'ishidden');
             }
         } else if ($mod->is_stealth()) {
-            // This module is available but is normally not displayed on the course page
-            // (this user can see it because they can manage it).
+            /* This module is available but is normally not displayed on the course page
+               (this user can see it because they can manage it). */
             $output .= $this->vsf_availability_info(get_string('hiddenoncoursepage'), 'isstealth');
         }
         if ($canviewhidden && !empty($CFG->enableavailability)) {
-            // Display information about conditional availability.
-            // Don't add availability information if user is not editing and activity is hidden.
+            /* Display information about conditional availability.
+               Don't add availability information if user is not editing and activity is hidden. */
             if ($mod->visible || $this->page->user_is_editing()) {
                 $hidinfoclass = 'isrestricted isfullinfo';
                 if (!$mod->visible) {
@@ -378,9 +376,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $output = '';
         static $modulelayout = array(
             1 => 'col-sm-12 col-md-6 col-lg-4 col-xl-2',
-            2 => 'col-md-12 col-lg-6 col-xl-4',
-            3 => 'col-lg-12 col-xl-6',
-            4 => 'col-lg-12 col-xl-6'
+            2 => 'col-md-12 col-lg-6 col-xl-4'
         );
         $ourclasses = ' '.$modulelayout[$course->layoutcolumns].' moduleviewgap';
         if ($this->moduleviewbutton) {

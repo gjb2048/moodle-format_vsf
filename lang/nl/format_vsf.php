@@ -87,8 +87,6 @@ $string['defaultsectionheaderborderradiusbl_desc'] = 'Radius omrading linksonder
 // Columns enhancement.
 $string['one'] = 'Een';
 $string['two'] = 'Twee';
-$string['three'] = 'Drie';
-$string['four'] = 'Vier';
 $string['columnvertical'] = 'Verticaal';
 $string['columnhorizontal'] = 'Horizontaal';
 $string['setlayoutcolumns'] = 'Kolommen';
