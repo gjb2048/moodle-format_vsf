@@ -283,10 +283,6 @@ class format_vsf extends core_courseformat\base {
                 'layoutcolumns' => array(
                     'default' => get_config('format_vsf', 'defaultlayoutcolumns'),
                     'type' => PARAM_INT,
-                ),
-                'layoutcolumnorientation' => array(
-                    'default' => get_config('format_vsf', 'defaultlayoutcolumnorientation'),
-                    'type' => PARAM_INT,
                 )
             );
         }
@@ -417,16 +413,6 @@ class format_vsf extends core_courseformat\base {
                     'element_attributes' => array(
                         array(1 => new lang_string('one', 'format_vsf'),   // Default.
                               2 => new lang_string('two', 'format_vsf'))   // Two.
-                    )
-                ),
-                'layoutcolumnorientation' => array(
-                    'label' => new lang_string('setlayoutcolumnorientation', 'format_vsf'),
-                    'help' => 'setlayoutcolumnorientation',
-                    'help_component' => 'format_vsf',
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(1 => new lang_string('columnvertical', 'format_vsf'),
-                              2 => new lang_string('columnhorizontal', 'format_vsf')) // Default.
                     )
                 )
             );

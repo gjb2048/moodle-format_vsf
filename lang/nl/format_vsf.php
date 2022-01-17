@@ -91,12 +91,8 @@ $string['columnvertical'] = 'Verticaal';
 $string['columnhorizontal'] = 'Horizontaal';
 $string['setlayoutcolumns'] = 'Kolommen';
 $string['setlayoutcolumns_help'] = 'Hoeveel kolommen moeten er gebruikt worden.';
-$string['setlayoutcolumnorientation'] = 'Kolom orientatie';
-$string['setlayoutcolumnorientation_help'] = 'Verticaal - Secties gaan van boven naar beneden.<br>Horizontaal - Secties gaan van links naar rechts.';
 $string['defaultlayoutcolumns'] = 'Aantal kolommen';
 $string['defaultlayoutcolumns_desc'] = "Aantal kolommen tussen een en vier.";
-$string['defaultlayoutcolumnorientation'] = 'Kolom Orientatie';
-$string['defaultlayoutcolumnorientation_desc'] = "De standaard kolom orientatie: Verticaal of Horizontaal.";
 
 // Progress bar chart.
 $string['barchart'] = 'Voortgangsbalk';

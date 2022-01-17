@@ -128,15 +128,8 @@ class renderer extends section_renderer {
      * @return string HTML to output.
      */
     protected function start_columns_section_list() {
-        $classes = 'sections ';
-        if (empty($this->course)) {
-            $this->course = $this->courseformat->get_course();
-        }
-        if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
-            $classes .= $this->get_column_class($this->course->layoutcolumns);
-        } else {
-            $classes .= $this->get_row_class();
-        }
+        $classes = 'sections '.$this->get_row_class(); // Horizontal.
+
         return html_writer::start_tag('ul', array('class' => $classes));
     }
 
@@ -304,8 +297,7 @@ class renderer extends section_renderer {
             $this->course = $this->courseformat->get_course();
         }
         if (($section->section != 0) &&
-            ($this->course->layoutcolumns > 1) &&
-            ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
+            ($this->course->layoutcolumns > 1)) { // Horizontal column layout.
             $classattrextra .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
         $sectionsummarycontext['classattrextra'] = $classattrextra;
@@ -499,8 +491,7 @@ class renderer extends section_renderer {
             $this->course = $this->courseformat->get_course();
         }
         if (($section->section != 0) &&
-            (!$onsectionpage) &&
-            ($this->course->layoutcolumnorientation == 2)) { // Horizontal column layout.
+            (!$onsectionpage)) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
 
@@ -697,9 +688,6 @@ class renderer extends section_renderer {
             }
             if ($canbreak === true) {
                 echo $this->end_section_list();
-                if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
-                    echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
-                }
                 echo $this->start_columns_section_list();
             }
         }
@@ -736,34 +724,18 @@ class renderer extends section_renderer {
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
             if ($canbreak === true) {
-                if ($this->course->layoutcolumnorientation == 1) {  // Vertical mode.
-                    if ($breaking == false) {
-                        $breaking = true;
-                        // Divide the number of sections by the number of columns.
-                        $breakpoint = $numshownsections / $this->course->layoutcolumns;
-                    }
+                // Horizontal mode.
+                if ($breaking == false) {
+                    $breaking = true;
+                    // The lowest value here for layoutcolumns is 2 and the maximum for shownsectioncount is 2, so :).
+                    $breakpoint = $this->course->layoutcolumns;
+                }
 
-                    if (($breaking == true) && ($shownsectioncount >= $breakpoint) &&
-                        ($columncount < $this->course->layoutcolumns)) {
-                        echo $this->end_section_list();
-                        echo $this->start_columns_section_list();
-                        $columncount++;
-                        // Next breakpoint is...
-                        $breakpoint += $numshownsections / $this->course->layoutcolumns;
-                    }
-                } else { // Horizontal mode.
-                    if ($breaking == false) {
-                        $breaking = true;
-                        // The lowest value here for layoutcolumns is 2 and the maximum for shownsectioncount is 2, so :).
-                        $breakpoint = $this->course->layoutcolumns;
-                    }
-
-                    if (($breaking == true) && ($shownsectioncount >= $breakpoint)) {
-                        echo $this->end_section_list();
-                        echo $this->start_columns_section_list();
-                        // Next breakpoint is...
-                        $breakpoint += $this->course->layoutcolumns;
-                    }
+                if (($breaking == true) && ($shownsectioncount >= $breakpoint)) {
+                    echo $this->end_section_list();
+                    echo $this->start_columns_section_list();
+                    // Next breakpoint is...
+                    $breakpoint += $this->course->layoutcolumns;
                 }
             }
         }
@@ -772,10 +744,6 @@ class renderer extends section_renderer {
             // Print stealth sections if present.
             if ($canbreak === true) {
                 echo $this->end_section_list();
-                if ($this->course->layoutcolumnorientation == 1) { // Vertical columns.
-                    echo html_writer::end_tag('div');
-                    echo html_writer::start_tag('div', array('class' => $this->get_row_class()));
-                }
                 echo $this->start_section_list();
             }
             foreach ($sectionsinfo as $section => $thissection) {
@@ -786,16 +754,10 @@ class renderer extends section_renderer {
                 echo $this->stealth_section($thissection, $this->course);
             }
             echo $this->end_section_list();
-            if (($canbreak === true) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
-                echo html_writer::end_tag('div');
-            }
 
             echo $this->change_number_sections($this->course, 0);
         } else {
             echo $this->end_section_list();
-            if (($canbreak === true) && ($this->course->layoutcolumnorientation == 1)) { // Vertical columns.
-                echo html_writer::end_tag('div');
-            }
         }
     }
 

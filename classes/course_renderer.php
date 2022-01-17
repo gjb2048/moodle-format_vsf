@@ -125,7 +125,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
     /**
      * Processes the availability markup into suitable text for the tool tip and separates out any link.
      *
-     * @param string $availabilityinfo.
+     * @param string $availabilityinfo
      *
      * @return array With separated 'text' and 'button' (if any).
      */

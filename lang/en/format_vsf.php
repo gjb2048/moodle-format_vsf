@@ -132,12 +132,8 @@ $string['columnvertical'] = 'Vertical';
 $string['columnhorizontal'] = 'Horizontal';
 $string['setlayoutcolumns'] = 'Columns';
 $string['setlayoutcolumns_help'] = 'How many columns to use.';
-$string['setlayoutcolumnorientation'] = 'Column orientation';
-$string['setlayoutcolumnorientation_help'] = 'Vertical - Sections go top to bottom.<br>Horizontal - Sections go left to right.';
 $string['defaultlayoutcolumns'] = 'Number of columns';
 $string['defaultlayoutcolumns_desc'] = "Number of columns between one and four.";
-$string['defaultlayoutcolumnorientation'] = 'Column orientation';
-$string['defaultlayoutcolumnorientation_desc'] = "The default column orientation: Vertical or Horizontal.";
 
 // Progress donut chart, bar chart or none.
 $string['barchart'] = 'Bar chart';

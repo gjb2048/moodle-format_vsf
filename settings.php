@@ -196,15 +196,4 @@ if ($ADMIN->fulltree) {
         2 => new lang_string('two', 'format_vsf') // Two.
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
-
-    // Default column orientation - 1 = vertical and 2 = horizontal.
-    $name = 'format_vsf/defaultlayoutcolumnorientation';
-    $title = get_string('defaultlayoutcolumnorientation', 'format_vsf');
-    $description = get_string('defaultlayoutcolumnorientation_desc', 'format_vsf');
-    $default = 2;
-    $choices = array(
-        1 => new lang_string('columnvertical', 'format_vsf'),
-        2 => new lang_string('columnhorizontal', 'format_vsf') // Default.
-    );
-    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 }
