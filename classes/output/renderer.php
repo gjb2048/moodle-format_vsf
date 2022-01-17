@@ -671,7 +671,6 @@ class renderer extends section_renderer {
 
         $canbreak = (($this->course->layoutcolumns > 1) && (!$this->editing));
 
-        $columncount = 1;
         $breaking = false; // Once the first section is shown we can decide if we break on another column.
         $breakpoint = 0;
         $shownsectioncount = 0;
@@ -711,7 +710,6 @@ class renderer extends section_renderer {
             }
         }
 
-        $numshownsections = count($sectiondisplayarray);
         foreach ($sectiondisplayarray as $thissection) {
             $shownsectioncount++;
             if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {

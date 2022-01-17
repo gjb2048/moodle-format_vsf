@@ -85,7 +85,7 @@ trait format_renderer_migration_toolbox {
     }
 
     protected function course_section_cmlist($section) {
-        if ((!$this->editing) && ($section->section != 0)) {
+        if (($this->moduleview) && (!$this->editing) && ($section->section != 0)) {
             return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, 0);
         }
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
