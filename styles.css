@@ -244,7 +244,7 @@
 }
 
 .format-vsf .vsfactivity .no-overflow p {
-    text-align: center;
+    text-align: center !important;
 }
 
 .format-vsf .vsf-progress-bar {

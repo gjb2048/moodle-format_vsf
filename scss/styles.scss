@@ -244,7 +244,7 @@
     .no-overflow {
         overflow: unset;
         p {
-            text-align: center;
+            text-align: center !important;
         }
     }
 }
