@@ -90,6 +90,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if (!empty($avcontent)) {
             $textclasses .= ' vsfavmod';
         }
+        $textclasses .= ' vsfactivity';
+        $textclasses = trim($textclasses);
 
         $classes = array();
         if ($content) {

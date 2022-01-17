@@ -768,7 +768,7 @@ class renderer extends section_renderer {
             return '';
         }
 
-        $colclasses = array(2 => 'vsf-col2', 3 => 'vsf-col3', 4 => 'vsf-col4');
+        $colclasses = array(2 => 'vsf-col2');
 
         return $colclasses[$columns];
     }
