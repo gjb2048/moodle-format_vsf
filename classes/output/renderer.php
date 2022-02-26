@@ -703,9 +703,7 @@ class renderer extends section_renderer {
             }
             /* Show the section if the user is permitted to access it, OR if it's not available
                but there is some available info text which explains the reason & should display. */
-            if ($thissection->uservisible ||
-                ($thissection->visible && !$thissection->available &&
-                !empty($thissection->availableinfo))) {
+            if (!$this->courseformat->is_section_visible($thissection)) {
                 $sectiondisplayarray[] = $thissection;
             }
         }

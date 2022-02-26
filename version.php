@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2021120700;
 $plugin->maturity = MATURITY_ALPHA;
-$plugin->requires  = 2021120300.00; // 4.0dev+ (Build: 20211203).
+$plugin->requires  = 2022022600.00; // 4.0dev+ (Build: 20220226).
 $plugin->supported = array(400, 400);
 $plugin->component = 'format_vsf';
 $plugin->release = '4.0.0.1';
