@@ -1,6 +1,6 @@
 {
   "name": "format-vsf-tasks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Grunt tasks for Moodle Progress Section Format.",
   "main": "Gruntfile.js",
   "author": {
@@ -19,14 +19,14 @@
     "grunt-exec": "3.0.0",
     "grunt-sass": "^3.1.0",
     "grunt-stylelint": "0.16.0",
-    "node-sass": "6.0.1",
+    "node-sass": "7.0.0",
     "semver": "7.3.4",
     "stylelint": "13.13.1",
     "stylelint-checkstyle-formatter": "0.1.2",
     "stylelint-csstree-validator": "1.9.0",
     "@xmldom/xmldom": "0.7.0",
     "xpath": "0.0.32"
-    },
+  },
   "engines": {
     "node": ">=14.15.0 <17"
   },
