@@ -444,11 +444,6 @@ class renderer extends section_renderer {
         }
     }
 
-    protected function render_sectionselector($widget) {
-        $data = $widget->export_for_template($this);
-        return $this->render_from_template('format_vsf/vsfsectionselector', $data);
-    }
-
     public function vsf_get_nav_link_icons() {
         return array(
             'next' => 'fa fa-arrow-circle-o-right',
@@ -580,8 +575,9 @@ class renderer extends section_renderer {
     /**
      * Output the html for a single section page .
      *
-     * @param stdClass $course The course entry from DB
-     * @param int $displaysection The section number in the course which is being displayed
+     * @param stdClass $course The course entry from DB.
+     * @param int $displaysection The section number in the course which is being displayed.
+     * @return string Markup.
      */
     public function single_section_page($course, $displaysection) {
         $modinfo = get_fast_modinfo($course);
@@ -629,23 +625,21 @@ class renderer extends section_renderer {
             'thissection' => $this->display_section($thissection, true, $displaysection, false)
         );
 
-        echo $this->render_from_template('format_vsf/singlesection', $singlesectioncontext);
+        return $this->render_from_template('format_vsf/singlesection', $singlesectioncontext);
     }
 
     /**
      * Output the html for a multiple section page
      *
-     * @param stdClass $course The course entry from DB
+     * @param stdClass $course The course entry from DB.
+     * @return string Markup.
      */
     public function multiple_section_page($course) {
         $modinfo = get_fast_modinfo($course);
 
         $context = context_course::instance($course->id);
 
-        echo $this->course_styles();
-
-        // Title.
-        echo $this->output->heading($this->page_title(), 2, 'accesshide');
+        $content = $this->course_styles();
 
         $numsections = $this->course->numsections; // Because we want to manipulate this for column breakpoints.
         if ($this->course->numsections > 0) {
@@ -676,18 +670,18 @@ class renderer extends section_renderer {
         $shownsectioncount = 0;
 
         // Now the list of sections..
-        echo $this->start_section_list();
+        $content .= $this->start_section_list();
 
         $sectionsinfo = $modinfo->get_section_info_all();
         if (!empty($sectionsinfo)) {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
             if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                echo $this->display_section($thissection, false, 0, false);
+                $content .= $this->display_section($thissection, false, 0, false);
             }
             if ($canbreak === true) {
-                echo $this->end_section_list();
-                echo $this->start_columns_section_list();
+                $content .= $this->end_section_list();
+                $content .= $this->start_columns_section_list();
             }
         }
 
@@ -712,10 +706,10 @@ class renderer extends section_renderer {
             $shownsectioncount++;
             if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
                 // Display section summary only.
-                echo $this->section_summary($thissection, $this->course, null);
+                $content .= $this->section_summary($thissection, $this->course, null);
             } else {
                 // Display the section.
-                echo $this->display_section($thissection, false, $thissection->section);
+                $content .= $this->display_section($thissection, false, $thissection->section);
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
@@ -728,8 +722,8 @@ class renderer extends section_renderer {
                 }
 
                 if (($breaking == true) && ($shownsectioncount >= $breakpoint)) {
-                    echo $this->end_section_list();
-                    echo $this->start_columns_section_list();
+                    $content .= $this->end_section_list();
+                    $content .= $this->start_columns_section_list();
                     // Next breakpoint is...
                     $breakpoint += $this->course->layoutcolumns;
                 }
@@ -739,22 +733,24 @@ class renderer extends section_renderer {
         if ($this->editing and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             if ($canbreak === true) {
-                echo $this->end_section_list();
-                echo $this->start_section_list();
+                $content .= $this->end_section_list();
+                $content .= $this->start_section_list();
             }
             foreach ($sectionsinfo as $section => $thissection) {
                 if ($section <= $numsections or empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }
-                echo $this->stealth_section($thissection, $this->course);
+                $content .= $this->stealth_section($thissection, $this->course);
             }
-            echo $this->end_section_list();
+            $content .= $this->end_section_list();
 
-            echo $this->change_number_sections($this->course, 0);
+            $content .= $this->change_number_sections($this->course, 0);
         } else {
-            echo $this->end_section_list();
+            $content .= $this->end_section_list();
         }
+
+        return $content;
     }
 
     protected function get_row_class() {

@@ -54,12 +54,20 @@ course_create_sections_if_missing($course, range(0, $course->numsections));
 
 $renderer = $PAGE->get_renderer('format_vsf');
 
+$content = '';
+$contentcontext = array(
+    'title' => $courseformat->page_title()
+);
 if (!empty($displaysection)) {
     $courseformat->set_section_number($displaysection);
-    $renderer->single_section_page($course, $displaysection);
+    $content = $renderer->single_section_page($course, $displaysection);
+    $contentcontext['sectionreturn'] = $displaysection;
 } else {
-    $renderer->multiple_section_page($course);
+    $content = $renderer->multiple_section_page($course);
 }
+$contentcontext['content'] = $content;
+
+echo $renderer->render_from_template('format_vsf/content', $contentcontext);
 
 // Include course format js module.
 $PAGE->requires->js('/course/format/vsf/format.js');

@@ -47,6 +47,16 @@ class sectionselector extends \core_courseformat\output\local\content\sectionsel
     private $navdata = null;
 
     /**
+     * Get the name of the template to use for this templatable.
+     *
+     * @param \renderer_base $renderer The renderer requesting the template name
+     * @return string
+     */
+    public function get_template_name(\renderer_base $renderer): string {
+        return 'format_vsf/local/content/sectionselector';
+    }
+
+    /**
      * Export this data so it can be used as the context for a mustache template.
      *
      * @param renderer_base $output typically, the renderer that's calling this function
