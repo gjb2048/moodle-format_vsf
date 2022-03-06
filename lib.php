@@ -242,7 +242,7 @@ class format_vsf extends core_courseformat\base {
                     'type' => PARAM_INT,
                 ),
                 'coursedisplay' => array(
-                    'default' => $courseconfig->coursedisplay,
+                    'default' => $courseconfig->coursedisplay ?? COURSE_DISPLAY_SINGLEPAGE,
                     'type' => PARAM_INT
                 ),
                 'chart' => array(

@@ -79,7 +79,7 @@ class renderer extends section_renderer {
 
         $this->editing = $page->user_is_editing();
         // Use our custom course renderer if we need to.
-        if ((!$this->editing) && ($this->course->coursedisplay == COURSE_DISPLAY_SINGLEPAGE)) {
+        if ((!$this->editing) && ($this->courseformat->get_course_display() == COURSE_DISPLAY_SINGLEPAGE)) {
             $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
             $this->moduleview = true;
         } else {
@@ -704,7 +704,7 @@ class renderer extends section_renderer {
 
         foreach ($sectiondisplayarray as $thissection) {
             $shownsectioncount++;
-            if (!$this->editing && $this->course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+            if (!$this->editing && $this->courseformat->get_course_display() == COURSE_DISPLAY_MULTIPAGE) {
                 // Display section summary only.
                 $content .= $this->section_summary($thissection, $this->course, null);
             } else {
