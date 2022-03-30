@@ -239,12 +239,18 @@ class renderer extends section_renderer {
         return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
     }
 
+    /**
+     * Generate the section header context in respect to badges.
+     *
+     * @param array $templatecontext Section header title.
+     * @param type $thissection Section.
+     */
     protected function section_badges(&$templatecontext, $thissection) {
         if ($this->courseformat->is_section_current($thissection->section)) {
             $templatecontext['iscurrent'] = true;
             $templatecontext['highlightedlabel'] = $this->courseformat->get_section_highlighted_name();
         }
-        
+
         if (!$thissection->visible) {
             global $USER;
             $context = context_course::instance($this->course->id);
