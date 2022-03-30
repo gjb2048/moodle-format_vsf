@@ -43,7 +43,7 @@
 <div class="row">
     <div class="col-sm-8 col-md-9 col-lg-10 col-xl-11">
 {{/controlmenu}}
-<div class="sectionname{{#vsfsectionname}} vsf-sectionname{{/vsfsectionname}}">
+<div class="sectionname{{#vsfsectionname}} vsf-sectionname{{/vsfsectionname}}" data-for="section_title" data-id="{{sectionid}}" data-number="{{sectionnumber}}">
 {{#hasbarchart}}
     <div class="row no-gutters">
         <div class="col-sm-6 col-lg-7 col-xl-8">
@@ -54,9 +54,6 @@
        {{#pix}}t/unlock, core{{/pix}}
     </div>
     {{/restrictionlock}}
-    <div data-region="sectionbadges" class="sectionbadges d-flex align-items-center">
-        {{> core_courseformat/local/content/section/badges }}
-    </div>
 {{#hasbarchart}}
         </div>
         <div class="col-sm-6 col-lg-5 col-xl-4">
@@ -72,3 +69,6 @@
     </div>
 </div>
 {{/controlmenu}}
+<div data-region="sectionbadges" class="sectionbadges d-flex align-items-center">
+    {{> core_courseformat/local/content/section/badges }}
+</div>

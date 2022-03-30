@@ -212,8 +212,11 @@ class renderer extends section_renderer {
      */
     protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $thissection, $vsfsectionname = true) {
         $sectionheaderhelpercontext = array(
+            'editing' => $this->editing,
             'hasbarchart' => $barchart,
             'restrictionlock' => !empty($thissection->availableinfo),
+            'sectionid' => $thissection->id,
+            'sectionnumber' => $thissection->section,
             'vsfsectionname' => $vsfsectionname
         );
 
@@ -231,7 +234,27 @@ class renderer extends section_renderer {
             }
         }
 
+        $this->section_badges($sectionheaderhelpercontext, $thissection);
+
         return $this->render_from_template('format_vsf/section_header_helper', $sectionheaderhelpercontext);
+    }
+
+    protected function section_badges(&$templatecontext, $thissection) {
+        if ($this->courseformat->is_section_current($thissection->section)) {
+            $templatecontext['iscurrent'] = true;
+            $templatecontext['highlightedlabel'] = $this->courseformat->get_section_highlighted_name();
+        }
+        
+        if (!$thissection->visible) {
+            global $USER;
+            $context = context_course::instance($this->course->id);
+            if (has_capability('moodle/course:viewhiddensections', $context, $USER)) {
+                $templatecontext['hiddenfromstudents'] = true;
+                $templatecontext['notavailable'] = false;
+            } else {
+                $templatecontext['notavailable'] = true;
+            }
+        }
     }
 
     /**
@@ -493,7 +516,7 @@ class renderer extends section_renderer {
         $displaysectioncontext['sectionstyle'] = $sectionstyle;
 
         if (!empty($sectionreturn)) {
-            $displaysectioncontext['sectionreturnid'] = $sectionstyle; // MDL-69065.
+            $displaysectioncontext['sectionreturnid'] = $sectionreturn; // MDL-69065.
         }
 
         // When not on a section page, we display the section titles except the general section if null.
