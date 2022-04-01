@@ -123,21 +123,21 @@
     width: 40px;
 }
 
-.format-vsf .course-content .single-section ul.sections li.section .content,
-.editing.format-vsf .course-content .single-section ul.sections li.section .content,
-.editing.format-vsf.lang-nl .course-content .single-section ul.sections li.section .content {
+.format-vsf .course-content .single-section ul.sections li.section > .content,
+.editing.format-vsf .course-content .single-section ul.sections li.section > .content,
+.editing.format-vsf.lang-nl .course-content .single-section ul.sections li.section > .content {
     margin: 0;
 }
 
-.format-vsf.editing .course-content .single-section ul.sections li.section .content {
+.format-vsf.editing .course-content .single-section ul.sections li.section > .content {
     margin: 0 40px;
 }
 
-.editing.format-vsf .course-content ul.sections li.section .content {
+.editing.format-vsf .course-content ul.sections li.section > .content {
     margin: 0 60px;
 }
 
-.editing.format-vsf.lang-nl .course-content ul.sections li.section .content {
+.editing.format-vsf.lang-nl .course-content ul.sections li.section > .content {
     margin: 0 80px;
 }
 
