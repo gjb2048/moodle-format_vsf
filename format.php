@@ -71,3 +71,4 @@ echo $renderer->render_from_template('format_vsf/content', $contentcontext);
 
 // Include course format js module.
 $PAGE->requires->js('/course/format/vsf/format.js');
+$PAGE->requires->js_call_amd('format_vsf/sectiontitle', 'init', array('section-2'));
