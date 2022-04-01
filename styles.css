@@ -209,6 +209,7 @@
 /* Section header background / foreground */
 .format-vsf .vsf-sectionname {
     margin-bottom: 8px;
+    min-height: 40px;
     padding: 0 12px;
 }
 
