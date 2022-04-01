@@ -141,7 +141,27 @@
     margin: 0 80px;
 }
 
-/* Progress chart */
+// Indentation.
+@media (min-width: 576px) {
+    .format-vsf {
+        $indent-size: 30px;
+        // Creates a series of .indent-# rule declarations based on indent size and number of indent levels.
+
+        @for $i from 1 through 16 {
+            $margin: ($i * $indent-size);
+
+            .indent-#{$i} {
+                margin-left: $margin;
+            }
+        }
+
+        .indent-huge {
+            margin-left: (16 * $indent-size);
+        }
+    }
+}
+
+// Progress chart
 .format-vsf .vsf-progress {
     float: right;
 }

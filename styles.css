@@ -141,7 +141,60 @@
     margin: 0 80px;
 }
 
-/* Progress chart */
+@media (min-width: 576px) {
+    .format-vsf .indent-1 {
+        margin-left: 30px;
+    }
+    .format-vsf .indent-2 {
+        margin-left: 60px;
+    }
+    .format-vsf .indent-3 {
+        margin-left: 90px;
+    }
+    .format-vsf .indent-4 {
+        margin-left: 120px;
+    }
+    .format-vsf .indent-5 {
+        margin-left: 150px;
+    }
+    .format-vsf .indent-6 {
+        margin-left: 180px;
+    }
+    .format-vsf .indent-7 {
+        margin-left: 210px;
+    }
+    .format-vsf .indent-8 {
+        margin-left: 240px;
+    }
+    .format-vsf .indent-9 {
+        margin-left: 270px;
+    }
+    .format-vsf .indent-10 {
+        margin-left: 300px;
+    }
+    .format-vsf .indent-11 {
+        margin-left: 330px;
+    }
+    .format-vsf .indent-12 {
+        margin-left: 360px;
+    }
+    .format-vsf .indent-13 {
+        margin-left: 390px;
+    }
+    .format-vsf .indent-14 {
+        margin-left: 420px;
+    }
+    .format-vsf .indent-15 {
+        margin-left: 450px;
+    }
+    .format-vsf .indent-16 {
+        margin-left: 480px;
+    }
+    .format-vsf .indent-huge {
+        margin-left: 480px;
+    }
+}
+
 .format-vsf .vsf-progress {
     float: right;
 }
