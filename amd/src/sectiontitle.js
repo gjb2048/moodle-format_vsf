@@ -1,25 +1,34 @@
 import Log from "core/log";
 
-export const init = (sectionid) => {
-    Log.debug("section title init " + sectionid);
+export const init = () => {
+    Log.debug("VSF section title init");
 
-    const theIdElement = document.getElementById(sectionid);
-    const theIdElementName = theIdElement.getElementsByClassName('vsf-sectionname')[0];
-    const theSectionElements = document.getElementsByClassName('section');
+    const theSectionElements = document.getElementsByClassName('vsf-sectionname');
+    var theLargestElement = null;
 
-    theSectionElements.forEach(function(theElement){
-        if (theElement !== theIdElement) {
-            theElement.style.minHeight = "250px";
-        } else {
-            Log.debug("ID element");
-        }
-    });
+    (function () {
+        var largest = 0;
+        theSectionElements.forEach(function(theElement) {
+            if (theElement.offsetHeight > largest) {
+               theLargestElement = theElement;
+               largest = theElement.offsetHeight;
+            }
+        });
+    })();
 
-    const reportWindowSize = function() {
+
+    const adjustSectionTitleHeights = function() {
         Log.debug("WinW - " + window.innerWidth);
-        Log.debug("EleNH - " + theIdElementName.offsetHeight);
+        Log.debug("LEleOH - " + theLargestElement.offsetHeight);
+
+        theSectionElements.forEach(function(theElement) {
+           if (theElement !== theLargestElement) {
+               theElement.style.height = "" + theLargestElement.offsetHeight + "px;";
+               Log.debug("EleOH - " + theElement.offsetHeight);
+           }
+        });
     };
 
-    reportWindowSize();
-    window.addEventListener('resize', reportWindowSize);
+    adjustSectionTitleHeights();
+    window.addEventListener('resize', adjustSectionTitleHeights);
 };
