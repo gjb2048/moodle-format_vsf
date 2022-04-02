@@ -31,6 +31,10 @@
  *
  * grunt css     Create the default CSS and lint the SCSS.
  *
+ * grunt amd     Use core, e.g. grunt amd --root=course/format/vsf
+ *               If on Windows, then set 'linebreak-style' to 'off' in root '.eslintrc'
+ *               as Git will handle this for us.
+ *
  * @package format_vsf.
  * @author G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
