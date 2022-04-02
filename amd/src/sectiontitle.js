@@ -20,15 +20,11 @@ export const init = () => {
             })();
 
             const adjustSectionTitleHeights = function() {
-                Log.debug("VSF section title WinW - " + window.innerWidth);
-                Log.debug("VSF section title LEleOH - " + theLargestElement.offsetHeight);
-
                 if (window.innerWidth < 576) {
                     if (theLargestElementCurrentSize !== 0) {
                         theSectionElements.forEach(function(theElement) {
                             if (theElement !== theLargestElement) {
                                 theElement.style.height = "auto";
-                                Log.debug("VSF section title EleOH SM - " + theElement.offsetHeight);
                             }
                         });
                         theLargestElementCurrentSize = 0;
@@ -38,7 +34,6 @@ export const init = () => {
                     theSectionElements.forEach(function(theElement) {
                         if (theElement !== theLargestElement) {
                             theElement.style.height = "" + theLargestElement.offsetHeight + "px";
-                            Log.debug("VSF section title EleOH SM+ - " + theElement.offsetHeight);
                         }
                     });
                 }
