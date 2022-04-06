@@ -233,10 +233,10 @@ class format_vsf extends core_courseformat\base {
 
             $courseconfig = get_config('moodlecourse');
             $courseformatoptions = array(
-                'numsections' => array(
+                /*'numsections' => array(
                     'default' => $courseconfig->numsections,
                     'type' => PARAM_INT,
-                ),
+                ),*/
                 'hiddensections' => array(
                     'default' => 1, // Completely invisible.
                     'type' => PARAM_INT,
@@ -303,11 +303,11 @@ class format_vsf extends core_courseformat\base {
                 $sectionmenu[$i] = "$i";
             }
             $courseformatoptionsedit = array(
-                'numsections' => array(
+                /*'numsections' => array(
                     'label' => new lang_string('numberweeks'),
                     'element_type' => 'select',
                     'element_attributes' => array($sectionmenu)
-                ),
+                ),*/
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
                     'element_type' => 'hidden'
@@ -474,14 +474,14 @@ class format_vsf extends core_courseformat\base {
         // activities / resources.
         if (!$forsection) {
             $maxsections = get_config('moodlecourse', 'maxsections');
-            $numsections = $mform->getElementValue('numsections');
+            /*$numsections = $mform->getElementValue('numsections');
             $numsections = $numsections[0];
             if ($numsections > $maxsections) {
                 $element = $mform->getElement('numsections');
                 for ($i = $maxsections + 1; $i <= $numsections; $i++) {
                     $element->addOption("$i", $i);
                 }
-            }
+            }*/
         }
 
         return $elements;

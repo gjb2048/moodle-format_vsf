@@ -691,9 +691,8 @@ class renderer extends section_renderer {
         $context = context_course::instance($course->id);
 
         $content = $this->course_styles();
-
-        $numsections = $this->course->numsections; // Because we want to manipulate this for column breakpoints.
-        if ($this->course->numsections > 0) {
+        $numsections = $this->courseformat->get_last_section_number(); // Because we want to manipulate this for column breakpoints.
+        if ($numsections > 0) {
             if ($numsections < $this->course->layoutcolumns) {
                 $this->course->layoutcolumns = $numsections;  // Help to ensure a reasonable display.
             }
@@ -742,7 +741,7 @@ class renderer extends section_renderer {
                 // Already output above.
                 continue;
             }
-            if ($section > $this->course->numsections) {
+            if ($section > $numsections) {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;
             }
