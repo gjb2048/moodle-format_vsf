@@ -599,6 +599,13 @@ class format_vsf extends core_courseformat\base {
     }
 
     /**
+     * This format is compatible with the React updates.
+     */
+    public function supports_components() {
+        return true;  // I.e. Allows section drag and drop to work!
+    }
+
+    /**
      * Returns whether this course format allows the activity to
      * have "triple visibility state" - visible always, hidden on course page but available, hidden.
      *

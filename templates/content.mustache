@@ -28,13 +28,7 @@
 }}
 <div id="{{uniqid}}-course-format">
     <h2 class="accesshide">{{{title}}}</h2>
-    {{^sectionreturn}}
-    <div data-for="course_sectionlist">
-    {{/sectionreturn}}
     {{{content}}}
-    {{^sectionreturn}}
-    </div>
-    {{/sectionreturn}}
 </div>
 {{#js}}
 require(['core_courseformat/local/content'], function(component) {

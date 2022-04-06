@@ -31,9 +31,11 @@ namespace format_vsf\output;
 defined('MOODLE_INTERNAL') || die();
 
 use context_course;
+use core_courseformat\base as course_format;
 use core_courseformat\output\section_renderer;
 use course_get_url;
 use html_writer;
+use section_info;
 
 require_once($CFG->dirroot.'/course/format/lib.php'); // For course_get_format.
 
@@ -116,11 +118,31 @@ class renderer extends section_renderer {
     }
 
     /**
+     * Get the updated rendered version of a section.
+     *
+     * This method will only be used when the course editor requires to get an updated cm item HTML
+     * to perform partial page refresh. It will be used for supporting the course editor webservices.
+     *
+     * By default, the template used for update a section is the same as when it renders initially,
+     * but format plugins are free to override this method to provide extra effects or so.
+     *
+     * @param course_format $format the course format
+     * @param section_info $section the section info
+     * @return string the rendered element
+     */
+    public function course_section_updated(
+        course_format $format,
+        section_info $section
+    ): string {
+        return $this->display_section($section, false);
+    }
+
+    /**
      * Generate the starting container html for a list of sections
      * @return string HTML to output.
      */
     protected function start_section_list() {
-        return html_writer::start_tag('ul', array('class' => 'sections'));
+        return html_writer::start_tag('ul', array('class' => 'sections', 'data-for' => 'course_sectionlist'));
     }
 
     /**
@@ -706,7 +728,7 @@ class renderer extends section_renderer {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
             if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
-                $content .= $this->display_section($thissection, false, 0, false);
+                $content .= $this->display_section($thissection, false, null, false);
             }
             if ($canbreak === true) {
                 $content .= $this->end_section_list();
@@ -738,7 +760,7 @@ class renderer extends section_renderer {
                 $content .= $this->section_summary($thissection, $this->course, null);
             } else {
                 // Display the section.
-                $content .= $this->display_section($thissection, false, $thissection->section);
+                $content .= $this->display_section($thissection, false);
             }
 
             // Only check for breaking up the structure with rows if more than one column and when we output all of the sections.
