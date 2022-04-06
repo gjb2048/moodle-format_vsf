@@ -598,8 +598,25 @@ class renderer extends section_renderer {
                     $this->courserenderer->course_section_add_cm_control($this->course, $section->section, $sectionreturn);
             }
         }
+        $this->add_section($displaysectioncontext, $section->id);
 
         return $this->render_from_template('format_vsf/display_section', $displaysectioncontext);
+    }
+
+    /**
+     * Generate the add section context data if any.
+     *
+     * @param array $displaysectioncontext The context for the template.
+     * @param int $sectionid The section id.
+     */
+    protected function add_section(&$displaysectioncontext, $sectionid) {
+        $outputclass = $this->courseformat->get_output_classname('content\\addsection');
+        $addsection = new $outputclass($this->courseformat);
+        $displaysectioncontext['addsections'] = $addsection->export_for_template($this);
+        if (!empty($displaysectioncontext['addsections'])) {
+            $displaysectioncontext['insertafter'] = true;
+            $displaysectioncontext['id'] = $sectionid;
+        }
     }
 
     /**
@@ -794,8 +811,6 @@ class renderer extends section_renderer {
                 $content .= $this->stealth_section($thissection, $this->course);
             }
             $content .= $this->end_section_list();
-
-            $content .= $this->change_number_sections($this->course, 0);
         } else {
             $content .= $this->end_section_list();
         }

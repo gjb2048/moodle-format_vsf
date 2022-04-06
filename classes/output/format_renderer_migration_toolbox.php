@@ -91,21 +91,4 @@ trait format_renderer_migration_toolbox {
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
         return $this->render(new $cmlistclass($this->courseformat, $section));
     }
-
-    /**
-     * Returns controls in the bottom of the page to increase/decrease number of sections
-     *
-     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
-     *
-     * @param stdClass $course
-     * @param int|null $sectionreturn
-     */
-    protected function change_number_sections($course, $sectionreturn = null) {
-        if ($sectionreturn) {
-            $this->courseformat->set_section_number($sectionreturn);
-        }
-        $outputclass = $this->courseformat->get_output_classname('content\\addsection');
-        $widget = new $outputclass($this->courseformat);
-        return $this->render($widget);
-    }
 }

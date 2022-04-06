@@ -233,10 +233,6 @@ class format_vsf extends core_courseformat\base {
 
             $courseconfig = get_config('moodlecourse');
             $courseformatoptions = array(
-                /*'numsections' => array(
-                    'default' => $courseconfig->numsections,
-                    'type' => PARAM_INT,
-                ),*/
                 'hiddensections' => array(
                     'default' => 1, // Completely invisible.
                     'type' => PARAM_INT,
@@ -303,11 +299,6 @@ class format_vsf extends core_courseformat\base {
                 $sectionmenu[$i] = "$i";
             }
             $courseformatoptionsedit = array(
-                /*'numsections' => array(
-                    'label' => new lang_string('numberweeks'),
-                    'element_type' => 'select',
-                    'element_attributes' => array($sectionmenu)
-                ),*/
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
                     'element_type' => 'hidden'
@@ -466,24 +457,22 @@ class format_vsf extends core_courseformat\base {
         MoodleQuickForm::registerElementType('vsfcolourpopup', "$CFG->dirroot/course/format/vsf/js/vsf_colourpopup.php",
                 'MoodleQuickForm_vsfcolourpopup');
         $elements = parent::create_edit_form_elements($mform, $forsection);
-
-        // Increase the number of sections combo box values if the user has increased the number of sections
-        // using the icon on the course page beyond course 'maxsections' or course 'maxsections' has been
-        // reduced below the number of sections already set for the course on the site administration course
-        // defaults page.  This is so that the number of sections is not reduced leaving unintended orphaned
-        // activities / resources.
-        if (!$forsection) {
-            $maxsections = get_config('moodlecourse', 'maxsections');
-            /*$numsections = $mform->getElementValue('numsections');
-            $numsections = $numsections[0];
-            if ($numsections > $maxsections) {
-                $element = $mform->getElement('numsections');
-                for ($i = $maxsections + 1; $i <= $numsections; $i++) {
-                    $element->addOption("$i", $i);
-                }
-            }*/
+        
+        if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {
+            // Add "numsections" element to the create course form - it will force new course to be prepopulated
+            // with empty sections.
+            // The "Number of sections" option is no longer available when editing course, instead teachers should
+            // delete and add sections when needed.
+            $courseconfig = get_config('moodlecourse');
+            $max = (int)$courseconfig->maxsections;
+            $element = $mform->addElement('select', 'numsections', get_string('numberweeks'), range(0, $max ?: 52));
+            $mform->setType('numsections', PARAM_INT);
+            if (is_null($mform->getElementValue('numsections'))) {
+                $mform->setDefault('numsections', $courseconfig->numsections);
+            }
+            array_unshift($elements, $element);
         }
-
+        
         return $elements;
     }
 
