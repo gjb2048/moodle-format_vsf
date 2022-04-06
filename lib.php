@@ -457,7 +457,7 @@ class format_vsf extends core_courseformat\base {
         MoodleQuickForm::registerElementType('vsfcolourpopup', "$CFG->dirroot/course/format/vsf/js/vsf_colourpopup.php",
                 'MoodleQuickForm_vsfcolourpopup');
         $elements = parent::create_edit_form_elements($mform, $forsection);
-        
+
         if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {
             // Add "numsections" element to the create course form - it will force new course to be prepopulated
             // with empty sections.
@@ -472,7 +472,7 @@ class format_vsf extends core_courseformat\base {
             }
             array_unshift($elements, $element);
         }
-        
+
         return $elements;
     }
 
