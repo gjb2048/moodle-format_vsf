@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.0.0.2
+-----------------------------
+  1. Activity navigation.
+
 Version 4.0.0.1
 -----------------------------
   1. Moodle 4.0 version.
