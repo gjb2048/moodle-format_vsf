@@ -39,7 +39,19 @@ class format_vsf extends core_courseformat\base {
     }
 
     public function uses_course_index() {
-        return true;
+
+        // Dirty tweak to allow both index and submenu.
+        // First run will be -> course_index_drawer().
+        // Next run will be -> activity_navigation().
+
+        static $i = 0;
+        $i++;
+
+        if ($i === 1) {
+            return true;
+        }
+
+        return false;
     }
 
     public function uses_indentation(): bool {
