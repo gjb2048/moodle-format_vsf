@@ -44,10 +44,11 @@ class format_vsf extends core_courseformat\base {
         // First run will be -> course_index_drawer().
         // Next run will be -> activity_navigation().
 
-        static $i = 0;
-        $i++;
+        static $i = false;
 
-        if ($i === 1) {
+        if ($i === false) {
+            $i = true;
+
             return true;
         }
 
