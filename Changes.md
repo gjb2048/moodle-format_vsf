@@ -4,6 +4,7 @@ Version Information
 Version 4.0.0.2
 -----------------------------
   1. Activity navigation.
+  2. Supports 4.1 
 
 Version 4.0.0.1
 -----------------------------
