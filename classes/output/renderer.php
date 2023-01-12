@@ -418,7 +418,8 @@ class renderer extends section_renderer {
             foreach ($modinfo->sections[$section->section] as $cmid) {
                 $thismod = $modinfo->cms[$cmid];
 
-                if ($thismod->uservisible) {
+                //if ($thismod->uservisible) { issue2 20230112
+				if ($thismod->visible) {
                     if (isset($sectionmods[$thismod->modname])) {
                         $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
                         $sectionmods[$thismod->modname]['count']++;
@@ -464,7 +465,7 @@ class renderer extends section_renderer {
                 $data = new \stdClass();
                 if ($this->course->chart == 2) { // Chart '2' is 'Bar chart'.
                     $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
-                    $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
+                    $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%'; 
                     $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-bar', $data);
                 } else if ($this->course->chart == 3) { // Chart '3' is 'Donut chart'.
                     $data->hasprogress = true;
