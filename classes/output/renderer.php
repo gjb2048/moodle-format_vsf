@@ -421,7 +421,7 @@ class renderer extends \format_section_renderer_base {
             foreach ($modinfo->sections[$section->section] as $cmid) {
                 $thismod = $modinfo->cms[$cmid];
 
-                if ($thismod->uservisible) {
+                if ($thismod->visible) {
                     if (isset($sectionmods[$thismod->modname])) {
                         $sectionmods[$thismod->modname]['name'] = $thismod->modplural;
                         $sectionmods[$thismod->modname]['count']++;
