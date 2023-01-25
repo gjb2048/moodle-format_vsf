@@ -266,6 +266,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             if (!$this->page->user_is_editing()) {
                 if ($this->moduleviewbutton) {
                     $output .= $this->course_section_cm_button($mod);
+                } else {
+                    $output .= $this->course_section_cm_image($mod);
                 }
             }
         }
@@ -523,4 +525,14 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
                 array('class' => 'mdl-align vsf-button-bottom'));
     }
+
+    protected function course_section_cm_image(cm_info $mod) {
+        $modicon = format_vsf\local\modicon\cache::get_modicon($mod);
+        $srcurl = $modicon->url;
+        $data = html_writer::img($srcurl, $mod->get_formatted_name(), array('class' => 'modpic'));
+        return html_writer::tag('div',
+                html_writer::link($mod->url, $data, array('class' => 'icon')),
+                array('class' => 'mdl-align vsf-image-bottom'));
+    }
+
 }
