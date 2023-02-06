@@ -814,3 +814,13 @@
 .format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-100 {
     stroke-dashoffset: 0;
 }
+
+.format-vsf .activity .vsf-image-bottom img.modpic.custom,
+.format-vsf .modicontable img.modpic.custom {
+    width: 90px;
+}
+
+.format-vsf .activity .vsf-image-bottom img.modpic.original,
+.format-vsf .modicontable img.modpic.original  {
+    /*width: 90px;*/
+}

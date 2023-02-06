@@ -100,11 +100,15 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $classes['class'] = $textclasses;
             }
         } else {
-            $content = html_writer::start_tag('p');
-            $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
-            $content .= html_writer::end_tag('p');
-            $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
+            // No longer display the standard mod icon. It's now taken care of by our custom icons.
+            // Please also view {{@link course_section_cm_image()}} at the end if this file.
+            // We might wish to add some CSS so activity item blocks have the same height?
+            $content = '';
+            //$content = html_writer::start_tag('p');
+            //$content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
+            //    'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
+            //$content .= html_writer::end_tag('p');
+            //$classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
         }
 
         if ($mod->url && $mod->uservisible) {
@@ -529,7 +533,14 @@ class format_vsf_course_renderer extends \core_course_renderer {
     protected function course_section_cm_image(cm_info $mod) {
         $modicon = format_vsf\local\modicon\cache::get_modicon($mod);
         $srcurl = $modicon->url;
-        $data = html_writer::img($srcurl, $mod->get_formatted_name(), array('class' => 'modpic'));
+        $class = 'modpic';
+        $class .= ' ' . $modicon->level; // Only indicative so it's known what scope the icon was set from.
+        if ($modicon->level === 'default') {
+            $class .= ' original';
+        } else {
+            $class .= ' custom';
+        }
+        $data = html_writer::img($srcurl, $mod->get_formatted_name(), array('class' => $class));
         return html_writer::tag('div',
                 html_writer::link($mod->url, $data, array('class' => 'icon')),
                 array('class' => 'mdl-align vsf-image-bottom'));

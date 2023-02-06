@@ -83,6 +83,7 @@ class overview implements renderable, templatable {
                 $rs->limitmod = $cm->modfullname;
                 $icons = cache::dump_modicons($cm);
                 $this->mark_active($icons);
+                $this->mark_class($icons);
                 $rs->modules[] = (object)[
                     'cm' => $cm,
                     'icons' => $icons
@@ -95,6 +96,7 @@ class overview implements renderable, templatable {
                 foreach ($fmi->cms as $cm) {
                     $icons = cache::dump_modicons($cm);
                     $this->mark_active($icons);
+                    $this->mark_class($icons);
                     $rs->modules[] = (object)[
                         'cm' => $cm,
                         'icons' => $icons
@@ -116,6 +118,17 @@ class overview implements renderable, templatable {
         array_walk($icons, function(&$item) use (&$first) {
             $item->active = $first;
             $first = false;
+        });
+    }
+
+    /**
+     * Mark icon class.
+     *
+     * @param array $icons
+     */
+    protected function mark_class(&$icons) {
+        array_walk($icons, function(&$item) {
+            $item->cssclass = ($item->level === 'default' ? 'original' : 'custom');
         });
     }
 

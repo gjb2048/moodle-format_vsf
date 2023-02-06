@@ -333,4 +333,15 @@
     margin-right: 0;
 }
 
+.format-vsf .activity .vsf-image-bottom img.modpic.custom,
+.format-vsf .modicontable img.modpic.custom {
+    width: 90px;
+}
+
+.format-vsf .activity .vsf-image-bottom img.modpic.original,
+.format-vsf .modicontable img.modpic.original  {
+    /*width: 90px;*/
+}
+
+
 @import "progress_chart";

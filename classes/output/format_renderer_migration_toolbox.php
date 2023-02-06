@@ -85,7 +85,11 @@ trait format_renderer_migration_toolbox {
     }
 
     protected function course_section_cmlist($section) {
-        if (($this->moduleview) && (!$this->editing) && ($section->section != 0)) {
+        // Turns out section 0 would be rendered according to defaults.
+        // This would imply our idea of icon customisations doesn't work.
+        // I don't know about the possible side effects, but made the choice to also include section 0.
+        //if (($this->moduleview) && (!$this->editing) && ($section->section != 0)) {
+        if (($this->moduleview) && (!$this->editing)) {
             return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, 0);
         }
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
