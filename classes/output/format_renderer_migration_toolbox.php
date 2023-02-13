@@ -84,11 +84,16 @@ trait format_renderer_migration_toolbox {
         return $summary->format_summary_text();
     }
 
+    /**
+     * Generate cmlist.
+     *
+     * @param mixed $section
+     * @return string HTML to output.
+     */
     protected function course_section_cmlist($section) {
         // Turns out section 0 would be rendered according to defaults.
         // This would imply our idea of icon customisations doesn't work.
         // I don't know about the possible side effects, but made the choice to also include section 0.
-        //if (($this->moduleview) && (!$this->editing) && ($section->section != 0)) {
         if (($this->moduleview) && (!$this->editing)) {
             return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, 0);
         }
