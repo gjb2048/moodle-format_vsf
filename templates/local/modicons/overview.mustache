@@ -1,0 +1,28 @@
+<table class="table generaltable modicontable">
+<thead><tr>
+    <th>{{#str}}activitymodule{{/str}}</th>
+    <th>{{#str}}module, course{{/str}}</th>
+    <th>{{#str}}mainicon, format_vsf{{/str}}</th>
+    <th>{{#str}}fallbackicons, format_vsf{{/str}}</th>
+</tr></thead>
+<tbody>
+{{#modules}}
+    <tr>
+        <td>{{cm.modname}}</td>
+        <td>{{cm.name}}</td>
+        <td>
+        {{#icons}}
+        {{#active}}<img src="{{url}}" class="modpic {{cssclass}}"/> ({{level}} - {{#str}}active{{/str}})</td><td>{{/active}}
+        {{^active}}<span><img src="{{url}}" class="modpic {{cssclass}}"/> ({{level}})</span>{{/active}}
+        {{/icons}}
+        </td>
+    </tr>
+{{/modules}}
+</tbody>
+</table>
+<style>
+.modicontable img {
+    max-width: 200px;
+    max-height: 200px;
+}
+</style>

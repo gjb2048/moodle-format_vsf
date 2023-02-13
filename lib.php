@@ -665,3 +665,101 @@ function format_vsf_inplace_editable($itemtype, $itemid, $newvalue) {
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }
+
+/**
+ * Drop-in replacement for theme custom CSS.
+ * This will inject the CSS needed for modpic/modtxt specifics.
+ * Since this callback is called _always_, we're not bound to use of the format.
+ */
+function format_vsf_before_standard_html_head() {
+    global $CFG;
+    $url = new moodle_url($CFG->wwwroot . '/course/format/vsf/injectedcss.css');
+    // Return CSS injection tag.
+    return html_writer::empty_tag('link', [
+        'href' => $url->out(false),
+        'rel' => 'stylesheet',
+        'type' => 'text/css'
+    ]);
+}
+
+/**
+ * Add items to course navigation
+ *
+ * @param navigation_node $parentnode
+ * @param stdClass $course
+ * @param context_course $context
+ */
+function format_vsf_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
+    global $CFG;
+    $str = get_string('iconsmenuitem', 'format_vsf');
+    $action = new moodle_url($CFG->wwwroot . '/course/format/vsf/courseicons.php', [
+        'id' => $course->id
+    ]);
+    $key = 'vsfcourseicons';
+    $properties = [
+        'key' => $key,
+        'text' => $str,
+        'shorttext' => $str,
+        'type' => navigation_node::TYPE_CUSTOM,
+        'action' => $action
+    ];
+    $node = new navigation_node($properties);
+    $parentnode->children->add($node);
+
+    $str = get_string('iconcustomizations', 'format_vsf');
+    $action = new moodle_url($CFG->wwwroot . '/course/format/vsf/iconused.php', [
+        'id' => $course->id, 'v' => 'course'
+    ]);
+    $key = 'vsfusedcourseicons';
+    $properties = [
+        'key' => $key,
+        'text' => $str,
+        'shorttext' => $str,
+        'type' => navigation_node::TYPE_CUSTOM,
+        'action' => $action
+    ];
+    $node = new navigation_node($properties);
+    $parentnode->children->add($node);
+}
+
+/**
+ * Serving the iconfiles
+ *
+ * @param stdClass $course
+ * @param stdClass|cm_info $cm
+ * @param context $context
+ * @param string $filearea
+ * @param array $args
+ * @param bool $forcedownload
+ * @param array $options
+ * @return boolean
+ */
+function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+    require_login($course, false, $cm);
+
+    // Make sure the filearea is one of those used by the plugin.
+    if ($filearea !== 'modicon' && strpos($filearea, 'modicon_') !== 0) {
+        return false;
+    }
+
+    // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
+    $itemid = array_shift($args); // The first item in the $args array.
+    // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
+    // user really does have access to the file in question.
+    // Extract the filename / filepath from the $args array.
+    $filename = array_pop($args); // The last item in the $args array.
+    if (!$args) {
+        $filepath = '/';
+    } else {
+        $filepath = '/' . implode('/', $args) . '/';
+    }
+
+    // Retrieve the file from the Files API.
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'format_vsf', $filearea, $itemid, $filepath, $filename);
+    if (!$file) {
+        return false; // The file does not exist.
+    }
+
+    send_stored_file($file, null, 0, $forcedownload, $options);
+}

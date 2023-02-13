@@ -72,7 +72,16 @@ class format_vsf_course_renderer extends \core_course_renderer {
             return '';
         }
 
-        $content = $mod->get_formatted_content(array('overflowdiv' => false, 'noclean' => true));
+        // We no longer read out any content; we've moved on to configurable icons.
+        $content = '';
+        if (!$this->page->user_is_editing()) {
+            if ($this->moduleviewbutton) {
+                $content .= $this->course_section_cm_button($mod);
+            } else {
+                $content .= $this->course_section_cm_image($mod);
+            }
+        }
+
         list($linkclasses, $textclasses) = $this->course_section_cm_classes_vsf($mod);
 
         $avcontent = '';
@@ -99,12 +108,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
             if (!empty($textclasses)) {
                 $classes['class'] = $textclasses;
             }
-        } else {
-            $content = html_writer::start_tag('p');
-            $content .= html_writer::empty_tag('img', array('src' => $mod->get_icon_url(),
-                'class' => 'iconlarge activityicon', 'alt' => ' ', 'role' => 'presentation'));
-            $content .= html_writer::end_tag('p');
-            $classes['class'] = trim('mdl-align vsfmodicon '.$textclasses);
         }
 
         if ($mod->url && $mod->uservisible) {
@@ -113,13 +116,20 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $groupinglabel = $mod->get_grouping_label($textclasses);
         }
 
-        $output = html_writer::tag('div', $avcontent.$content.$groupinglabel, $classes);
+        $output = html_writer::tag('div', $content.$avcontent.$groupinglabel, $classes);
         if (!$this->moduleviewbutton) {
-            $output = html_writer::link($mod->url, $output);
+            if ($mod->uservisible) {
+                // Only link this when this activity is actually available.
+                $output = html_writer::link($mod->url, $output);
+            }
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
-                $output .= html_writer::tag('div', $availabilityinfo['button'], array('class' => 'mdl-align vsf-button-bottom vsf-aib'));
+                $output .= html_writer::tag('div', $availabilityinfo['button'],
+                        array('class' => 'mdl-align vsf-button-bottom vsf-aib'));
             }
         }
+
+        // Finally, wrap in a flex box.
+        $output = html_writer::div($output, 'vsf-activity-wrapper');
 
         return $output;
     }
@@ -225,6 +235,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         if ($this->page->user_is_editing()) {
+            // I think this is never called?
+            // This course_renderer looks only in use when user is NOT editing in renderer.php.
             $output .= course_get_cm_move($mod, $sectionreturn);
         }
 
@@ -244,7 +256,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 // Module can put text after the link (e.g. forum unread).
                 $output .= $mod->afterlink;
 
-                // Closing the tag which contains everything but edit icons. Content part of the module should not be part of this.
+                // Closing the tag which contains everything but edit icons.
+                // Content part of the module should not be part of this.
                 $output .= html_writer::end_tag('div'); // End .activityinstance.
             }
         }
@@ -262,12 +275,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
             /* If there is content AND a link, then display the content here
                (AFTER any icons). Otherwise it was displayed before. */
             $output .= $this->course_section_cm_text_vsf($mod, true, $displayoptions);
-
-            if (!$this->page->user_is_editing()) {
-                if ($this->moduleviewbutton) {
-                    $output .= $this->course_section_cm_button($mod);
-                }
-            }
         }
 
         return $output;
@@ -374,7 +381,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
+    public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod,
+            $sectionreturn, $displayoptions = array()) {
         $output = '';
         static $modulelayout = array(
             1 => 'col-sm-12 col-md-6 col-lg-4 col-xl-2',
@@ -406,7 +414,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_label_item_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = []) {
+    public function course_section_cm_list_label_item_vsf($course, &$completioninfo,
+            cm_info $mod, $sectionreturn, $displayoptions = []) {
         $output = '';
         if ($modulehtml = $this->course_section_label_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
@@ -430,7 +439,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_label_cm_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = []) {
+    public function course_section_label_cm_vsf($course, &$completioninfo,
+            cm_info $mod, $sectionreturn, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page()) {
             return '';
         }
@@ -517,10 +527,46 @@ class format_vsf_course_renderer extends \core_course_renderer {
         return $output;
     }
 
-    // VSF methods.
+    /**
+     * Course activity button
+     *
+     * @param cm_info $mod
+     * @return string
+     */
     protected function course_section_cm_button(cm_info $mod) {
-        return html_writer::tag('div',
-                html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
-                array('class' => 'mdl-align vsf-button-bottom'));
+        if ($mod->uservisible) {
+            // Return button.
+            return html_writer::tag('span',
+                    html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
+                    array('class' => 'mdl-align vsf-button-bottom'));
+        } else {
+            // Return as disabled text only button.
+            return html_writer::tag('span',
+                    html_writer::tag('span', $mod->get_formatted_name(), ['class' => 'btn btn-primary disabled']),
+                    array('class' => 'mdl-align vsf-button-bottom'));
+        }
     }
+
+    /**
+     * Course activity icon
+     *
+     * @param cm_info $mod
+     * @return string
+     */
+    protected function course_section_cm_image(cm_info $mod) {
+        $modicon = format_vsf\local\modicon\cache::get_modicon($mod);
+        $srcurl = $modicon->url;
+        $class = 'modpic';
+        $class .= ' ' . $modicon->level; // Only indicative so it's known what scope the icon was set from.
+        if ($modicon->level === 'default') {
+            $class .= ' original';
+        } else {
+            $class .= ' custom';
+        }
+        $image = html_writer::img($srcurl, $mod->get_formatted_name(),
+                ['class' => $class, 'alt' => ' ', 'role' => 'presentation']);
+        return html_writer::tag('span',
+                $image, array('class' => 'mdl-align vsf-icon'));
+    }
+
 }

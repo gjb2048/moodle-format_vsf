@@ -110,3 +110,40 @@ $string['defaultmoduleviewbutton_desc'] = 'Door deze instelling op Ja te zetten 
 
 // Privacy.
 $string['privacy:nop'] = 'VSF cursusformat bewaart de configuratieinstellingen. Geen van de instellingen hebben betrekking op een specifieke gebruiker. Het is de verantwoordelijkheid van de organisatie dat in vrije tekstvelden geen persoonlijke gebruikersinformatie vermeld wordt. Indien een instelling gewijzigd wordt zal dit in de Moodle log getoond wordt onder vermelding van de gebruiker die de instelling heeft aangepast. Deze logging heeft geen betrekking op het cursusformat en is onderdeel van de Moodle standaard functionaliteiten. Indien dit niet gewenst is dient dit in de Moodle standaard opgelost te worden. Indien afbeeldingen geupload worden bij de module beschrijving, adviseren we je om embedded locatie informatie (EXIF GPS) te vermelden inclusief andere persoonlijke informatie om zo te voorkomen dat persoonlijke informatie verspreid kan worden. Inspecteer de code om zeker te weten dat deze voldoet aan de organisaties interpertatie van de AVG wetgeving. De ontwikkelaar neemt hier verder geen verantwoordelijk voor. Twijfel je aan de analyse van de ontwikkelaar, verwijder dan het cursusformat van je Moodle installatie.';
+
+// Mod/course icons.
+$string['changemodiconheader'] = 'Afbeeldingen activiteitenmodules aanpassen';
+$string['edit-icon'] = 'Afbeelding aanpassen';
+$string['modicon:image:defaults:head'] = 'Afbeeldingsverwerker (globaal niveau)';
+$string['modicon:image:defaults:desc'] = 'Dit scherm toont en voorziet in vervangen/overschrijven van de custom afbeeldingen ten behoeve van activiteitenmodules op hoogste niveau (systeem).<br/>
+Afbeeldingen die hier worden verwerkt dienen als hoogste niveau fallback voordat de door de activiteitenmodule zelf gedefinieerde afbeelding genomen wordt.';
+$string['modicon:image:coursecat:head'] = 'Afbeeldingsverwerker voor activiteitenmodules in cursuscategorie {$a}';
+$string['modicon:image:coursecat:desc'] = 'Dit scherm toont en voorziet in vervangen/overschrijven van de custom afbeeldingen ten behoeve van activiteitenmodules op niveau van deze cursuscategorie.<br/>
+Afbeeldingen die hier worden verwerkt dienen als fallback mits er op lager niveau (cursus of activiteit) geen custom afbeelding gevonden kan worden.<br/>
+Wordt hier ook geen afbeelding gevonden; dan wordt gekeken naar het bovenliggende niveau (systeem).<br/><br/>
+Je kunt de overschrijvingen ook doen op <a href="{$a}">systeemniveau</a>.';
+$string['modicon:image:course:head'] = 'Afbeeldingsverwerker voor activiteitenmodules in cursus {$a}';
+$string['modicon:image:course:desc'] = 'Dit scherm toont en voorziet in vervangen/overschrijven van de custom afbeeldingen ten behoeve van activiteitenmodules op niveau van deze cursus.<br/>
+Afbeeldingen die hier worden verwerkt dienen als fallback mits er op voorgaand niveau (cursusactiviteit) geen overschrijvingen bestaan.<br/>
+Wordt hier ook geen afbeelding gevonden; dan wordt gekeken naar het bovenliggende niveau (cursuscategorie).<br/><br/>
+Je kunt de overschrijvingen ook doen op <a href="{$a}">cursuscategorieniveau</a>.';
+$string['modicon:image:coursemodule:head'] = 'Afbeeldingsverwerker voor activiteitenmodules in cursusactiviteit {$a}';
+$string['modicon:image:coursemodule:desc'] = 'Dit scherm toont en voorziet in vervangen/overschrijven van de custom afbeeldingen ten behoeve van activiteitenmodules op niveau van de cursusactiviteit.<br/>
+Afbeeldingen die hier worden verwerkt dienen als specialisatie voor de huidige cursusactiviteit.<br/>
+Is hier niets ingesteld, dan wordt gekeken naar cursusniveau, cursuscategorieniveau, systeemniveau en uiteindelijk, wanneer niets wordt gevonden, de door de activiteitenmodule zelf gedefinieerde afbeelding.<br/><br/>
+Je kunt de afbeeldingen ook instellen op <a href="{$a}">cursusniveau</a>.';
+$string['iconsmenuitem'] = 'Afbeeldingen beheren';
+$string['modicon:usage'] = 'Gebruikte custom afbeeldingen';
+$string['iconcustomizations'] = 'Toon afbeeldingsoverschrijvingen';
+$string['modicon:for'] = 'Activiteitsafbeelding voor {$a}';
+$string['modicon:cm'] = 'Custom afbeelding activiteit';
+$string['modicons'] = 'Custom icoon activiteitenmodule';
+$string['mainicon'] = 'Actief icoon';
+$string['fallbackicons'] = 'Hogerliggende iconen';
+$string['modicons:global:changes:saved'] = 'Global afbeeldingsoverschrijvingen bewaard';
+$string['modicons:course:changes:saved'] = 'Cursusactiviteitsafbeelding(en) voor cursus bewaard';
+$string['modicons:coursecat:changes:saved'] = 'Cursusactiviteitsafbeelding(en) voor cursuscategorie bewaard';
+$string['modicons:cm:changes:saved'] = 'Cursusactiviteitsafbeelding voor activiteit bewaard';
+$string['modicons:global'] = 'Globale custom afbeeldingen (systeemniveau)';
+$string['modicons:course'] = 'Cursus custom afbeeldingen (cursusniveau)';
+$string['modicons:coursecat'] = 'Cursuscategorie custom afbeeldingen (cursuscategorieniveau)';
