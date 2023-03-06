@@ -565,7 +565,8 @@ class renderer extends section_renderer {
         $headerclasses = 'section-title';
         if ($hasnamenotsecpg || $hasnamesecpg) {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
-            $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
+             // Chart '2' is 'Bar chart'.
+            $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2));
 
             $displaysectioncontext['header'] = $this->section_header_helper(
                     $this->section_title_without_link($section, $this->course),

@@ -151,7 +151,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $inpaymentlinktag = false;
         $currenttag = '';
         $lasttag = '';
-        $processed = array('text'  => '', 'button' => '');
+        $processed = array('text' => '', 'button' => '');
         $avilen = core_text::strlen($availabilityinfo);
 
         for ($charno = 0; $charno < $avilen; $charno++) {
@@ -604,7 +604,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
     protected function get_tooltip_content(cm_info $mod) {
         $output = '';
         if (!$mod->is_visible_on_course_page()) {
-            // Nothing to be displayed to the user
+            // Nothing to be displayed to the user.
             return $output;
         }
         if (!$this->moduledescriptiontooltip) {
