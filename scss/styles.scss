@@ -259,6 +259,7 @@
 
 .format-vsf .moduleviewgapwithbutton {
     padding-bottom: 30px;
+    mi-height: 70px;
 }
 
 .format-vsf .vsfactivity {
@@ -307,16 +308,20 @@
 }
 
 .format-vsf .vsfavmod .vsfai {
-    bottom: 20px;
-    left: 0;
     position: absolute;
-    right: 0;
     text-align: center;
-    top: 20px;
+    /*top: 20px;*/
+    /*bottom: 20px;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    left: 10px;
+    right: 10px;
+    bottom: 0px;
 }
 
 .format-vsf .vsfavmod .vsfai img {
     max-height: 100%;
+    max-width: 100%;
 }
 
 .format-vsf .vsfavmod.vsfmodicon .vsfai {
@@ -332,5 +337,21 @@
 .format-vsf .activity .vsfavmod img.activityicon {
     margin-right: 0;
 }
+
+.format-vsf .activity .vsf-icon img.modpic.custom,
+.format-vsf .modicontable img.modpic.custom {
+    width: 90px;
+}
+
+.format-vsf .activity .vsf-icon img.modpic.original,
+.format-vsf .modicontable img.modpic.original  {
+    /*width: 90px;*/
+}
+
+.format-vsf .activity.moduleviewgapwithbutton .vsfactivity {
+    max-width: 100%;
+}
+
+
 
 @import "progress_chart";

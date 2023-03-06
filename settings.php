@@ -196,4 +196,21 @@ if ($ADMIN->fulltree) {
         2 => new lang_string('two', 'format_vsf') // Two.
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
+    // Inject link to global/system level custom icons.
+    $dparams = ['return' => (new moodle_url($CFG->wwwroot . '/admin/settings.php', ['section' => 'formatsettingvsf']))->out(false)];
+    $settings->add(new admin_setting_description(
+            'format_vsf/modiconlinks',
+            get_string('modicons', 'format_vsf'),
+            \html_writer::link(
+                    new moodle_url($CFG->wwwroot . '/course/format/vsf/modicons.php', $dparams),
+                    get_string('modicons:global', 'format_vsf'))
+        ));
+
 }
+
+$category = new admin_category('vsfcategory', get_string('pluginname', 'format_vsf'));
+$ADMIN->add('root', $category);
+$category->add('vsfcategory', new admin_externalpage('vsfmodicons', get_string('modicons', 'format_vsf'),
+        new moodle_url($CFG->wwwroot . '/course/format/vsf/modicons.php',
+                ['return' => (new moodle_url($CFG->wwwroot . '/admin/search.php'))->out(false)])));

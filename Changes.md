@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.0.0.3
+-----------------------------
+  1. Replace Moodle standard Activity icons with images on activity, course, category or systemlevel (Sebsoft)
+  
 Version 4.0.0.2
 -----------------------------
   1. Activity navigation.

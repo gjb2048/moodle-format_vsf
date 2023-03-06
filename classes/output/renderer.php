@@ -197,10 +197,14 @@ class renderer extends section_renderer {
         }
 
         // Site wide configuration Site Administration -> Plugins -> Course formats -> Collapsed Topics.
-        $coursestylescontext['vsfborderradiustl'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustl'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiustr'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiustr'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiusbr'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiusbl'] = clean_param(get_config('format_vsf', 'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiustl'] = clean_param(get_config('format_vsf',
+                'defaultsectionheaderborderradiustl'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiustr'] = clean_param(get_config('format_vsf',
+                'defaultsectionheaderborderradiustr'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbr'] = clean_param(get_config('format_vsf',
+                'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbl'] = clean_param(get_config('format_vsf',
+                'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
 
         if ($this->course->sectionheaderforegroundcolour[0] != '#') {
             $coursestylescontext['sectionheaderforegroundcolour'] = '#'.$this->course->sectionheaderforegroundcolour;
@@ -232,7 +236,8 @@ class renderer extends section_renderer {
      * @param type $barchart States if the bar chart is shown.
      * @param type $thissection Section.
      */
-    protected function section_header_helper($title, $titleattributes, $activitysummary, $barchart, $thissection, $vsfsectionname = true) {
+    protected function section_header_helper($title, $titleattributes, $activitysummary,
+            $barchart, $thissection, $vsfsectionname = true) {
         $sectionheaderhelpercontext = array(
             'editing' => $this->editing,
             'hasbarchart' => $barchart,
@@ -247,7 +252,8 @@ class renderer extends section_renderer {
             $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
         }
 
-        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes, "sectionid-{$thissection->id}-title");
+        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes,
+                "sectionid-{$thissection->id}-title");
 
         if ($this->courseformat->show_editor()) {
             if (empty($this->hidecontrols)) {
@@ -360,7 +366,8 @@ class renderer extends section_renderer {
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
         $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title', $activitysummary, $barchart, $section);
+        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title',
+                $activitysummary, $barchart, $section);
 
         if ($this->course->chart == 3) { // Donut chart.
             if (!empty($activitysummary)) {
@@ -465,11 +472,13 @@ class renderer extends section_renderer {
                 if ($this->course->chart == 2) { // Chart '2' is 'Bar chart'.
                     $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
                     $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
-                    $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-bar', $data);
+                    $this->sectioncompletionmarkup[$section->section] .=
+                            $this->render_from_template('format_vsf/progress-bar', $data);
                 } else if ($this->course->chart == 3) { // Chart '3' is 'Donut chart'.
                     $data->hasprogress = true;
                     $data->progress = $this->sectioncompletionpercentage[$section->section];
-                    $this->sectioncompletionmarkup[$section->section] .= $this->render_from_template('format_vsf/progress-chart', $data);
+                    $this->sectioncompletionmarkup[$section->section] .=
+                            $this->render_from_template('format_vsf/progress-chart', $data);
                 }
             }
 
@@ -558,12 +567,14 @@ class renderer extends section_renderer {
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-            $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
+            $displaysectioncontext['header'] = $this->section_header_helper(
+                    $this->section_title_without_link($section, $this->course),
                 $headerclasses, $activitysummary, $barchart, $section);
         } else {
             // Hidden section name so don't output anything bar the header name.
             $headerclasses .= ' accesshide';
-            $displaysectioncontext['header'] = $this->section_header_helper($this->section_title_without_link($section, $this->course),
+            $displaysectioncontext['header'] = $this->section_header_helper(
+                    $this->section_title_without_link($section, $this->course),
                 $headerclasses, '', false, $section, false);
         }
 
@@ -743,7 +754,7 @@ class renderer extends section_renderer {
         if (!empty($sectionsinfo)) {
             $thissection = $sectionsinfo[0];
             // 0-section is displayed a little different then the others.
-            if ($thissection->summary or !empty($modinfo->sections[0]) or $this->editing) {
+            if ($thissection->summary || !empty($modinfo->sections[0]) || $this->editing) {
                 $content .= $this->display_section($thissection, false, null, false);
             }
             if ($canbreak === true) {
@@ -797,14 +808,14 @@ class renderer extends section_renderer {
             }
         }
 
-        if ($this->editing and has_capability('moodle/course:update', $context)) {
+        if ($this->editing && has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             if ($canbreak === true) {
                 $content .= $this->end_section_list();
                 $content .= $this->start_section_list();
             }
             foreach ($sectionsinfo as $section => $thissection) {
-                if ($section <= $numsections or empty($modinfo->sections[$section])) {
+                if ($section <= $numsections || empty($modinfo->sections[$section])) {
                     // This is not stealth section or it is empty.
                     continue;
                 }

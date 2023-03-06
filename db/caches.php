@@ -15,21 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Progress Section Format
+ * VSF course format icon cache
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' below.
- * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
- * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     format_vsf
+ * @copyright   2022 Ing. R.J. van Dongen
+ * @author      Ing. R.J. van Dongen <rogier@sebsoft.nl>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2023021301;
-$plugin->maturity = MATURITY_BETA;
-$plugin->requires  = 2022041900.00; // This is Moodle 4.0 (Build: 20220419).
-$plugin->supported = array(400, 401);
-$plugin->component = 'format_vsf';
-$plugin->release = '4.0.0.3';
+$definitions = array(
+    'modicons' => array(
+        'mode' => cache_store::MODE_REQUEST,
+        'simplekeys' => true,
+        'simpledata' => true
+    ),
+);

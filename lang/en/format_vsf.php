@@ -151,3 +151,40 @@ $string['defaultmoduleviewbutton_desc'] = 'Default setting to state if the butto
 
 // Privacy.
 $string['privacy:nop'] = 'The PSF format stores settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';
+
+// Mod/course icons.
+$string['changemodiconheader'] = 'Change module icons';
+$string['edit-icon'] = 'Change icon';
+$string['modicon:image:defaults:head'] = 'Global activity icon editor';
+$string['modicon:image:defaults:desc'] = 'This interface displays the custom icons for course modules on system level.<br/>
+Icons that are configured here represent the highest level fallback before falling back to the activity module\'s own defined icon.';
+$string['modicon:image:coursecat:head'] = 'Activity icon editor for course category {$a}';
+$string['modicon:image:coursecat:desc'] = 'This interface displays the custom icons for course modules on course category specific level.<br/>
+Icons that are configured here represent the course category level fallback when there are no custom icons for the specific course or course module module.<br/>
+If no course category fallback is found, the next fallbacks are system level and, if not found, the default icon as defined by the activity module.<br/><br/>
+You can also modify the icons on <a href="{$a}">system level</a>.';
+$string['modicon:image:course:head'] = 'Activity icon editor for course {$a}';
+$string['modicon:image:course:desc'] = 'This interface displays the custom icons for course modules on course specific level.<br/>
+Icons that are configured here represent the course level fallback when there are no custom icons for the specific course module.<br/>
+If no course fallback is found, the next fallbacks are system level and, if not found, the default icon as defined by the activity module.<br/><br/>
+You can also modify the icons on <a href="{$a}">course category level</a>.';
+$string['modicon:image:coursemodule:head'] = 'Activity icon editor for coursemodule {$a}';
+$string['modicon:image:coursemodule:desc'] = 'This interface displays the custom icon for this specific course module.<br/>
+Icons that are configured here represent a course module level icon override.<br/>
+If not found, fallbacks will be to course level, then system level and then, if none were found, the default icon as defined by the activity module.<br/><br/>
+You can also modify the icons on <a href="{$a}">course level</a>.';
+$string['iconsmenuitem'] = 'Manage icons';
+$string['modicon:usage'] = 'Used custom icons';
+$string['iconcustomizations'] = 'Display icon customizations';
+$string['modicon:for'] = 'Activity icon for {$a}';
+$string['modicon:cm'] = 'Custom module icon';
+$string['modicons'] = 'Custom module icons';
+$string['mainicon'] = 'Main/active icon';
+$string['fallbackicons'] = 'Fallback icon(s)';
+$string['modicons:global:changes:saved'] = 'Global module icon overrides saved';
+$string['modicons:course:changes:saved'] = 'Course module icon overrides saved';
+$string['modicons:coursecat:changes:saved'] = 'Coursecategory module icon overrides saved';
+$string['modicons:cm:changes:saved'] = 'Course module icon override saved';
+$string['modicons:global'] = 'Global custom module icons (system level)';
+$string['modicons:course'] = 'Course custom module icon (course category level)';
+$string['modicons:coursecat'] = 'Coursecategory custom module icons (course category level)';
