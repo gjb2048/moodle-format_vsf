@@ -147,3 +147,10 @@ $string['modicons:cm:changes:saved'] = 'Cursusactiviteitsafbeelding voor activit
 $string['modicons:global'] = 'Globale custom afbeeldingen (systeemniveau)';
 $string['modicons:course'] = 'Cursus custom afbeeldingen (cursusniveau)';
 $string['modicons:coursecat'] = 'Cursuscategorie custom afbeeldingen (cursuscategorieniveau)';
+
+// Module description tooltip.
+$string['moduledescriptiontooltip'] = 'Module beschrijving tonen als tooltip';
+$string['moduledescriptiontooltip_help'] = 'De beschrijving van een activiteit wordt als tooltip/confirm box getoond wanneer er overheen wordt bewogen met de muis/op wordt geklikt.';
+$string['defaultmoduledescriptiontooltip'] = 'Standaard beschrijving tonen als tooltip';
+$string['defaultmoduledescriptiontooltip_desc'] = 'Standaardinstelling voor het tonen van de beschrijving van een activiteit wanneer er met de muis overheen wordt bewogen/op wordt geklikt.';
+

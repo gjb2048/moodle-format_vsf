@@ -188,3 +188,9 @@ $string['modicons:cm:changes:saved'] = 'Course module icon override saved';
 $string['modicons:global'] = 'Global custom module icons (system level)';
 $string['modicons:course'] = 'Course custom module icon (course category level)';
 $string['modicons:coursecat'] = 'Coursecategory custom module icons (course category level)';
+// Module description tooltip.
+$string['moduledescriptiontooltip'] = 'Module description tooltip';
+$string['moduledescriptiontooltip_help'] = 'State if the module description will be visible as a tooltip when hovering over the activity icon/button.';
+$string['defaultmoduledescriptiontooltip'] = 'Module description tooltip default';
+$string['defaultmoduledescriptiontooltip_desc'] = 'Default setting to state if the module description will be visible as a tooltip when hovering over the activity icon/button.';
+

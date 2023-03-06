@@ -27,6 +27,7 @@
 class format_vsf_course_renderer extends \core_course_renderer {
 
     protected $moduleviewbutton = false;
+    protected $moduledescriptiontooltip = false;
 
     /**
      * Returns the CSS classes for the activity name/content
@@ -90,7 +91,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
             if (!empty($availabilityinfo)) {
                 $availabilityinfo = $this->process_availability($availabilityinfo);
-                $avcontent .= html_writer::start_tag('span', array('class' => 'vsfai', 'title' => $availabilityinfo['text']));
+                $avcontent .= html_writer::start_tag('span', ['class' => 'vsfai', 'title' => $availabilityinfo['text']]);
                 $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
                     'class' => '', 'alt' => '', 'role' => 'presentation'));
                 $avcontent .= html_writer::end_tag('span');
@@ -120,7 +121,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if (!$this->moduleviewbutton) {
             if ($mod->uservisible) {
                 // Only link this when this activity is actually available.
-                $output = html_writer::link($mod->url, $output);
+                $attributes = [];
+                $this->load_tooltip_data($attributes, $mod);
+                $output = html_writer::link($mod->url, $output, $attributes);
             }
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
                 $output .= html_writer::tag('div', $availabilityinfo['button'],
@@ -486,6 +489,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if ((!empty($course->moduleviewbutton)) && ($course->moduleviewbutton == 2)) { // Two is yes.
             $this->moduleviewbutton = true;
         }
+        if ((!empty($course->moduledescriptiontooltip)) && ($course->moduledescriptiontooltip == 2)) { // Two is yes.
+            $this->moduledescriptiontooltip = true;
+        }
         // Get the list of modules visible to user (excluding the module being moved if there is one).
         $moduleshtml = array();
         $aftermoduleshtml = array();
@@ -534,15 +540,18 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function course_section_cm_button(cm_info $mod) {
+        $attributes = ['class' => 'btn btn-primary'];
+        $this->load_tooltip_data($attributes, $mod);
         if ($mod->uservisible) {
             // Return button.
             return html_writer::tag('span',
-                    html_writer::link($mod->url, $mod->get_formatted_name(), array('class' => 'btn btn-primary')),
+                    html_writer::link($mod->url, $mod->get_formatted_name(), $attributes),
                     array('class' => 'mdl-align vsf-button-bottom'));
         } else {
             // Return as disabled text only button.
+            $this->merge_attributes($attributes, ['class' => 'disabled']);
             return html_writer::tag('span',
-                    html_writer::tag('span', $mod->get_formatted_name(), ['class' => 'btn btn-primary disabled']),
+                    html_writer::tag('span', $mod->get_formatted_name(), $attributes),
                     array('class' => 'mdl-align vsf-button-bottom'));
         }
     }
@@ -567,6 +576,59 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 ['class' => $class, 'alt' => ' ', 'role' => 'presentation']);
         return html_writer::tag('span',
                 $image, array('class' => 'mdl-align vsf-icon'));
+    }
+
+    /**
+     * Attributes merger.
+     *
+     * @param array $attribs
+     * @param array $merge
+     * @return array
+     */
+    protected function merge_attributes(array &$attribs, array $merge) {
+        foreach ($merge as $key => $value) {
+            if (array_key_exists($key, $attribs)) {
+                $attribs[$key] .= " {$value}";
+            } else {
+                $attribs[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * Tooltip content helper for modules.
+     *
+     * @param mod_info $mod
+     * @return string
+     */
+    protected function get_tooltip_content(cm_info $mod) {
+        $output = '';
+        if (!$mod->is_visible_on_course_page()) {
+            // Nothing to be displayed to the user
+            return $output;
+        }
+        if (!$this->moduledescriptiontooltip) {
+            // Not enabled.
+            return $output;
+        }
+        if ($mod->showdescription == 1) {
+            // Setting 1 means no.
+            return $output;
+        }
+        return $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+    }
+
+    /**
+     * Tooltip helper.
+     *
+     * @param array $attributes
+     * @param cm_info $mod
+     */
+    protected function load_tooltip_data(array &$attributes, cm_info $mod) {
+        $content = $this->get_tooltip_content($mod);
+        if (!empty($content)) {
+            $this->merge_attributes($attributes, ['data-vsf-tooltip' => 1, 'title' => $content]);
+        }
     }
 
 }

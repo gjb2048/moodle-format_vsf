@@ -262,6 +262,10 @@ class format_vsf extends core_courseformat\base {
                     'default' => get_config('format_vsf', 'defaultmoduleviewbutton'),
                     'type' => PARAM_INT
                 ),
+                'moduledescriptiontooltip' => array(
+                    'default' => get_config('format_vsf', 'defaultmoduledescriptiontooltip'),
+                    'type' => PARAM_INT
+                ),
                 // Continue button.
                 'continuebackgroundcolour' => array(
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
@@ -351,6 +355,18 @@ class format_vsf extends core_courseformat\base {
                         )
                     ),
                     'help' => 'moduleviewbutton',
+                    'help_component' => 'format_vsf',
+                ),
+                'moduledescriptiontooltip' => array(
+                    'label' => new lang_string('moduledescriptiontooltip', 'format_vsf'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            1 => new lang_string('no'),
+                            2 => new lang_string('yes')
+                        )
+                    ),
+                    'help' => 'moduledescriptiontooltip',
                     'help_component' => 'format_vsf',
                 ),
                 // Continue button.
