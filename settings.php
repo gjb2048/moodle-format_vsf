@@ -66,6 +66,18 @@ if ($ADMIN->fulltree) {
     );
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
+    // Module view button.
+    // 1 = no, 2 = yes.
+    $name = 'format_vsf/defaultmoduledescriptiontooltip';
+    $title = get_string('defaultmoduledescriptiontooltip', 'format_vsf');
+    $description = get_string('defaultmoduledescriptiontooltip_desc', 'format_vsf');
+    $default = 2;
+    $choices = array(
+        1 => new lang_string('no'),   // No.
+        2 => new lang_string('yes')   // Yes.
+    );
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
     // Default continue button background colour in hexadecimal RGB with preceding '#'.
     $name = 'format_vsf/defaultcontinuebackgroundcolour';
     $title = get_string('defaultcontinuebackgroundcolour', 'format_vsf');

@@ -34,4 +34,7 @@
 require(['core_courseformat/local/content'], function(component) {
     component.init('{{uniqid}}-course-format', {}, {{sectionreturn}});
 });
+require(['jquery'], function($) {
+    $('[data-vsf-tooltip="1"]').tooltip({html:true});
+});
 {{/js}}
