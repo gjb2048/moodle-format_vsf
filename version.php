@@ -27,9 +27,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2023021301;
+$plugin->version   = 2023021302;
 $plugin->maturity = MATURITY_BETA;
 $plugin->requires = 2022041900.00; // This is Moodle 4.0 (Build: 20220419).
 $plugin->supported = array(400, 401);
 $plugin->component = 'format_vsf';
-$plugin->release = '4.0.0.3';
+$plugin->release = '4.0.0.4';

@@ -611,8 +611,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             // Not enabled.
             return $output;
         }
-        if ($mod->showdescription == 1) {
-            // Setting 1 means no.
+        if ($mod->showdescription == 0) {
+            // Setting 0 means no.
             return $output;
         }
         return $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));

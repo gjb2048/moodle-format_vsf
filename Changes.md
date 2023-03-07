@@ -1,14 +1,19 @@
 Version Information
 ===================
 
+Version 4.0.0.4
+-----------------------------
+  1. Added ability to display activity description as tooltip (using BS tooltips) (Sebsoft)
+  2. Notice: a known issue arises when the tooltip behaviour is active AND the "old" modpix/modtxt method is used.
+
 Version 4.0.0.3
 -----------------------------
   1. Replace Moodle standard Activity icons with images on activity, course, category or systemlevel (Sebsoft)
-  
+
 Version 4.0.0.2
 -----------------------------
   1. Activity navigation.
-  2. Supports 4.1 
+  2. Supports 4.1
 
 Version 4.0.0.1
 -----------------------------
