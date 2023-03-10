@@ -706,6 +706,10 @@ function format_vsf_before_standard_html_head() {
  * @param context_course $context
  */
 function format_vsf_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
+    if (!has_capability('moodle/course:update', $context)) {
+        return '';
+    }
+
     global $CFG;
     $str = get_string('iconsmenuitem', 'format_vsf');
     $action = new moodle_url($CFG->wwwroot . '/course/format/vsf/courseicons.php', [
