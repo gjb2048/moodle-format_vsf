@@ -308,18 +308,14 @@
 }
 
 .format-vsf .vsfavmod .vsfai {
-    position: absolute;
-    text-align: center;
-    /*top: 20px;*/
-    /*bottom: 20px;*/
-    /*left: 0;*/
-    /*right: 0;*/
     left: 10px;
+    position: absolute;
     right: 10px;
-    bottom: 0px;
+    text-align: center;
+    top: 0;
 }
 
-.format-vsf .vsfavmod .vsfai img {
+.format-vsf .vsfai img {
     max-height: 100%;
     max-width: 100%;
 }
@@ -348,10 +344,18 @@
     /*width: 90px;*/
 }
 
+.format-vsf .vsf-activity-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: space-between;
+}
+
 .format-vsf .activity.moduleviewgapwithbutton .vsfactivity {
     max-width: 100%;
 }
-
 
 
 @import "progress_chart";

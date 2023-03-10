@@ -75,9 +75,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         // We no longer read out any content; we've moved on to configurable icons.
         $content = '';
+        $endcontent = '';
         if (!$this->page->user_is_editing()) {
             if ($this->moduleviewbutton) {
-                $content .= $this->course_section_cm_button($mod);
+                $endcontent .= $this->course_section_cm_button($mod);
             } else {
                 $content .= $this->course_section_cm_image($mod);
             }
@@ -93,7 +94,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $availabilityinfo = $this->process_availability($availabilityinfo);
                 $avcontent .= html_writer::start_tag('span', ['class' => 'vsfai', 'title' => $availabilityinfo['text']]);
                 $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
-                    'class' => '', 'alt' => '', 'role' => 'presentation'));
+                    'alt' => '', 'role' => 'presentation'));
                 $avcontent .= html_writer::end_tag('span');
             }
         }
@@ -117,7 +118,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $groupinglabel = $mod->get_grouping_label($textclasses);
         }
 
-        $output = html_writer::tag('div', $content.$avcontent.$groupinglabel, $classes);
+        $output = $content.$avcontent.$groupinglabel;
+        if (!empty($output)) {
+            $output = html_writer::tag('div', $output, $classes);
+        }
         if (!$this->moduleviewbutton) {
             if ($mod->uservisible) {
                 // Only link this when this activity is actually available.
@@ -128,6 +132,23 @@ class format_vsf_course_renderer extends \core_course_renderer {
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
                 $output .= html_writer::tag('div', $availabilityinfo['button'],
                         array('class' => 'mdl-align vsf-button-bottom vsf-aib'));
+            }
+        }
+
+        if ((!$this->moduledescriptiontooltip) && ($mod->showdescription == 1)) {
+            // Setting 1 means yes.
+            $output .= html_writer::tag(
+                'div',
+                $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true)),
+                array('class' => 'vsf-mod-description pt-2')
+            );
+        }
+
+        if (!empty($endcontent)) {
+            if (empty($output)) {
+                $output .= html_writer::tag('span', '').$endcontent;
+            } else {
+                $output .= $endcontent;
             }
         }
 
@@ -540,19 +561,19 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @return string
      */
     protected function course_section_cm_button(cm_info $mod) {
-        $attributes = ['class' => 'btn btn-primary'];
+        $attributes = ['class' => 'btn btn-primary w-100 word-break-all'];
         $this->load_tooltip_data($attributes, $mod);
         if ($mod->uservisible) {
             // Return button.
             return html_writer::tag('span',
                     html_writer::link($mod->url, $mod->get_formatted_name(), $attributes),
-                    array('class' => 'mdl-align vsf-button-bottom'));
+                    array('class' => 'mdl-align px-1 w-100'));
         } else {
             // Return as disabled text only button.
             $this->merge_attributes($attributes, ['class' => 'disabled']);
             return html_writer::tag('span',
                     html_writer::tag('span', $mod->get_formatted_name(), $attributes),
-                    array('class' => 'mdl-align vsf-button-bottom'));
+                    array('class' => 'mdl-align px-1 w-100'));
         }
     }
 
@@ -603,10 +624,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
      */
     protected function get_tooltip_content(cm_info $mod) {
         $output = '';
-        if (!$mod->is_visible_on_course_page()) {
-            // Nothing to be displayed to the user.
-            return $output;
-        }
         if (!$this->moduledescriptiontooltip) {
             // Not enabled.
             return $output;
