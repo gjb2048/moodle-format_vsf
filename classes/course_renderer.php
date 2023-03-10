@@ -131,6 +131,15 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
+        if ((!$this->moduledescriptiontooltip) && ($mod->showdescription == 1)) {
+            // Setting 1 means yes.
+            $output .= html_writer::tag(
+                'div',
+                $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true)),
+                array('class' => 'vsf-mod-description')
+            );
+        }
+
         // Finally, wrap in a flex box.
         $output = html_writer::div($output, 'vsf-activity-wrapper');
 
@@ -603,10 +612,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
      */
     protected function get_tooltip_content(cm_info $mod) {
         $output = '';
-        if (!$mod->is_visible_on_course_page()) {
-            // Nothing to be displayed to the user.
-            return $output;
-        }
         if (!$this->moduledescriptiontooltip) {
             // Not enabled.
             return $output;

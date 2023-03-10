@@ -339,15 +339,11 @@
 }
 
 .format-vsf .vsfavmod .vsfai {
-    position: absolute;
-    text-align: center;
-    /*top: 20px;*/
-    /*bottom: 20px;*/
-    /*left: 0;*/
-    /*right: 0;*/
     left: 10px;
+    position: absolute;
     right: 10px;
-    bottom: 0px;
+    text-align: center;
+    top: 0;
 }
 
 .format-vsf .vsfavmod .vsfai img {
@@ -834,7 +830,7 @@
     display: flex;
     vertical-align: bottom;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: center;
     height: 100%;
 }
