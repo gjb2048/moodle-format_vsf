@@ -500,7 +500,7 @@ class renderer extends section_renderer {
             $this->calculate_section_activity_summary($section, $course);
             return $this->sectioncompletionmarkup[$section->section];
         } else {
-            return parent::section_activity_summary($section, $course, $mods);
+            return $this->vsf_section_activity_summary($section, $course, $mods);
         }
     }
 

@@ -42,10 +42,10 @@ trait format_renderer_migration_toolbox {
      * @param array    $mods (argument not used)
      * @return string HTML to output.
      */
-    protected function section_activity_summary($section, $course, $mods) {
+    protected function vsf_section_activity_summary($section, $course, $mods) {
         $widgetclass = $this->courseformat->get_output_classname('content\\section\\cmsummary');
         $widget = new $widgetclass($this->courseformat, $section);
-        $this->render($widget);
+        return $this->render($widget);
     }
 
     /**
