@@ -137,9 +137,19 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         if ((!$this->moduledescriptiontooltip) && ($mod->showdescription == 1)) {
             // Setting 1 means yes.
+            $modcontent = $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+            $modpic = mb_strpos($modcontent, 'modpic');
+            if ($modpic !== false) {
+                $modpicstartstring = mb_substr($modcontent, 0, $modpic);
+                $modpicstartpos = mb_strrpos($modpicstartstring, '<');
+                $modpicendpos = mb_strpos($modcontent, '>', $modpicstartpos) + 1;
+                $modpicimg = mb_substr($modcontent, $modpicstartpos, ($modpicendpos - $modpicstartpos));
+                $modpicwrapper = html_writer::link($mod->url, $modpicimg);
+                $modcontent = mb_substr($modcontent, 0, $modpicstartpos).$modpicwrapper.mb_substr($modcontent, $modpicendpos);
+            }
             $output .= html_writer::tag(
                 'div',
-                $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true)),
+                $modcontent,
                 array('class' => 'vsf-mod-description pt-2')
             );
         }

@@ -6,6 +6,7 @@ Version 4.0.0.4
   1. Added ability to display activity description as tooltip (using BS tooltips) (Sebsoft)
   2. Notice: a known issue arises when the tooltip behaviour is active AND the "old" modpix/modtxt method is used.
   3. Fix 'M4.1 error | when having module view button' - #5.
+  4. Link images in the module description with the class 'modpic' to the module itself.
 
 Version 4.0.0.3
 -----------------------------
