@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.2.0.1
+-----------------------------
+  1. Supports Moodle 4.2.
+
 Version 4.0.0.4
 -----------------------------
   1. Added ability to display activity description as tooltip (using BS tooltips) (Sebsoft)
