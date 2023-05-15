@@ -827,6 +827,8 @@ class renderer extends section_renderer {
             $content .= $this->end_section_list();
         }
 
+        $content .= $this->bulkedittools();
+
         return $content;
     }
 

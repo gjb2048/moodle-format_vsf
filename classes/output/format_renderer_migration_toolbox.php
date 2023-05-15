@@ -100,4 +100,18 @@ trait format_renderer_migration_toolbox {
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
         return $this->render(new $cmlistclass($this->courseformat, $section));
     }
+
+    /**
+     * Returns bulk edit tools if any.
+     *
+     * @return string HTML to output.
+     */
+    protected function bulkedittools() {
+        if ($this->courseformat->show_editor()) {
+            $outputclass = $this->courseformat->get_output_classname('content\\bulkedittools');
+            $widget = new $outputclass($this->courseformat);
+            return $this->render($widget);
+        }
+        return '';
+    }
 }

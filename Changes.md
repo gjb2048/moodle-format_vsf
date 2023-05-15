@@ -4,6 +4,7 @@ Version Information
 Version 4.2.0.1
 -----------------------------
   1. Supports Moodle 4.2.
+  2. Bulk editing tools support.
 
 Version 4.0.0.4
 -----------------------------
