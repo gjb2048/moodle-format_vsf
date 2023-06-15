@@ -22,10 +22,24 @@
 
     Different from core only in respect of adding an 'indent'.
 }}
+{{#editing}}
+    <div class="divider divider-plus bulk-hidden" data-action="insert-before-{{activityname}}">
+        {{> core_course/activitychooserbuttonactivity}}
+    </div>
+{{/editing}}
 <div class="activity-item{{#modstealth}} hiddenactivity{{/modstealth}}{{!
         }}{{#modhiddenfromstudents}} hiddenactivity{{/modhiddenfromstudents}}{{!
         }}{{#indent}} indent-{{indent}}{{/indent}}{{#hugeindent}} indent-huge{{/hugeindent}}{{!
         }}{{#modinline}} activityinline{{/modinline}}" data-activityname="{{activityname}}"{{!
 }}>
-    {{> core_courseformat/local/content/cm/activity }}
+    {{$ core_courseformat/local/content/cm/bulkselect }}
+        {{> core_courseformat/local/content/cm/bulkselect }}
+    {{/ core_courseformat/local/content/cm/bulkselect }}
+    {{!
+      Place the actual content of the activity-item in a separate template to make it easier for other formats to add
+      additional content to the activity wrapper.
+    }}
+    {{$ core_courseformat/local/content/cm/activity }}
+        {{> core_courseformat/local/content/cm/activity }}
+    {{/ core_courseformat/local/content/cm/activity }}
 </div>
