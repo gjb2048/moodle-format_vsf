@@ -7,6 +7,7 @@ Version 4.0.0.4
   2. Notice: a known issue arises when the tooltip behaviour is active AND the "old" modpix/modtxt method is used.
   3. Fix 'M4.1 error | when having module view button' - #5.
   4. Link images in the module description with the class 'modpic' to the module itself.
+  5. Fix 'Progressbar vs restrictions' - https://github.com/Lesterhuis-Training-en-Consultancy/moodle-format_vsf/issues/6.
 
 Version 4.0.0.3
 -----------------------------
