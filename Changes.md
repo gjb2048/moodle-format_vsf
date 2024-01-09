@@ -5,6 +5,7 @@ Version 4.2.0.1
 -----------------------------
   1. Supports Moodle 4.2.
   2. Bulk editing tools support.
+  3. Fix 'Progressbar vs restrictions' - https://github.com/Lesterhuis-Training-en-Consultancy/moodle-format_vsf/issues/6.
 
 Version 4.0.0.4
 -----------------------------
