@@ -24,7 +24,10 @@
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require_once("HTML/QuickForm/text.php");
+defined('MOODLE_INTERNAL') || die();
+
+global $CFG;
+require_once($CFG->dirroot . "/lib/pear/HTML/QuickForm/text.php");
 
 /**
  * HTML class for a colorpopup type element
