@@ -47,7 +47,7 @@ $renderer = $PAGE->get_renderer('format_vsf');
 $customdata = [
     'coursemodule' => $cm,
     'course' => $course,
-    'context' => $context
+    'context' => $context,
 ];
 
 $rparams = ['id' => $course->id];

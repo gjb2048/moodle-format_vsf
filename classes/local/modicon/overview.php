@@ -73,7 +73,7 @@ class overview implements renderable, templatable {
         $rs = (object)[
             'context' => $this->context,
             'limitmod' => get_string('all'),
-            'modules' => []
+            'modules' => [],
         ];
 
         switch ($this->context->contextlevel) {
@@ -86,7 +86,7 @@ class overview implements renderable, templatable {
                 $this->mark_class($icons);
                 $rs->modules[] = (object)[
                     'cm' => $cm,
-                    'icons' => $icons
+                    'icons' => $icons,
                 ];
                 break;
 
@@ -99,7 +99,7 @@ class overview implements renderable, templatable {
                     $this->mark_class($icons);
                     $rs->modules[] = (object)[
                         'cm' => $cm,
-                        'icons' => $icons
+                        'icons' => $icons,
                     ];
                 }
                 break;

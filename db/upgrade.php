@@ -34,7 +34,7 @@ function xmldb_format_vsf_upgrade($oldversion = 0) {
             set_config('defaultlayoutcolumns', 2, 'format_vsf');
         }
 
-        $records = $DB->get_records('course_format_options', array('format' => 'vsf', 'name' => 'layoutcolumns'), '', 'id,value');
+        $records = $DB->get_records('course_format_options', ['format' => 'vsf', 'name' => 'layoutcolumns'], '', 'id,value');
         foreach ($records as $record) {
             if ($record->value > 2) {
                 $record->value = 2;

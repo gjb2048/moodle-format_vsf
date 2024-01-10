@@ -59,7 +59,7 @@ if ($form->is_cancelled()) {
 }
 
 $oneupurl = new moodle_url($CFG->wwwroot . '/course/format/vsf/coursecaticons.php', [
-    'id' => $course->category
+    'id' => $course->category,
 ]);
 
 echo $renderer->header();

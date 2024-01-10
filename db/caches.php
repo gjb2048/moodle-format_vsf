@@ -25,10 +25,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$definitions = array(
-    'modicons' => array(
+$definitions = [
+    'modicons' => [
         'mode' => cache_store::MODE_REQUEST,
         'simplekeys' => true,
-        'simpledata' => true
-    ),
-);
+        'simpledata' => true,
+    ],
+];

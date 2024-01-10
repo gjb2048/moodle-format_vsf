@@ -71,7 +71,7 @@ class format_vsf extends core_courseformat\base {
         $section = $this->get_section($section);
         if ((string)$section->name !== '') {
             return format_string($section->name, true,
-                    array('context' => context_course::instance($this->courseid)));
+                    ['context' => context_course::instance($this->courseid)]);
         } else if ($section->section == 0) {
             return get_string('section0name', 'format_vsf');
         } else {
@@ -109,10 +109,10 @@ class format_vsf extends core_courseformat\base {
      *     'sr' (int) used by multipage formats to specify to which section to return
      * @return null|moodle_url
      */
-    public function get_view_url($section, $options = array()) {
+    public function get_view_url($section, $options = []) {
         global $CFG;
         $course = $this->get_course();
-        $url = new moodle_url('/course/view.php', array('id' => $course->id));
+        $url = new moodle_url('/course/view.php', ['id' => $course->id]);
 
         $sr = null;
         if (array_key_exists('sr', $options)) {
@@ -203,7 +203,7 @@ class format_vsf extends core_courseformat\base {
      */
     public function ajax_section_move() {
         global $PAGE;
-        $titles = array();
+        $titles = [];
         $course = $this->get_course();
         $modinfo = get_fast_modinfo($course);
         $renderer = $this->get_renderer($PAGE);
@@ -212,7 +212,7 @@ class format_vsf extends core_courseformat\base {
                 $titles[$number] = $renderer->section_title($section, $course);
             }
         }
-        return array('sectiontitles' => $titles, 'action' => 'move');
+        return ['sectiontitles' => $titles, 'action' => 'move'];
     }
 
     /**
@@ -222,10 +222,10 @@ class format_vsf extends core_courseformat\base {
      *     each of values is an array of block names (for left and right side columns)
      */
     public function get_default_blocks() {
-        return array(
-            BLOCK_POS_LEFT => array(),
-            BLOCK_POS_RIGHT => array('search_forums', 'news_items', 'calendar_upcoming', 'recent_activity')
-        );
+        return [
+            BLOCK_POS_LEFT => [],
+            BLOCK_POS_RIGHT => ['search_forums', 'news_items', 'calendar_upcoming', 'recent_activity'],
+        ];
     }
 
     /**
@@ -245,59 +245,59 @@ class format_vsf extends core_courseformat\base {
             $defaults = $this->get_course_format_colour_defaults();
 
             $courseconfig = get_config('moodlecourse');
-            $courseformatoptions = array(
-                'hiddensections' => array(
+            $courseformatoptions = [
+                'hiddensections' => [
                     'default' => 1, // Completely invisible.
                     'type' => PARAM_INT,
-                ),
-                'coursedisplay' => array(
+                ],
+                'coursedisplay' => [
                     'default' => $courseconfig->coursedisplay ?? COURSE_DISPLAY_SINGLEPAGE,
-                    'type' => PARAM_INT
-                ),
-                'chart' => array(
+                    'type' => PARAM_INT,
+                ],
+                'chart' => [
                     'default' => get_config('format_vsf', 'defaultchart'),
-                    'type' => PARAM_INT
-                ),
-                'moduleviewbutton' => array(
+                    'type' => PARAM_INT,
+                ],
+                'moduleviewbutton' => [
                     'default' => get_config('format_vsf', 'defaultmoduleviewbutton'),
-                    'type' => PARAM_INT
-                ),
-                'moduledescriptiontooltip' => array(
+                    'type' => PARAM_INT,
+                ],
+                'moduledescriptiontooltip' => [
                     'default' => get_config('format_vsf', 'defaultmoduledescriptiontooltip'),
-                    'type' => PARAM_INT
-                ),
+                    'type' => PARAM_INT,
+                ],
                 // Continue button.
-                'continuebackgroundcolour' => array(
+                'continuebackgroundcolour' => [
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
-                'continuetextcolour' => array(
+                    'type' => PARAM_ALPHANUM,
+                ],
+                'continuetextcolour' => [
                     'default' => $defaults['defaultcontinuetextcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
+                    'type' => PARAM_ALPHANUM,
+                ],
                 // Section header.
-                'sectionheaderbackgroundcolour' => array(
+                'sectionheaderbackgroundcolour' => [
                     'default' => $defaults['defaultsectionheaderbackgroundcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
-                'sectionheaderbackgroundhvrcolour' => array(
+                    'type' => PARAM_ALPHANUM,
+                ],
+                'sectionheaderbackgroundhvrcolour' => [
                     'default' => $defaults['defaultsectionheaderbackgroundhvrcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
-                'sectionheaderforegroundcolour' => array(
+                    'type' => PARAM_ALPHANUM,
+                ],
+                'sectionheaderforegroundcolour' => [
                     'default' => $defaults['defaultsectionheaderforegroundcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
-                'sectionheaderforegroundhvrcolour' => array(
+                    'type' => PARAM_ALPHANUM,
+                ],
+                'sectionheaderforegroundhvrcolour' => [
                     'default' => $defaults['defaultsectionheaderforegroundhvrcolour'],
-                    'type' => PARAM_ALPHANUM
-                ),
+                    'type' => PARAM_ALPHANUM,
+                ],
                 // Columns.
-                'layoutcolumns' => array(
+                'layoutcolumns' => [
                     'default' => get_config('format_vsf', 'defaultlayoutcolumns'),
                     'type' => PARAM_INT,
-                )
-            );
+                ],
+            ];
         }
         if ($foreditform && !isset($courseformatoptions['numsections']['label'])) {
             if (empty($defaults)) {
@@ -311,138 +311,138 @@ class format_vsf extends core_courseformat\base {
             if (!isset($max) || !is_numeric($max)) {
                 $max = 52;
             }
-            $sectionmenu = array();
+            $sectionmenu = [];
             for ($i = 0; $i <= $max; $i++) {
                 $sectionmenu[$i] = "$i";
             }
-            $courseformatoptionsedit = array(
-                'hiddensections' => array(
+            $courseformatoptionsedit = [
+                'hiddensections' => [
                     'label' => new lang_string('hiddensections'),
-                    'element_type' => 'hidden'
-                ),
-                'coursedisplay' => array(
+                    'element_type' => 'hidden',
+                ],
+                'coursedisplay' => [
                     'label' => new lang_string('coursedisplay'),
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
+                    'element_attributes' => [
+                        [
                             COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single'),
-                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
-                        )
-                    ),
+                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi'),
+                        ],
+                    ],
                     'help' => 'coursedisplay',
                     'help_component' => 'moodle',
-                ),
-                'chart' => array(
+                ],
+                'chart' => [
                     'label' => new lang_string('chart', 'format_vsf'),
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
+                    'element_attributes' => [
+                        [
                             1 => new lang_string('none'),                    // None.
                             2 => new lang_string('barchart', 'format_vsf'),  // Bar.
-                            3 => new lang_string('donutchart', 'format_vsf') // Donut.
-                        )
-                    ),
+                            3 => new lang_string('donutchart', 'format_vsf'), // Donut.
+                        ],
+                    ],
                     'help' => 'chart',
                     'help_component' => 'format_vsf',
-                ),
-                'moduleviewbutton' => array(
+                ],
+                'moduleviewbutton' => [
                     'label' => new lang_string('moduleviewbutton', 'format_vsf'),
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
+                    'element_attributes' => [
+                        [
                             1 => new lang_string('no'),
-                            2 => new lang_string('yes')
-                        )
-                    ),
+                            2 => new lang_string('yes'),
+                        ],
+                    ],
                     'help' => 'moduleviewbutton',
                     'help_component' => 'format_vsf',
-                ),
-                'moduledescriptiontooltip' => array(
+                ],
+                'moduledescriptiontooltip' => [
                     'label' => new lang_string('moduledescriptiontooltip', 'format_vsf'),
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
+                    'element_attributes' => [
+                        [
                             1 => new lang_string('no'),
-                            2 => new lang_string('yes')
-                        )
-                    ),
+                            2 => new lang_string('yes'),
+                        ],
+                    ],
                     'help' => 'moduledescriptiontooltip',
                     'help_component' => 'format_vsf',
-                ),
+                ],
                 // Continue button.
-                'continuebackgroundcolour' => array(
+                'continuebackgroundcolour' => [
                     'label' => new lang_string('continuebackgroundcolour', 'format_vsf'),
                     'help' => 'continuebackgroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultcontinuebackgroundcolour'])
-                    )
-                ),
-                'continuetextcolour' => array(
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultcontinuebackgroundcolour']],
+                    ],
+                ],
+                'continuetextcolour' => [
                     'label' => new lang_string('continuetextcolour', 'format_vsf'),
                     'help' => 'continuetextcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultcontinuetextcolour'])
-                    )
-                ),
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultcontinuetextcolour']],
+                    ],
+                ],
                 // Section header.
-                'sectionheaderbackgroundcolour' => array(
+                'sectionheaderbackgroundcolour' => [
                     'label' => new lang_string('sectionheaderbackgroundcolour', 'format_vsf'),
                     'help' => 'sectionheaderbackgroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultsectionheaderbackgroundcolour'])
-                    )
-                ),
-                'sectionheaderbackgroundhvrcolour' => array(
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultsectionheaderbackgroundcolour']],
+                    ],
+                ],
+                'sectionheaderbackgroundhvrcolour' => [
                     'label' => new lang_string('sectionheaderbackgroundhvrcolour', 'format_vsf'),
                     'help' => 'sectionheaderbackgroundhvrcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultsectionheaderbackgroundhvrcolour'])
-                    )
-                ),
-                'sectionheaderforegroundcolour' => array(
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultsectionheaderbackgroundhvrcolour']],
+                    ],
+                ],
+                'sectionheaderforegroundcolour' => [
                     'label' => new lang_string('sectionheaderforegroundcolour', 'format_vsf'),
                     'help' => 'sectionheaderforegroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultsectionheaderforegroundcolour'])
-                    )
-                ),
-                'sectionheaderforegroundhvrcolour' => array(
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultsectionheaderforegroundcolour']],
+                    ],
+                ],
+                'sectionheaderforegroundhvrcolour' => [
                     'label' => new lang_string('sectionheaderforegroundhvrcolour', 'format_vsf'),
                     'help' => 'sectionheaderforegroundhvrcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
-                    'element_attributes' => array(
-                        array('value' => $defaults['defaultsectionheaderforegroundhvrcolour'])
-                    )
-                ),
-                'layoutcolumns' => array(
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultsectionheaderforegroundhvrcolour']],
+                    ],
+                ],
+                'layoutcolumns' => [
                     'label' => new lang_string('setlayoutcolumns', 'format_vsf'),
                     'help' => 'setlayoutcolumns',
                     'help_component' => 'format_vsf',
                     'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(1 => new lang_string('one', 'format_vsf'),   // Default.
-                              2 => new lang_string('two', 'format_vsf'))   // Two.
-                    )
-                )
-            );
+                    'element_attributes' => [
+                        [1 => new lang_string('one', 'format_vsf'),   // Default.
+                              2 => new lang_string('two', 'format_vsf')],   // Two.
+                    ],
+                ],
+            ];
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
     }
 
     protected function get_course_format_colour_defaults() {
-        $defaults = array();
+        $defaults = [];
         // Continue button.
         $defaults['defaultcontinuebackgroundcolour'] = get_config('format_vsf', 'defaultcontinuebackgroundcolour');
         if ($defaults['defaultcontinuebackgroundcolour'][0] == '#') {
@@ -539,7 +539,7 @@ class format_vsf extends core_courseformat\base {
                            and $data['numsections'] is not set,
                            we fill it with the maximum section number from the DB. */
                         $maxsection = $DB->get_field_sql('SELECT max(section) from {course_sections}
-                            WHERE course = ?', array($this->courseid));
+                            WHERE course = ?', [$this->courseid]);
                         if ($maxsection) {
                             // If there are no sections, or just default 0-section, 'numsections' will be set to default.
                             $data['numsections'] = $maxsection;
@@ -553,7 +553,7 @@ class format_vsf extends core_courseformat\base {
             // If the numsections was decreased, try to completely delete the orphaned sections (unless they are not empty).
             $numsections = (int)$data['numsections'];
             $maxsection = $DB->get_field_sql('SELECT max(section) from {course_sections}
-                        WHERE course = ?', array($this->courseid));
+                        WHERE course = ?', [$this->courseid]);
             for ($sectionnum = $maxsection; $sectionnum > $numsections; $sectionnum--) {
                 if (!$this->delete_section($sectionnum, false)) {
                     break;
@@ -581,7 +581,7 @@ class format_vsf extends core_courseformat\base {
      */
     public function update_vsf_columns_setting($layoutcolumns) {
         // Create data array.
-        $data = array('layoutcolumns' => $layoutcolumns);
+        $data = ['layoutcolumns' => $layoutcolumns];
 
         $this->update_course_format_options($data);
     }
@@ -677,7 +677,7 @@ function format_vsf_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
         $section = $DB->get_record_sql(
             'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            array($itemid, 'vsf'), MUST_EXIST);
+            [$itemid, 'vsf'], MUST_EXIST);
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }
@@ -694,7 +694,7 @@ function format_vsf_before_standard_html_head() {
     return html_writer::empty_tag('link', [
         'href' => $url->out(false),
         'rel' => 'stylesheet',
-        'type' => 'text/css'
+        'type' => 'text/css',
     ]);
 }
 
@@ -713,7 +713,7 @@ function format_vsf_extend_navigation_course(navigation_node $parentnode, stdCla
     global $CFG;
     $str = get_string('iconsmenuitem', 'format_vsf');
     $action = new moodle_url($CFG->wwwroot . '/course/format/vsf/courseicons.php', [
-        'id' => $course->id
+        'id' => $course->id,
     ]);
     $key = 'vsfcourseicons';
     $properties = [
@@ -721,14 +721,14 @@ function format_vsf_extend_navigation_course(navigation_node $parentnode, stdCla
         'text' => $str,
         'shorttext' => $str,
         'type' => navigation_node::TYPE_CUSTOM,
-        'action' => $action
+        'action' => $action,
     ];
     $node = new navigation_node($properties);
     $parentnode->children->add($node);
 
     $str = get_string('iconcustomizations', 'format_vsf');
     $action = new moodle_url($CFG->wwwroot . '/course/format/vsf/iconused.php', [
-        'id' => $course->id, 'v' => 'course'
+        'id' => $course->id, 'v' => 'course',
     ]);
     $key = 'vsfusedcourseicons';
     $properties = [
@@ -736,7 +736,7 @@ function format_vsf_extend_navigation_course(navigation_node $parentnode, stdCla
         'text' => $str,
         'shorttext' => $str,
         'type' => navigation_node::TYPE_CUSTOM,
-        'action' => $action
+        'action' => $action,
     ];
     $node = new navigation_node($properties);
     $parentnode->children->add($node);
@@ -754,7 +754,7 @@ function format_vsf_extend_navigation_course(navigation_node $parentnode, stdCla
  * @param array $options
  * @return boolean
  */
-function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     require_login($course, false, $cm);
 
     // Make sure the filearea is one of those used by the plugin.

@@ -65,13 +65,13 @@ class util {
         require_once($CFG->dirroot . '/course/lib.php');
 
         $maxbytes = 10 * 1024 * 1024;
-        $options = array(
+        $options = [
             'subdirs' => 0,
             'maxbytes' => $maxbytes,
             'areamaxbytes' => 10485760,
             'maxfiles' => static::MAX_FILES,
-            'accepted_types' => array('image'),
-        );
+            'accepted_types' => ['image'],
+        ];
 
         $modulenames = get_module_types_names(false);
         if (empty($course) || empty($course->id) || $course->id == SITEID || $context->contextlevel == CONTEXT_COURSECAT) {
@@ -140,13 +140,13 @@ class util {
     public static function add_cm_form_elements(&$mform, $cm) {
         list($course, $cminfo) = get_course_and_cm_from_cmid($cm, $cm->modname);
         $maxbytes = 10 * 1024 * 1024;
-        $options = array(
+        $options = [
             'subdirs' => 0,
             'maxbytes' => $maxbytes,
             'areamaxbytes' => 10485760,
             'maxfiles' => static::MAX_FILES,
-            'accepted_types' => array('image'),
-        );
+            'accepted_types' => ['image'],
+        ];
 
         $key = "cm{$cm->id}";
         $elementname = self::get_element_name($key);
@@ -193,7 +193,7 @@ class util {
      * @return int
      */
     public static function prepare_draftarea($filearea, $itemid, $context, &$draftitemid) {
-        $options = array('subdirs' => 0, 'maxfiles' => static::MAX_FILES);
+        $options = ['subdirs' => 0, 'maxfiles' => static::MAX_FILES];
         file_prepare_draft_area($draftitemid, $context->id, self::COMPONENT,
                 $filearea, $itemid, $options);
         return $draftitemid;
@@ -209,7 +209,7 @@ class util {
      * @return string|null
      */
     public static function store_draft_files($filearea, $itemid, $context, $draftitemid) {
-        $options = array('subdirs' => 0, 'maxfiles' => static::MAX_FILES);
+        $options = ['subdirs' => 0, 'maxfiles' => static::MAX_FILES];
         $text = null;
         return file_save_draft_area_files($draftitemid, $context->id, self::COMPONENT,
                 $filearea, $itemid, $options, $text);
@@ -226,7 +226,7 @@ class util {
         global $CFG;
         require_once("$CFG->libdir/filelib.php");
         require_once("$CFG->dirroot/repository/lib.php");
-        $defaults = array(
+        $defaults = [
             'mainfile' => '',
             'subdirs' => 0,
             'maxbytes' => -1,
@@ -234,7 +234,7 @@ class util {
             'accepted_types' => '*',
             'return_types' => FILE_INTERNAL,
             'areamaxbytes' => FILE_AREA_MAX_BYTES_UNLIMITED,
-            'context' => $context);
+            'context' => $context];
 
         foreach ($overrideoptions as $k => $v) {
             $defaults[$k] = $v;

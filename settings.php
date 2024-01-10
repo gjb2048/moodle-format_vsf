@@ -35,10 +35,10 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultcontinueshow', 'format_vsf');
     $description = get_string('defaultcontinueshow_desc', 'format_vsf');
     $default = 2;
-    $choices = array(
+    $choices = [
         1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes')   // Yes.
-    );
+        2 => new lang_string('yes'),   // Yes.
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Donut, bar or none?.
@@ -47,11 +47,11 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultchart', 'format_vsf');
     $description = get_string('defaultchart_desc', 'format_vsf');
     $default = 3;
-    $choices = array(
+    $choices = [
         1 => new lang_string('none'),                    // None.
         2 => new lang_string('barchart', 'format_vsf'),  // Bar.
-        3 => new lang_string('donutchart', 'format_vsf') // Donut.
-    );
+        3 => new lang_string('donutchart', 'format_vsf'), // Donut.
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Module view button.
@@ -60,10 +60,10 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultmoduleviewbutton', 'format_vsf');
     $description = get_string('defaultmoduleviewbutton_desc', 'format_vsf');
     $default = 2;
-    $choices = array(
+    $choices = [
         1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes')   // Yes.
-    );
+        2 => new lang_string('yes'),   // Yes.
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Module view button.
@@ -72,10 +72,10 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultmoduledescriptiontooltip', 'format_vsf');
     $description = get_string('defaultmoduledescriptiontooltip_desc', 'format_vsf');
     $default = 2;
-    $choices = array(
+    $choices = [
         1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes')   // Yes.
-    );
+        2 => new lang_string('yes'),   // Yes.
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Default continue button background colour in hexadecimal RGB with preceding '#'.
@@ -132,7 +132,7 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultsectionheaderborderradiustl', 'format_vsf');
     $description = get_string('defaultsectionheaderborderradiustl_desc', 'format_vsf');
     $default = '0.7';
-    $choices = array(
+    $choices = [
         '0.0' => new lang_string('em0_0', 'format_vsf'),
         '0.1' => new lang_string('em0_1', 'format_vsf'),
         '0.2' => new lang_string('em0_2', 'format_vsf'),
@@ -173,8 +173,8 @@ if ($ADMIN->fulltree) {
         '3.7' => new lang_string('em3_7', 'format_vsf'),
         '3.8' => new lang_string('em3_8', 'format_vsf'),
         '3.9' => new lang_string('em3_9', 'format_vsf'),
-        '4.0' => new lang_string('em4_0', 'format_vsf')
-    );
+        '4.0' => new lang_string('em4_0', 'format_vsf'),
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Section header border radius top right.
@@ -203,10 +203,10 @@ if ($ADMIN->fulltree) {
     $title = get_string('defaultlayoutcolumns', 'format_vsf');
     $description = get_string('defaultlayoutcolumns_desc', 'format_vsf');
     $default = 1;
-    $choices = array(
+    $choices = [
         1 => new lang_string('one', 'format_vsf'), // Default.
-        2 => new lang_string('two', 'format_vsf') // Two.
-    );
+        2 => new lang_string('two', 'format_vsf'), // Two.
+    ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
     // Inject link to global/system level custom icons.

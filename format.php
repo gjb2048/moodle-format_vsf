@@ -55,9 +55,9 @@ course_create_sections_if_missing($course, 0);
 $renderer = $PAGE->get_renderer('format_vsf');
 
 $content = '';
-$contentcontext = array(
-    'title' => $courseformat->page_title()
-);
+$contentcontext = [
+    'title' => $courseformat->page_title(),
+];
 if (!empty($displaysection)) {
     $courseformat->set_section_number($displaysection);
     $content = $renderer->single_section_page($course, $displaysection);
