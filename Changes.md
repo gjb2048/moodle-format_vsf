@@ -1,6 +1,11 @@
 Version Information
 ===================
 
+Version 4.3.0.1
+-----------------------------
+  1. Supports Moodle 4.3.
+  2. Apply MDL-78283.
+
 Version 4.2.0.1
 -----------------------------
   1. Supports Moodle 4.2.

@@ -4,11 +4,10 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 3.11 version 2021051700.00 (Build: 20210517) and above within the 3.11 branch until the
+This version works with Moodle 4.3 version 2023100900.00 (Build: 20231009) and above within the MOODLE_403_STABLE branch until the
 next release.
 
-Please ensure that your hardware and software complies with 'Requirements' in 'Installing Moodle' on
-'docs.moodle.org/311/en/Installing_Moodle'
+Please ensure that your hardware and software complies with 'Requirements' in '[Installing Moodle](https://docs.moodle.org/403/en/Installing_Moodle)'.
 
 Installation
 ============
@@ -32,7 +31,7 @@ Uninstallation
 Usage
 =====
 1. When creating a new course, select the course format as 'Progress Section Format' from the list of available options.
-2. To change an existing course, edit the course settings (http://docs.moodle.org/311/en/course/edit) and select the
+2. To change an existing course, edit the course settings (http://docs.moodle.org/403/en/course/edit) and select the
    'Progress Section Format' from the list of available options.
 
 Notes
@@ -76,5 +75,8 @@ You should have received a copy of the GNU General Public License
 along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 G J Barnard MSc. BSc(Hons)(Sndw). MBCS. CEng. CITP. PGCE.
-Moodle profile: moodle.org/user/profile.php?id=442195.
-Web profile   : about.me/gjbarnard
+
+- Moodle profile | [Moodle.org](https://moodle.org/user/profile.php?id=442195)
+- @gjbarnard     | [X](https://twitter.com/gjbarnard)
+- Web profile    | [About.me](https://about.me/gjbarnard)
+- Website        | [Website](https://gjbarnard.co.uk)
