@@ -70,25 +70,25 @@ class controlmenu extends controlmenu_base {
             if ($course->marker == $section->section) {  // Show the "light globe" on/off.
                 $url->param('marker', 0);
                 $highlightoff = get_string('highlightoff');
-                $controls['highlight'] = array(
+                $controls['highlight'] = [
                     'url' => $url, "icon" => 'i/marked',
                     'name' => $highlightoff,
-                    'pixattr' => array('class' => ''),
-                    'attr' => array(
+                    'pixattr' => ['class' => ''],
+                    'attr' => [
                         'class' => 'editing_highlight',
-                        'data-action' => 'removemarker')
-                    );
+                        'data-action' => 'removemarker'],
+                    ];
             } else {
                 $url->param('marker', $section->section);
                 $highlight = get_string('highlight');
-                $controls['highlight'] = array(
+                $controls['highlight'] = [
                     'url' => $url, "icon" => 'i/marker',
                     'name' => $highlight,
-                    'pixattr' => array('class' => ''),
-                    'attr' => array(
+                    'pixattr' => ['class' => ''],
+                    'attr' => [
                         'class' => 'editing_highlight',
-                        'data-action' => 'setmarker')
-                );
+                        'data-action' => 'setmarker'],
+                ];
             }
         }
 

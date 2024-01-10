@@ -183,9 +183,9 @@ class cache {
         require_once($CFG->dirroot . '/lib/modinfolib.php');
 
         $cmids = $DB->get_fieldset_sql("SELECT cm.id FROM {course_modules} cm
-                INNER JOIN {modules} m ON m.id = cm.module WHERE m.name = ?", array(
-            $modname
-        ));
+                INNER JOIN {modules} m ON m.id = cm.module WHERE m.name = ?", [
+            $modname,
+        ]);
         $cache = \cache::make('format_vsf', 'modicons');
         $cache->delete_many($cmids);
     }
@@ -201,7 +201,7 @@ class cache {
         require_once($CFG->dirroot . '/lib/filelib.php');
 
         $modicon = (object)[
-            'mod' => $cm->modname
+            'mod' => $cm->modname,
         ];
         $fs = get_file_storage();
 

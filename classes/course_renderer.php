@@ -67,7 +67,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      *
      * @return string.
      */
-    public function course_section_cm_text_vsf(cm_info $mod, $vsfavailability = false, $displayoptions = array()) {
+    public function course_section_cm_text_vsf(cm_info $mod, $vsfavailability = false, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page()) {
             // Nothing to be displayed to the user.
             return '';
@@ -93,8 +93,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             if (!empty($availabilityinfo)) {
                 $availabilityinfo = $this->process_availability($availabilityinfo);
                 $avcontent .= html_writer::start_tag('span', ['class' => 'vsfai', 'title' => $availabilityinfo['text']]);
-                $avcontent .= html_writer::empty_tag('img', array('src' => $this->image_url('access_transparent', 'format_vsf'),
-                    'alt' => '', 'role' => 'presentation'));
+                $avcontent .= html_writer::empty_tag('img', ['src' => $this->image_url('access_transparent', 'format_vsf'),
+                    'alt' => '', 'role' => 'presentation']);
                 $avcontent .= html_writer::end_tag('span');
             }
         }
@@ -104,7 +104,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $textclasses .= ' vsfactivity';
         $textclasses = trim($textclasses);
 
-        $classes = array();
+        $classes = [];
         if ($content) {
             // If specified, display extra content after link.
             if (!empty($textclasses)) {
@@ -131,13 +131,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
                 $output .= html_writer::tag('div', $availabilityinfo['button'],
-                        array('class' => 'mdl-align vsf-button-bottom vsf-aib'));
+                        ['class' => 'mdl-align vsf-button-bottom vsf-aib']);
             }
         }
 
         if ((!$this->moduledescriptiontooltip) && ($mod->showdescription == 1)) {
             // Setting 1 means yes.
-            $modcontent = $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+            $modcontent = $mod->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
             $modpic = mb_strpos($modcontent, 'modpic');
             if ($modpic !== false) {
                 $modpicstartstring = mb_substr($modcontent, 0, $modpic);
@@ -150,7 +150,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $output .= html_writer::tag(
                 'div',
                 $modcontent,
-                array('class' => 'vsf-mod-description pt-2')
+                ['class' => 'vsf-mod-description pt-2']
             );
         }
 
@@ -182,7 +182,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $inpaymentlinktag = false;
         $currenttag = '';
         $lasttag = '';
-        $processed = array('text' => '', 'button' => '');
+        $processed = ['text' => '', 'button' => ''];
         $avilen = core_text::strlen($availabilityinfo);
 
         for ($charno = 0; $charno < $avilen; $charno++) {
@@ -247,7 +247,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_cm_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = array()) {
+    public function course_section_cm_vsf($course, &$completioninfo, cm_info $mod, $sectionreturn, $displayoptions = []) {
         $output = '';
         /* We return empty string (because course module will not be displayed at all)
            if:
@@ -284,7 +284,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
             if (!empty($cmname)) {
                 // Start the div for the activity title, excluding the edit icons.
-                $output .= html_writer::start_tag('div', array('class' => 'activityinstance'));
+                $output .= html_writer::start_tag('div', ['class' => 'activityinstance']);
                 $output .= $cmname;
 
                 // Module can put text after the link (e.g. forum unread).
@@ -322,7 +322,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function vsf_course_section_cm_availability(cm_info $mod, $displayoptions = array()) {
+    public function vsf_course_section_cm_availability(cm_info $mod, $displayoptions = []) {
         global $CFG;
         $output = '';
         if (!$mod->is_visible_on_course_page()) {
@@ -416,19 +416,19 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @return String
      */
     public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod,
-            $sectionreturn, $displayoptions = array()) {
+            $sectionreturn, $displayoptions = []) {
         $output = '';
-        static $modulelayout = array(
+        static $modulelayout = [
             1 => 'col-sm-12 col-md-6 col-lg-4 col-xl-2',
-            2 => 'col-md-12 col-lg-6 col-xl-4'
-        );
+            2 => 'col-md-12 col-lg-6 col-xl-4',
+        ];
         $ourclasses = ' '.$modulelayout[$course->layoutcolumns].' moduleviewgap';
         if ($this->moduleviewbutton) {
             $ourclasses .= ' moduleviewgapwithbutton';
         }
         if ($modulehtml = $this->course_section_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
             $modclasses = 'activity '.$mod->modname.' modtype_'.$mod->modname.' '.trim($mod->extraclasses.$ourclasses);
-            $output .= html_writer::tag('div', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
+            $output .= html_writer::tag('div', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
         return $output;
     }
@@ -453,7 +453,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $output = '';
         if ($modulehtml = $this->course_section_label_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
-            $output .= html_writer::tag('li', $modulehtml, array('class' => $modclasses, 'id' => 'module-' . $mod->id));
+            $output .= html_writer::tag('li', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
         return $output;
     }
@@ -507,7 +507,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param int $displayoptions
      * @return void
      */
-    public function course_section_cm_list_vsf($course, $section, $sectionreturn = null, $displayoptions = array()) {
+    public function course_section_cm_list_vsf($course, $section, $sectionreturn = null, $displayoptions = []) {
         $output = '';
         $modinfo = get_fast_modinfo($course);
         if (is_object($section)) {
@@ -524,8 +524,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $this->moduledescriptiontooltip = true;
         }
         // Get the list of modules visible to user (excluding the module being moved if there is one).
-        $moduleshtml = array();
-        $aftermoduleshtml = array();
+        $moduleshtml = [];
+        $aftermoduleshtml = [];
         if (!empty($modinfo->sections[$section->section])) {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
@@ -544,7 +544,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $sectionoutput = '';
         if (!empty($moduleshtml)) {
-            $sectionoutput .= html_writer::start_tag('li', array('class' => 'row no-gutters justify-content-center'));
+            $sectionoutput .= html_writer::start_tag('li', ['class' => 'row no-gutters justify-content-center']);
             foreach ($moduleshtml as $modnumber => $modulehtml) {
 
                 $sectionoutput .= $modulehtml;
@@ -559,7 +559,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         }
 
         // Always output the section module list.
-        $output .= html_writer::tag('ul', $sectionoutput, array('class' => 'moduleview section img-text'));
+        $output .= html_writer::tag('ul', $sectionoutput, ['class' => 'moduleview section img-text']);
 
         return $output;
     }
@@ -577,13 +577,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
             // Return button.
             return html_writer::tag('span',
                     html_writer::link($mod->url, $mod->get_formatted_name(), $attributes),
-                    array('class' => 'mdl-align px-1 w-100'));
+                    ['class' => 'mdl-align px-1 w-100']);
         } else {
             // Return as disabled text only button.
             $this->merge_attributes($attributes, ['class' => 'disabled']);
             return html_writer::tag('span',
                     html_writer::tag('span', $mod->get_formatted_name(), $attributes),
-                    array('class' => 'mdl-align px-1 w-100'));
+                    ['class' => 'mdl-align px-1 w-100']);
         }
     }
 
@@ -606,7 +606,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $image = html_writer::img($srcurl, $mod->get_formatted_name(),
                 ['class' => $class, 'alt' => ' ', 'role' => 'presentation']);
         return html_writer::tag('span',
-                $image, array('class' => 'mdl-align vsf-icon'));
+                $image, ['class' => 'mdl-align vsf-icon']);
     }
 
     /**
@@ -642,7 +642,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             // Setting 0 means no.
             return $output;
         }
-        return $mod->get_formatted_content(array('overflowdiv' => true, 'noclean' => true));
+        return $mod->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
     }
 
     /**

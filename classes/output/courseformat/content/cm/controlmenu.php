@@ -75,10 +75,10 @@ class controlmenu extends controlmenu_base {
         $editiconurl = new \moodle_url($CFG->wwwroot . '/course/format/vsf/modicon.php', $editiconparams);
         $parentcontrols['editicon'] = new \action_menu_link_secondary(
             $editiconurl,
-            new \pix_icon('e/insert_edit_image', '', 'moodle', array('class' => 'iconsmall')),
+            new \pix_icon('e/insert_edit_image', '', 'moodle', ['class' => 'iconsmall']),
             $editicon,
-            array('class' => 'editing_editcmicon', 'data-action' => 'editcmicon',
-                'data-keepopen' => true, 'data-sectionreturn' => $sectionreturn)
+            ['class' => 'editing_editcmicon', 'data-action' => 'editcmicon',
+                'data-keepopen' => true, 'data-sectionreturn' => $sectionreturn]
         );
 
         return $parentcontrols;
