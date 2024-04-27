@@ -761,24 +761,8 @@ class renderer extends section_renderer {
         $content .= $this->start_section_list();
 
         $sectionsinfo = $modinfo->get_section_info_all();
-        if (!empty($sectionsinfo)) {
-            $thissection = $sectionsinfo[0];
-            // 0-section is displayed a little different then the others.
-            if ($thissection->summary || !empty($modinfo->sections[0]) || $this->editing) {
-                $content .= $this->display_section($thissection, false, null, false);
-            }
-            if ($canbreak === true) {
-                $content .= $this->end_section_list();
-                $content .= $this->start_columns_section_list();
-            }
-        }
-
         $sectiondisplayarray = [];
         foreach ($sectionsinfo as $section => $thissection) {
-            if ($section == 0) {
-                // Already output above.
-                continue;
-            }
             if ($section > $numsections) {
                 // Activities inside this section are 'orphaned', this section will be printed as 'stealth' below.
                 continue;

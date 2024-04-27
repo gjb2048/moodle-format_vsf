@@ -77,7 +77,7 @@ class sectionselector extends \core_courseformat\output\local\content\sectionsel
         // Add the section selector.
         $sectionmenu = [];
         $sectionmenu[course_get_url($course)->out(false)] = get_string('maincoursepage');
-        $section = 1;
+        $section = 0;
         $numsections = $format->get_last_section_number();
         while ($section <= $numsections) {
             $thissection = $modinfo->get_section_info($section);
