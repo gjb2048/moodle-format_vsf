@@ -17,13 +17,17 @@
 /**
  * Progress Section Format
  *
- * @package    course/format_vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2022-onwards G J Barnard.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Upgrade processes.
+ *
+ * @return bool Success.
+ */
 function xmldb_format_vsf_upgrade($oldversion = 0) {
     global $DB;
 
