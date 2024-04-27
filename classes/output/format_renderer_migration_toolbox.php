@@ -26,6 +26,9 @@
 
 namespace format_vsf\output;
 
+/**
+ * Migration trait.
+ */
 trait format_renderer_migration_toolbox {
 
     /**
@@ -59,7 +62,7 @@ trait format_renderer_migration_toolbox {
      * @return string
      */
     public function section_availability($section) {
-        // TODO: Update to a template!
+        // Todo: Update to a template!
         $widgetclass = $this->courseformat->get_output_classname('content\\section\\availability');
         $widget = new $widgetclass($this->courseformat, $section);
         return $this->render($widget);

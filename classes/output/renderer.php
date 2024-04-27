@@ -37,21 +37,32 @@ use section_info;
 
 require_once($CFG->dirroot.'/course/format/lib.php'); // For course_get_format.
 
+/**
+ * The renderer.
+ */
 class renderer extends section_renderer {
     use format_renderer_migration_toolbox;
 
+    /** @var array section completion percentage */
     private $sectioncompletionpercentage = [];
+    /** @var array section completion markup */
     private $sectioncompletionmarkup = [];
+    /** @var array section completion calculated */
     private $sectioncompletioncalculated = [];
 
+    /** @var bool show completion button */
     private $showcontinuebutton = false;
 
-    private $courseformat = null; // Our course format object as defined in lib.php.
+    /** @var class Our course format object as defined in lib.php */
+    private $courseformat = null;
+    /** @var class Course with settings */
     private $course; // Course with settings.
 
-    private $moduleview; // Showing the modules in a grid.
+    /** @var bool Showing the modules in a grid? */
+    private $moduleview;
 
-    protected $editing; // Are we editing?
+    /** @var bool Are we editing? */
+    protected $editing;
 
     /** @var section control menu output class */
     protected $controlmenuclass;

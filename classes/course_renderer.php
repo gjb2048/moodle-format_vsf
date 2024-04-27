@@ -28,7 +28,9 @@
  */
 class format_vsf_course_renderer extends \core_course_renderer {
 
+    /** @var bool the module view button */
     protected $moduleviewbutton = false;
+    /** @var bool the module description tooltip */
     protected $moduledescriptiontooltip = false;
 
     /**
