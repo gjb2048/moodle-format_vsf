@@ -1,5 +1,5 @@
 /* VSF extra css - Afbeelding bij beschrijving toevoegen */
 body:not(.path-course):not(.editing) .modpic,
 body:not(.editing).path-course .modtxt {
-    display: none!important;
+    display: none !important;
 }
