@@ -218,7 +218,6 @@
 }
 
 /* Section header with navigation */
-.format-vsf .single-section .vsf-nav-bottom,
 .format-vsf .single-section .vsf-sectionname {
     position: relative;
 }
@@ -234,22 +233,26 @@
     top: 0;
 }
 
-.format-vsf .single-section .vsf-nav-bottom .vsf-nav-left,
-.format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
-    bottom: 0;
-    display: table;
-    height: auto;
-    margin: auto;
-    position: absolute;
-    top: 0;
+.format-vsf .course-content .single-section .vsf-nav-bottom {
+    align-items: center;
+    display: flex;
+}
+
+.course-content .single-section .section-navigation .vsf-selection-selector-item {
+    display: flex;
+    flex: 1 0 0%;
 }
 
 .format-vsf .single-section .vsf-nav-bottom .vsf-nav-left {
-    left: 10px;
+    justify-content: flex-start;
+}
+
+.format-vsf .single-section .vsf-nav-bottom .vsf-jumpto {
+    justify-content: center;
 }
 
 .format-vsf .single-section .vsf-nav-bottom .vsf-nav-right {
-    right: 10px;
+    justify-content: flex-end;
 }
 
 .format-vsf .vsf-sectionname h3,

@@ -33,21 +33,21 @@
     }
 }}
 <div class="section-navigation vsf-nav-bottom mdl-bottom">
-    {{#hasprevious}}
-    <div class="prevsection vsf-nav-left">
+    <div class="prevsection vsf-selection-selector-item vsf-nav-left">
+        {{#hasprevious}}
         <a href="{{{previousurl}}}"{{#previoushidden}} class="dimmed_text"{{/previoushidden}}>
             <span class="{{previousclasses}} mr-1"></span>{{{previousname}}}
         </a>
+        {{/hasprevious}}
     </div>
-    {{/hasprevious}}
-    <div class="mdl-align">
+    <div class="mdl-align vsf-selection-selector-item vsf-jumpto">
         {{{selector}}}
     </div>
-    {{#hasnext}}
-    <div class="nextsection vsf-nav-right">
+    <div class="nextsection vsf-selection-selector-item vsf-nav-right">
+        {{#hasnext}}
         <a href="{{{nexturl}}}"{{#nexthidden}} class="dimmed_text"{{/nexthidden}}>
             {{{nextname}}}<span class="{{nextclasses}} ml-1"></span>
         </a>
+        {{/hasnext}}
     </div>
-    {{/hasnext}}
 </div>
