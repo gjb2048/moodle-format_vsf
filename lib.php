@@ -26,6 +26,9 @@
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot. '/course/format/lib.php');
 
+/**
+ * Format class.
+ */
 class format_vsf extends core_courseformat\base {
     /**
      * Returns true if this course format uses sections
