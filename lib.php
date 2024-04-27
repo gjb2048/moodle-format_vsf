@@ -17,12 +17,10 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -38,6 +36,11 @@ class format_vsf extends core_courseformat\base {
         return true;
     }
 
+    /**
+     * Returns true if this course format uses the course index.
+     *
+     * @return bool
+     */
     public function uses_course_index() {
 
         // Dirty tweak to allow both index and submenu.
@@ -55,6 +58,11 @@ class format_vsf extends core_courseformat\base {
         return false;
     }
 
+    /**
+     * Returns true if this course format uses indentation.
+     *
+     * @return bool
+     */
     public function uses_indentation(): bool {
         return true;
     }
@@ -464,6 +472,11 @@ class format_vsf extends core_courseformat\base {
         return $courseformatoptions;
     }
 
+    /**
+     * Return the colour defaults.
+     *
+     * @return array.
+     */
     protected function get_course_format_colour_defaults() {
         $defaults = [];
         // Restricted module icon colour.
@@ -664,6 +677,19 @@ class format_vsf extends core_courseformat\base {
         return !$section->section || $section->visible;
     }
 
+    /**
+     * Callback used in WS core_course_edit_section when teacher performs an AJAX action on a section (show/hide)
+     *
+     * Access to the course is already validated in the WS but the callback has to make sure
+     * that particular action is allowed by checking capabilities
+     *
+     * Course formats should register
+     *
+     * @param stdClass|section_info $section
+     * @param string $action
+     * @param int $sr the section return
+     * @return null|array|stdClass any data for the Javascript post-processor (must be json-encodeable)
+     */
     public function section_action($section, $action, $sr) {
         global $PAGE;
 
