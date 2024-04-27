@@ -17,13 +17,17 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2017-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+// phpcs:disable moodle.NamingConventions.ValidVariableName.MemberNameUnderscore
+// phpcs:disable moodle.NamingConventions.ValidVariableName.VariableNameLowerCase
+// phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -33,19 +37,23 @@ require_once($CFG->dirroot . "/lib/pear/HTML/QuickForm/text.php");
  * HTML class for a colorpopup type element
  *
  * @author       Iain Checkland - modified from ColourPicker by Jamie Pratt [thanks]
- * @access       public
  */
 class MoodleQuickForm_vsfcolourpopup extends HTML_QuickForm_text implements templatable {
     use templatable_form_element {
         export_for_template as export_for_template_base;
     }
 
-    /*
+    /**
      * html for help button, if empty then no help
      *
      * @var string
      */
     public $_helpbutton = '';
+    /**
+     * Hidden label?
+     *
+     * @var bool
+     */
     public $_hiddenLabel = false;
 
     public function __construct($elementName = null, $elementLabel = null, $attributes = null, $options = null) {
