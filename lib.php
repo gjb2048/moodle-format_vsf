@@ -154,9 +154,8 @@ class format_vsf extends core_courseformat\base {
             if ($sectionno != 0 && $usercoursedisplay == COURSE_DISPLAY_MULTIPAGE) {
                 $url->param('section', $sectionno);
             } else {
-                if (empty($CFG->linkcoursesections) && !empty($options['navigation'])) {
-                    return null;
-                }
+                // Must return a url or the local\state\section.php will fail for
+                // JS core_courseformat_get_state call.
                 $url->set_anchor('section-'.$sectionno);
             }
         }
