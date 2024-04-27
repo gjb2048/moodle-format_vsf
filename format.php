@@ -17,12 +17,10 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -68,9 +66,6 @@ if (!empty($displaysection)) {
 $contentcontext['content'] = $content;
 
 echo $renderer->render_from_template('format_vsf/content', $contentcontext);
-
-// Include course format js module.
-$PAGE->requires->js('/course/format/vsf/format.js');
 
 if ((!$PAGE->user_is_editing()) && ($courseformat->get_course_display() == COURSE_DISPLAY_SINGLEPAGE)) {
     if ($course->layoutcolumns > 1) {

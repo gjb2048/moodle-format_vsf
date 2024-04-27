@@ -17,15 +17,16 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// phpcs:disable moodle.Files.LangFilesOrdering
+
 $string['addsections'] = 'Add section';
+$string['newsection'] = 'New section';
 $string['currentsection'] = 'This section';
 $string['editsection'] = 'Edit section';
 $string['editsectionname'] = 'Edit section name';
@@ -33,11 +34,12 @@ $string['deletesection'] = 'Delete section';
 $string['newsectionname'] = 'New name for section {$a}';
 $string['sectionname'] = 'Section';
 $string['pluginname'] = 'Progress Section Format';
+$string['plugin_description'] = 'The course is divided into sections that additionally show completion.';
 $string['section0name'] = 'General';
 $string['page-course-view-vsf'] = 'Any course main page in the progress section format';
 $string['page-course-view-vsf-x'] = 'Any course page in progress section format';
-$string['hidefromothers'] = 'Hide section';
-$string['showfromothers'] = 'Show section';
+$string['hidefromothers'] = 'Hide';
+$string['showfromothers'] = 'Show';
 $string['completionpercentagechart'] = 'Section {$a->sectionno} completion percentage chart';
 // These are 'sections' as they are only shown in 'section' based structures.
 $string['markedthissection'] = 'This section is highlighted as the current section';

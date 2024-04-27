@@ -17,19 +17,17 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' below.
+ * @package    format_vsf
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024011000;
+$plugin->version = 2024042700;
 $plugin->maturity = MATURITY_BETA;
-$plugin->requires = 2023100900.00; // 4.3 (Build: 20231009).
-$plugin->supported = [403, 403];
+$plugin->requires = 2024042200.00; // 4.4 (Build: 20240422).
+$plugin->supported = [404, 404];
 $plugin->component = 'format_vsf';
-$plugin->release = '4.3.0.1';
+$plugin->release = '4.4.0.1';

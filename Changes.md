@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.4.0.1
+-----------------------------
+  1. Supports Moodle 4.4.
+
 Version 4.3.0.1
 -----------------------------
   1. Supports Moodle 4.3.

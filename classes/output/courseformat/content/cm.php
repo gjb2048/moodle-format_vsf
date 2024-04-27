@@ -19,14 +19,11 @@
  *
  * Contains the class to render a section module.
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2022-onwards G J Barnard in respect to modifications of standard topics format, i.e:
  * @copyright  2020 Ferran Recio <ferran@moodle.com>
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_vsf\output\courseformat\content;

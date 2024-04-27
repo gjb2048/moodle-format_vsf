@@ -17,12 +17,10 @@
 /**
  * Progress Section Format
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2016-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -38,6 +36,11 @@ class format_vsf extends core_courseformat\base {
         return true;
     }
 
+    /**
+     * Returns true if this course format uses the course index.
+     *
+     * @return bool
+     */
     public function uses_course_index() {
 
         // Dirty tweak to allow both index and submenu.
@@ -55,6 +58,11 @@ class format_vsf extends core_courseformat\base {
         return false;
     }
 
+    /**
+     * Returns true if this course format uses indentation.
+     *
+     * @return bool
+     */
     public function uses_indentation(): bool {
         return true;
     }
@@ -102,11 +110,17 @@ class format_vsf extends core_courseformat\base {
     /**
      * The URL to use for the specified course (with section)
      *
+     * Please note that course view page /course/view.php?id=COURSEID is hardcoded in many
+     * places in core and contributed modules. If course format wants to change the location
+     * of the view script, it is not enough to change just this function. Do not forget
+     * to add proper redirection.
+     *
      * @param int|stdClass $section Section object from database or just field course_sections.section
-     *     if omitted the course view page is returned
+     *     if null the course view page is returned
      * @param array $options options for view URL. At the moment core uses:
-     *     'navigation' (bool) if true and section has no separate page, the function returns null
-     *     'sr' (int) used by multipage formats to specify to which section to return
+     *     'navigation' (bool) if true and section not empty, the function returns section page; otherwise, it returns course page.
+     *     'sr' (int) used by course formats to specify to which section to return
+     *     'expanded' (bool) if true the section will be shown expanded, true by default
      * @return null|moodle_url
      */
     public function get_view_url($section, $options = []) {
@@ -441,6 +455,11 @@ class format_vsf extends core_courseformat\base {
         return $courseformatoptions;
     }
 
+    /**
+     * Return the colour defaults.
+     *
+     * @return array.
+     */
     protected function get_course_format_colour_defaults() {
         $defaults = [];
         // Continue button.
@@ -636,6 +655,19 @@ class format_vsf extends core_courseformat\base {
         return !$section->section || $section->visible;
     }
 
+    /**
+     * Callback used in WS core_course_edit_section when teacher performs an AJAX action on a section (show/hide)
+     *
+     * Access to the course is already validated in the WS but the callback has to make sure
+     * that particular action is allowed by checking capabilities
+     *
+     * Course formats should register
+     *
+     * @param stdClass|section_info $section
+     * @param string $action
+     * @param int $sr the section return
+     * @return null|array|stdClass any data for the Javascript post-processor (must be json-encodeable)
+     */
     public function section_action($section, $action, $sr) {
         global $PAGE;
 
@@ -660,6 +692,15 @@ class format_vsf extends core_courseformat\base {
         $rv['section_availability'] = $renderer->render($availability);
 
         return $rv;
+    }
+
+    /**
+     * Get the required javascript files for the course format.
+     *
+     * @return array The list of javascript files required by the course format.
+     */
+    public function get_required_jsfiles(): array {
+        return [];
     }
 }
 

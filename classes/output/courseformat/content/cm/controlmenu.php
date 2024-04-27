@@ -22,14 +22,11 @@
  * This class, apart from the base implemnentation, is only responsible for injecting
  * a link to the mod-icon editor.
  *
- * @package    course/format
- * @subpackage vsf
- * @version    See the value of '$plugin->version' in version.php.
+ * @package    format_vsf
  * @copyright  &copy; 2022-onwards Ing. R.J. vanDongen in respect to modifications related to modicons.
  * @copyright  2020 Ferran Recio <ferran@moodle.com>
  * @author     Ing. R.J. van Dongen
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_vsf\output\courseformat\content\cm;
