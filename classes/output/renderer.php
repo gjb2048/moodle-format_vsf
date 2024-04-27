@@ -542,20 +542,16 @@ class renderer extends section_renderer {
         ];
 
         $sectionstyle = '';
-        if ($section->section != 0) {
-            // Only in the non-general sections.
-            if (!$section->visible) {
-                $sectionstyle = ' hidden';
-            } else if ($this->courseformat->is_section_current($section)) {
-                $sectionstyle = ' current';
-            }
+        if (!$section->visible) {
+            $sectionstyle = ' hidden';
+        } else if ($this->courseformat->is_section_current($section)) {
+            $sectionstyle = ' current';
         }
 
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        if (($section->section != 0) &&
-            (!$onsectionpage)) { // Horizontal column layout.
+        if (!$onsectionpage) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
 
@@ -565,14 +561,15 @@ class renderer extends section_renderer {
             $displaysectioncontext['sectionreturnid'] = $sectionreturn; // MDL-69065.
         }
 
-        // When not on a section page, we display the section titles except the general section if null.
-        $hasnamenotsecpg = (!$onsectionpage && ($section->section != 0 || !is_null($section->name)));
-
-        // When on a section page, we only display the general section title, if title is not the default one.
-        $hasnamesecpg = ($onsectionpage && ($section->section == 0 && !is_null($section->name)));
-
         $headerclasses = 'section-title';
-        if ($hasnamenotsecpg || $hasnamesecpg) {
+        if ($onsectionpage) {
+            // Hidden section name so don't output anything bar the header name.
+            $headerclasses .= ' accesshide';
+            $displaysectioncontext['header'] = $this->section_header_helper(
+                    $this->section_title_without_link($section, $this->course),
+                $headerclasses, '', false, $section, false);
+        } else {
+            // When not on a section page, we display the section titles.
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
              // Chart '2' is 'Bar chart'.
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2));
@@ -580,12 +577,6 @@ class renderer extends section_renderer {
             $displaysectioncontext['header'] = $this->section_header_helper(
                     $this->section_title_without_link($section, $this->course),
                 $headerclasses, $activitysummary, $barchart, $section);
-        } else {
-            // Hidden section name so don't output anything bar the header name.
-            $headerclasses .= ' accesshide';
-            $displaysectioncontext['header'] = $this->section_header_helper(
-                    $this->section_title_without_link($section, $this->course),
-                $headerclasses, '', false, $section, false);
         }
 
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
