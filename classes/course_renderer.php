@@ -608,7 +608,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $class .= ' custom';
         }
         $image = html_writer::img($srcurl, $mod->get_formatted_name(),
-                ['class' => $class, 'alt' => ' ', 'role' => 'presentation']);
+                ['class' => $class, 'alt' => ' ']);
         return html_writer::tag('span',
                 $image, ['class' => 'mdl-align vsf-icon']);
     }

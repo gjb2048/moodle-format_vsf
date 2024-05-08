@@ -45,8 +45,10 @@ class renderer extends section_renderer {
 
     /** @var array section completion percentage */
     private $sectioncompletionpercentage = [];
+
     /** @var array section completion markup */
     private $sectioncompletionmarkup = [];
+
     /** @var array section completion calculated */
     private $sectioncompletioncalculated = [];
 
@@ -55,6 +57,7 @@ class renderer extends section_renderer {
 
     /** @var class Our course format object as defined in lib.php */
     private $courseformat = null;
+
     /** @var class Course with settings */
     private $course; // Course with settings.
 
@@ -66,6 +69,9 @@ class renderer extends section_renderer {
 
     /** @var section control menu output class */
     protected $controlmenuclass;
+
+    /** @var core_course_renderer contains an instance of core course renderer */
+    protected $courserenderer;
 
     /**
      * Constructor method, calls the parent constructor
@@ -751,7 +757,11 @@ class renderer extends section_renderer {
         $shownsectioncount = 0;
 
         // Now the list of sections..
-        $content .= $this->start_section_list();
+        if ($canbreak) {
+            $content .= $this->start_columns_section_list();
+        } else {
+            $content .= $this->start_section_list();
+        }
 
         $sectionsinfo = $modinfo->get_section_info_all();
         $sectiondisplayarray = [];
