@@ -98,7 +98,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $availabilityinfo = $this->process_availability($availabilityinfo);
                 $avcontent .= html_writer::start_tag('span', ['class' => 'vsfai', 'title' => $availabilityinfo['text']]);
                 $avcontent .= html_writer::empty_tag('img', ['src' => $this->image_url('access_transparent', 'format_vsf'),
-                    'alt' => '', 'role' => 'presentation']);
+                    'alt' => '']);
                 $avcontent .= html_writer::end_tag('span');
             }
         }
@@ -489,7 +489,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if ($sectionreturn) {
             $format->set_section_number($sectionreturn);
         }
-        $section = $modinfo->get_section_info($format->get_section_number());
+        $sectionnum = $format->get_sectionnum();
+        if (is_null($sectionnum)) {
+            // Section 0.
+            $sectionnum = 0;
+        }
+        $section = $modinfo->get_section_info($sectionnum);
 
         $cmclass = $format->get_output_classname('content\\cm');
         $cm = new $cmclass($format, $section, $mod, $displayoptions);
@@ -608,7 +613,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $class .= ' custom';
         }
         $image = html_writer::img($srcurl, $mod->get_formatted_name(),
-                ['class' => $class, 'alt' => ' ']);
+                ['class' => $class, 'alt' => '']);
         return html_writer::tag('span',
                 $image, ['class' => 'mdl-align vsf-icon']);
     }

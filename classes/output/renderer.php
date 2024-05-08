@@ -694,7 +694,12 @@ class renderer extends section_renderer {
         }
 
         $sectionnavigationclass = $this->courseformat->get_output_classname('content\\sectionnavigation');
-        $sectionnavigation = new $sectionnavigationclass($this->courseformat, $this->courseformat->get_section_number(), $this);
+        $sectionnum = $this->courseformat->get_sectionnum();
+        if (is_null($sectionnum)) {
+            // Section 0.
+            $sectionnum = 0;
+        }
+        $sectionnavigation = new $sectionnavigationclass($this->courseformat, $sectionnum, $this);
         $sectionselectorclass = $this->courseformat->get_output_classname('content\\sectionselector');
         $sectionselector = new $sectionselectorclass($this->courseformat, $sectionnavigation);
         // Do now so that the selection selector export, exports the navigation data.

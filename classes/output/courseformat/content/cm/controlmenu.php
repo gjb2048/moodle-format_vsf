@@ -59,7 +59,7 @@ class controlmenu extends controlmenu_base {
 
         $format = $this->format;
         $mod = $this->mod;
-        $sectionreturn = $format->get_section_number();
+        $sectionreturn = $format->get_sectionnum();
         if (!empty($this->displayoptions['disableindentation']) || !$format->uses_indentation()) {
             $indent = -1;
         } else {
