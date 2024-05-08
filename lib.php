@@ -726,22 +726,6 @@ function format_vsf_inplace_editable($itemtype, $itemid, $newvalue) {
 }
 
 /**
- * Drop-in replacement for theme custom CSS.
- * This will inject the CSS needed for modpic/modtxt specifics.
- * Since this callback is called _always_, we're not bound to use of the format.
- */
-function format_vsf_before_standard_html_head() {
-    global $CFG;
-    $url = new moodle_url($CFG->wwwroot . '/course/format/vsf/injectedcss.css');
-    // Return CSS injection tag.
-    return html_writer::empty_tag('link', [
-        'href' => $url->out(false),
-        'rel' => 'stylesheet',
-        'type' => 'text/css',
-    ]);
-}
-
-/**
  * Add items to course navigation
  *
  * @param navigation_node $parentnode

@@ -841,3 +841,9 @@
 .format-vsf .progress-chart-container .progress-doughnut .progress-indicator svg .circle.percent-100 {
     stroke-dashoffset: 0;
 }
+
+/* VSF extra css - Afbeelding bij beschrijving toevoegen */
+body:not(.path-course):not(.editing) .modpic,
+body:not(.editing).path-course .modtxt {
+    display: none !important;
+}
