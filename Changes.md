@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.0.0.5
+-----------------------------
+  1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
+
 Version 4.0.0.4
 -----------------------------
   1. Added ability to display activity description as tooltip (using BS tooltips) (Sebsoft)
