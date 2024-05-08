@@ -335,7 +335,7 @@
 }
 
 .format-vsf .vsfavmod {
-    /*position: relative;*/
+    position: relative;
 }
 
 .format-vsf .vsfavmod .vsfai {
@@ -363,6 +363,29 @@
 
 .format-vsf .activity .vsfavmod img.activityicon {
     margin-right: 0;
+}
+
+.format-vsf .activity .vsf-icon img.modpic.custom,
+.format-vsf .modicontable img.modpic.custom {
+    width: 90px;
+}
+
+.format-vsf .activity .vsf-icon img.modpic.original,
+.format-vsf .modicontable img.modpic.original {
+    /*width: 90px;*/
+}
+
+.format-vsf .vsf-activity-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.format-vsf .activity.moduleviewgapwithbutton .vsfactivity {
+    max-width: 100%;
 }
 
 .format-vsf .progress-chart-container {
@@ -816,25 +839,8 @@
     stroke-dashoffset: 0;
 }
 
-.format-vsf .activity .vsf-icon img.modpic.custom,
-.format-vsf .modicontable img.modpic.custom {
-    width: 90px;
-}
-
-.format-vsf .activity .vsf-icon img.modpic.original,
-.format-vsf .modicontable img.modpic.original  {
-    /*width: 90px;*/
-}
-
-.format-vsf .vsf-activity-wrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100%;
-    justify-content: space-between;
-}
-
-.format-vsf .activity.moduleviewgapwithbutton .vsfactivity {
-    max-width: 100%;
+/* VSF extra css - Afbeelding bij beschrijving toevoegen */
+body:not(.path-course):not(.editing) .modpic,
+body:not(.editing).path-course .modtxt {
+    display: none !important;
 }
