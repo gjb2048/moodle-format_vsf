@@ -89,14 +89,14 @@ class renderer extends section_renderer {
         }
 
         $this->editing = $page->user_is_editing();
-        // Use our custom course renderer if we need to.
-        if ($this->courseformat->show_editor()) {
-            $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
-        }
         if ((!$this->editing) && ($this->courseformat->get_course_display() == COURSE_DISPLAY_SINGLEPAGE)) {
             $this->moduleview = true;
         } else {
             $this->moduleview = false;
+        }
+        // Use our custom course renderer if we need to.
+        if (($this->moduleview) || ($this->courseformat->show_editor())) {
+            $this->courserenderer = $this->page->get_renderer('format_vsf', 'course');
         }
 
         if ($this->courseformat->show_editor()) {
