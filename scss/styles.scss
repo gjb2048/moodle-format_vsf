@@ -259,14 +259,14 @@
 
 .format-vsf .moduleviewgapwithbutton {
     padding-bottom: 30px;
-    mi-height: 70px;
+    min-height: 70px;
 }
 
 .format-vsf .vsfactivity {
     .no-overflow {
         overflow: unset;
         p {
-            text-align: center !important;
+            text-align: center !important; // stylelint-disable-line declaration-no-important
         }
     }
 }
@@ -340,7 +340,7 @@
 }
 
 .format-vsf .activity .vsf-icon img.modpic.original,
-.format-vsf .modicontable img.modpic.original  {
+.format-vsf .modicontable img.modpic.original {
     /*width: 90px;*/
 }
 
@@ -357,5 +357,5 @@
     max-width: 100%;
 }
 
-
 @import "progress_chart";
+@import "extra";

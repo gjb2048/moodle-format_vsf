@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.3.0.2
+-----------------------------
+  1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
+
 Version 4.3.0.1
 -----------------------------
   1. Supports Moodle 4.3.
