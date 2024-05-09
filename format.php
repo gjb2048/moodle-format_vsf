@@ -57,7 +57,7 @@ $contentcontext = [
     'title' => $courseformat->page_title(),
 ];
 if (!is_null($displaysection)) {
-    $courseformat->set_section_number($displaysection);
+    $courseformat->set_sectionnum($displaysection);
     $content = $renderer->single_section_page($course, $displaysection);
     $contentcontext['sectionreturn'] = $displaysection;
 } else {
