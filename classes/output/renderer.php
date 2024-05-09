@@ -370,8 +370,7 @@ class renderer extends section_renderer {
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        if (($section->section != 0) &&
-            ($this->course->layoutcolumns > 1)) { // Horizontal column layout.
+        if ($this->course->layoutcolumns > 1) { // Horizontal column layout.
             $classattrextra .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
         $sectionsummarycontext['classattrextra'] = $classattrextra;
