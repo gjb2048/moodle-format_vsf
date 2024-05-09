@@ -368,14 +368,15 @@
     margin-right: 0;
 }
 
+.format-vsf .activity .vsf-icon img.modpic.original,
+.format-vsf .modicontable img.modpic.original {
+    height: 24px;
+    width: 24px;
+}
+
 .format-vsf .activity .vsf-icon img.modpic.custom,
 .format-vsf .modicontable img.modpic.custom {
     width: 90px;
-}
-
-.format-vsf .activity .vsf-icon img.modpic.original,
-.format-vsf .modicontable img.modpic.original {
-    /*width: 90px;*/
 }
 
 .format-vsf .vsf-activity-wrapper {
