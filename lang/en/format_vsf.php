@@ -151,8 +151,15 @@ $string['moduleviewbutton_help'] = 'State if the button to access a module is pr
 $string['defaultmoduleviewbutton'] = 'Module view button default';
 $string['defaultmoduleviewbutton_desc'] = 'Default setting to state if the button to access a module is present when in \'Module view\', being \'Show all sections on one page\' for the \'Course layout\' setting.  This only applies to new courses or ones that switch to the format.';
 
-// Privacy.
-$string['privacy:nop'] = 'The PSF format stores settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';
+// Restricted module icon.
+$string['restrictedmoduleicon'] = 'Restricted module icon';
+$string['restrictedmoduleicon_help'] = 'Set the Font Awesome icon to use instead of the default image.  Please state the CSS classes or just the name to have a \'fa fa-\' prefix to the name automatically prepended.  To find the FontAwesome(Free) classes for the icon you wish to use, go to <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">Font Awesome free</a> and search for the icon.  To refer to the site setting \'defaultrestrictedmoduleicon\' value, enter \'-\'.  Leave empty to use the default image.';
+$string['defaultrestrictedmoduleicon'] = 'Restricted module icon default';
+$string['defaultrestrictedmoduleicon_desc'] = 'Set the Font Awesome icon to use instead of the default image.  State the CSS classes or just the name to have a \'fa fa-\' prefix to the name automatically prepended.  To find the FontAwesome(Free) classes for the icon you wish to use, go to <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">Font Awesome free</a> and search for the icon.  Leave empty to use the default image.';
+$string['restrictedmoduleiconcolour'] = 'Restricted module icon colour';
+$string['restrictedmoduleiconcolour_help'] = 'Set the icon colour.';
+$string['defaultrestrictedmoduleiconcolour'] = 'Restricted module icon colour default';
+$string['defaultrestrictedmoduleiconcolour_desc'] = 'Set the default icon colour.';
 
 // Mod/course icons.
 $string['changemodiconheader'] = 'Change module icons';
@@ -196,3 +203,5 @@ $string['moduledescriptiontooltip_help'] = 'State if the module description will
 $string['defaultmoduledescriptiontooltip'] = 'Module description tooltip default';
 $string['defaultmoduledescriptiontooltip_desc'] = 'Default setting to state if the module description will be visible as a tooltip when hovering over the activity icon/button.';
 
+// Privacy.
+$string['privacy:nop'] = 'The PSF format stores settings that pertain to its configuration.  None of the settings are related to a specific user.  It is your responsibilty to ensure that no user data is entered in any of the free text fields.  Setting a setting will result in that action being logged within the core Moodle logging system against the user whom changed it, this is outside of the formats control, please see the core logging system for privacy compliance for this.  When uploading images, you should avoid uploading images with embedded location data (EXIF GPS) included or other such personal data.  It would be possible to extract any location / personal data from the images.  Please examine the code carefully to be sure that it complies with your interpretation of your privacy laws.  I am not a lawyer and my analysis is based on my interpretation.  If you have any doubt then remove the format forthwith.';

@@ -282,6 +282,14 @@ class format_vsf extends core_courseformat\base {
                     'default' => get_config('format_vsf', 'defaultmoduledescriptiontooltip'),
                     'type' => PARAM_INT,
                 ],
+                'restrictedmoduleicon' => [
+                    'default' => '-',
+                    'type' => PARAM_ALPHANUMEXT,
+                ],
+                'restrictedmoduleiconcolour' => [
+                    'default' => $defaults['defaultrestrictedmoduleiconcolour'],
+                    'type' => PARAM_ALPHANUM,
+                ],
                 // Continue button.
                 'continuebackgroundcolour' => [
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
@@ -385,6 +393,21 @@ class format_vsf extends core_courseformat\base {
                     'help' => 'moduledescriptiontooltip',
                     'help_component' => 'format_vsf',
                 ],
+                'restrictedmoduleicon' => [
+                    'label' => new lang_string('restrictedmoduleicon', 'format_vsf'),
+                    'element_type' => 'text',
+                    'help' => 'restrictedmoduleicon',
+                    'help_component' => 'format_vsf',
+                ],
+                'restrictedmoduleiconcolour' => [
+                    'label' => new lang_string('restrictedmoduleiconcolour', 'format_vsf'),
+                    'help' => 'restrictedmoduleiconcolour',
+                    'help_component' => 'format_vsf',
+                    'element_type' => 'vsfcolourpopup',
+                    'element_attributes' => [
+                        ['value' => $defaults['defaultrestrictedmoduleiconcolour']],
+                    ],
+                ],
                 // Continue button.
                 'continuebackgroundcolour' => [
                     'label' => new lang_string('continuebackgroundcolour', 'format_vsf'),
@@ -464,6 +487,11 @@ class format_vsf extends core_courseformat\base {
      */
     protected function get_course_format_colour_defaults() {
         $defaults = [];
+        // Restricted module icon colour.
+        $defaults['defaultrestrictedmoduleiconcolour'] = get_config('format_vsf', 'defaultrestrictedmoduleiconcolour');
+        if ($defaults['defaultrestrictedmoduleiconcolour'][0] == '#') {
+            $defaults['defaultrestrictedmoduleiconcolour'] = substr($defaults['defaultrestrictedmoduleiconcolour'], 1);
+        }
         // Continue button.
         $defaults['defaultcontinuebackgroundcolour'] = get_config('format_vsf', 'defaultcontinuebackgroundcolour');
         if ($defaults['defaultcontinuebackgroundcolour'][0] == '#') {
