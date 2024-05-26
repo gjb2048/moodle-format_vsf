@@ -61,13 +61,14 @@ class format_vsf_course_renderer extends \core_course_renderer {
     /**
      * Renders html to display the module content on the course page (i.e. text of the labels)
      *
+     * @param stdClass $course
      * @param cm_info $mod.
      * @param boolean $vsfavailability Use our availability.
      * @param array $displayoptions.
      *
      * @return string.
      */
-    public function course_section_cm_text_vsf(cm_info $mod, $vsfavailability = false, $displayoptions = []) {
+    public function course_section_cm_text_vsf($course, cm_info $mod, $vsfavailability = false, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page()) {
             // Nothing to be displayed to the user.
             return '';
@@ -92,9 +93,24 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $availabilityinfo = $this->vsf_course_section_cm_availability($mod, $displayoptions);
             if (!empty($availabilityinfo)) {
                 $availabilityinfo = $this->process_availability($availabilityinfo);
-                $avcontent .= html_writer::start_tag('span', ['class' => 'vsfai', 'title' => $availabilityinfo['text']]);
-                $avcontent .= html_writer::empty_tag('img', ['src' => $this->image_url('access_transparent', 'format_vsf'),
-                    'alt' => '', 'role' => 'presentation']);
+                $avcontentclasses = 'vsfai';
+                $restrictedmoduleicon = '';
+                if (!empty($course->restrictedmoduleicon)) {
+                    if ($course->restrictedmoduleicon[0] == '-') {
+                        $restrictedmoduleicon = get_config('format_vsf', 'defaultrestrictedmoduleicon');
+                    } else {
+                        $restrictedmoduleicon = $course->restrictedmoduleicon;
+                    }
+                }
+                if (empty($restrictedmoduleicon)) {
+                    $avcontenticon = html_writer::empty_tag('img', ['src' => $this->image_url('access_transparent', 'format_vsf'),
+                        'alt' => '']);
+                } else {
+                    $avcontenticon = \format_vsf\toolbox::getfontawesomemarkup($restrictedmoduleicon, ['vsffa']);
+                    $avcontentclasses .= ' vsfaifa';
+                }
+                $avcontent .= html_writer::start_tag('span', ['class' => $avcontentclasses, 'title' => $availabilityinfo['text']]);
+                $avcontent .= $avcontenticon;
                 $avcontent .= html_writer::end_tag('span');
             }
         }
@@ -303,12 +319,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
            it should work similarly (at least in terms of ordering) to an
            activity. */
         if (empty($url)) {
-            $output .= $this->course_section_cm_text_vsf($mod, false, $displayoptions);
+            $output .= $this->course_section_cm_text_vsf($course, $mod, false, $displayoptions);
             $output .= $this->course_section_cm_availability($mod, $displayoptions);
         } else {
             /* If there is content AND a link, then display the content here
                (AFTER any icons). Otherwise it was displayed before. */
-            $output .= $this->course_section_cm_text_vsf($mod, true, $displayoptions);
+            $output .= $this->course_section_cm_text_vsf($course, $mod, true, $displayoptions);
         }
 
         return $output;
