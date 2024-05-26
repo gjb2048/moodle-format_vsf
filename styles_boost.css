@@ -25,3 +25,8 @@ ul.sections :target::before { /* Ref: MDL-64894 */
 .format-vsf .moduleview.section {
     padding-left: 0;
 }
+
+/* Module icon */
+.format-vsf .vsfavmod .vsfai.vsfaifa .vsffa {
+    font-size: 104px;
+}

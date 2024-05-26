@@ -282,6 +282,10 @@ class format_vsf extends core_courseformat\base {
                     'default' => get_config('format_vsf', 'defaultmoduledescriptiontooltip'),
                     'type' => PARAM_INT,
                 ],
+                'restrictedmoduleicon' => [
+                    'default' => '-',
+                    'type' => PARAM_ALPHANUMEXT,
+                ],
                 // Continue button.
                 'continuebackgroundcolour' => [
                     'default' => $defaults['defaultcontinuebackgroundcolour'],
@@ -383,6 +387,12 @@ class format_vsf extends core_courseformat\base {
                         ],
                     ],
                     'help' => 'moduledescriptiontooltip',
+                    'help_component' => 'format_vsf',
+                ],
+                'restrictedmoduleicon' => [
+                    'label' => new lang_string('restrictedmoduleicon', 'format_vsf'),
+                    'element_type' => 'text',
+                    'help' => 'restrictedmoduleicon',
                     'help_component' => 'format_vsf',
                 ],
                 // Continue button.

@@ -349,6 +349,18 @@
     top: 0;
 }
 
+.format-vsf .vsfavmod .vsfai.vsfaifa {
+    bottom: 0;
+}
+
+.format-vsf .vsfavmod .vsfai.vsfaifa .vsffa {
+    color: #e51874;
+    font-size: 52px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .format-vsf .vsfai img {
     max-height: 100%;
     max-width: 100%;

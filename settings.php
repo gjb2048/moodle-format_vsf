@@ -76,6 +76,13 @@ if ($ADMIN->fulltree) {
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
+    // Restricted module icon.
+    $name = 'format_vsf/defaultrestrictedmoduleicon';
+    $title = get_string('defaultrestrictedmoduleicon', 'format_vsf');
+    $description = get_string('defaultrestrictedmoduleicon_desc', 'format_vsf');
+    $default = '';
+    $settings->add(new admin_setting_configtext($name, $title, $description, $default, PARAM_ALPHANUM));
+
     // Default continue button background colour in hexadecimal RGB with preceding '#'.
     $name = 'format_vsf/defaultcontinuebackgroundcolour';
     $title = get_string('defaultcontinuebackgroundcolour', 'format_vsf');
