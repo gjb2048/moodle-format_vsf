@@ -195,6 +195,12 @@ class renderer extends section_renderer {
     protected function course_styles() {
         $coursestylescontext = [];
 
+        if ($this->course->restrictedmoduleiconcolour[0] != '#') {
+            $coursestylescontext['restrictedmoduleiconcolour'] = '#'.$this->course->restrictedmoduleiconcolour;
+        } else {
+            $coursestylescontext['restrictedmoduleiconcolour'] = $this->course->restrictedmoduleiconcolour;
+        }
+
         if ($this->course->continuebackgroundcolour[0] != '#') {
             $coursestylescontext['continuebackgroundcolour'] = '#'.$this->course->continuebackgroundcolour;
         } else {

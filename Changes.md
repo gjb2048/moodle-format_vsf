@@ -3,10 +3,12 @@ Version Information
 
 Version 4.4.0.2
 -----------------------------
-  1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
-  2. Add ability to use a Font Awesome icon instead of the default for restricted modules.  Specifiy at either the
-     course 'restrictedmoduleicon' setting or site 'defaultrestrictedmoduleicon', which the course will refer to when
-     it is set to '-'.  Leave empty to use the icon 'access_transparent.png' located in the format's 'pix' folder.
+1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
+2. Add ability to use a Font Awesome icon instead of the default for restricted modules.  Specifiy at either the course
+   'restrictedmoduleicon' setting or site 'defaultrestrictedmoduleicon' setting, to which the course will refer to
+   when it is set to '-'.  Leave empty to use the icon 'access_transparent.png' located in the format's 'pix' folder.
+3. Add course 'restrictedmoduleiconcolour' and 'defaultrestrictedmoduleiconcolour' settings to specify the colour of
+   the 'restrictedmoduleicon' icon.
 
 Version 4.4.0.1
 -----------------------------

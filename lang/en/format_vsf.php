@@ -156,6 +156,10 @@ $string['restrictedmoduleicon'] = 'Restricted module icon';
 $string['restrictedmoduleicon_help'] = 'Set the Font Awesome icon to use instead of the default image.  Please state the CSS classes or just the name to have a \'fa fa-\' prefix to the name automatically prepended.  To find the FontAwesome(Free) classes for the icon you wish to use, go to <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">Font Awesome free</a> and search for the icon.  To refer to the site setting \'defaultrestrictedmoduleicon\' value, enter \'-\'.  Leave empty to use the default image.';
 $string['defaultrestrictedmoduleicon'] = 'Restricted module icon default';
 $string['defaultrestrictedmoduleicon_desc'] = 'Set the Font Awesome icon to use instead of the default image.  State the CSS classes or just the name to have a \'fa fa-\' prefix to the name automatically prepended.  To find the FontAwesome(Free) classes for the icon you wish to use, go to <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">Font Awesome free</a> and search for the icon.  Leave empty to use the default image.';
+$string['restrictedmoduleiconcolour'] = 'Restricted module icon colour';
+$string['restrictedmoduleiconcolour_help'] = 'Set the icon colour.';
+$string['defaultrestrictedmoduleiconcolour'] = 'Restricted module icon colour default';
+$string['defaultrestrictedmoduleiconcolour_desc'] = 'Set the default icon colour.';
 
 // Mod/course icons.
 $string['changemodiconheader'] = 'Change module icons';

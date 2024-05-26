@@ -83,6 +83,14 @@ if ($ADMIN->fulltree) {
     $default = '';
     $settings->add(new admin_setting_configtext($name, $title, $description, $default, PARAM_ALPHANUM));
 
+    // Restricted module icon colour in hexadecimal RGB with preceding '#'.
+    $name = 'format_vsf/defaultrestrictedmoduleiconcolour';
+    $title = get_string('defaultrestrictedmoduleiconcolour', 'format_vsf');
+    $description = get_string('defaultrestrictedmoduleiconcolour_desc', 'format_vsf');
+    $default = '#E51874';
+    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default);
+    $settings->add($setting);
+
     // Default continue button background colour in hexadecimal RGB with preceding '#'.
     $name = 'format_vsf/defaultcontinuebackgroundcolour';
     $title = get_string('defaultcontinuebackgroundcolour', 'format_vsf');
