@@ -20,6 +20,7 @@
     Progress Section Format course styles template.
 
     Context variables required for this template:
+    * restrictedmoduleiconcolour - Restricted module icon colour.
     * continuebackgroundcolour - Continue button background colour.
     * continuetextcolour - Continue button text colour.
     * sectionheaderbackgroundcolour - Section header background colour.
@@ -33,6 +34,7 @@
 
     Example context (json):
     {
+        "restrictedmoduleiconcolour": "#E51874",
         "continuebackgroundcolour": "#CE2E2B",
         "continuetextcolour": "#FFFFFF",
         "sectionheaderbackgroundcolour": "#777777",
@@ -47,6 +49,11 @@
 }}
 <style type="text/css" media="screen">
     /* <![CDATA[ */
+
+    /* Restricted module icon */
+    .format-vsf .vsfavmod .vsfai.vsfaifa .vsffa {
+        color: {{restrictedmoduleiconcolour}};
+    }
 
     /* Continue button */
     .format-vsf .vsf-continue {
