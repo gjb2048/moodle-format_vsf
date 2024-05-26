@@ -3,7 +3,14 @@ Version Information
 
 Version 4.0.0.5
 -----------------------------
-  1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
+1. Move injected CSS into styles CSS to remove employment of hook that uses a deprecated method of implementation.
+2. Add ability to use a Font Awesome icon instead of the default for restricted modules.  Specifiy at either the course
+   'restrictedmoduleicon' setting or site 'defaultrestrictedmoduleicon' setting, to which the course will refer to
+   when it is set to '-'.  Leave empty to use the icon 'access_transparent.png' located in the format's 'pix' folder.
+3. Add course 'restrictedmoduleiconcolour' and 'defaultrestrictedmoduleiconcolour' settings to specify the colour of
+   the 'restrictedmoduleicon' icon.
+4. Set the 'restrictedmoduleicon' to have a font size of 50px.
+5. Set '.format-vsf .activity .vsf-icon img.modpic', '.original' and '.custom' to an opacity of 0.5.
 
 Version 4.0.0.4
 -----------------------------

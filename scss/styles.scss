@@ -304,7 +304,7 @@
 }
 
 .format-vsf .vsfavmod {
-    position: relative;
+    /*position: relative;*/
 }
 
 .format-vsf .vsfavmod .vsfai {
@@ -313,6 +313,18 @@
     right: 10px;
     text-align: center;
     top: 0;
+}
+
+.format-vsf .vsfavmod .vsfai.vsfaifa {
+    bottom: 0;
+}
+
+.format-vsf .vsfavmod .vsfai.vsfaifa .vsffa {
+    color: #e51874;
+    font-size: 50px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .format-vsf .vsfai img {
@@ -343,6 +355,13 @@
 .format-vsf .activity .vsf-icon img.modpic.custom,
 .format-vsf .modicontable img.modpic.custom {
     width: 90px;
+}
+
+.format-vsf .activity .vsf-icon img.modpic {
+    &.original,
+    &.custom {
+        opacity: 0.5;
+    }
 }
 
 .format-vsf .vsf-activity-wrapper {
