@@ -9,6 +9,8 @@ Version 4.4.0.2
    when it is set to '-'.  Leave empty to use the icon 'access_transparent.png' located in the format's 'pix' folder.
 3. Add course 'restrictedmoduleiconcolour' and 'defaultrestrictedmoduleiconcolour' settings to specify the colour of
    the 'restrictedmoduleicon' icon.
+4. Set the 'restrictedmoduleicon' to have a font size of 50px.
+5. Set '.format-vsf .activity .vsf-icon img.modpic', '.original' and '.custom' to an opacity of 0.5.
 
 Version 4.4.0.1
 -----------------------------

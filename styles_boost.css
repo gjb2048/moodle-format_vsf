@@ -28,5 +28,5 @@ ul.sections :target::before { /* Ref: MDL-64894 */
 
 /* Module icon */
 .format-vsf .vsfavmod .vsfai.vsfaifa .vsffa {
-    font-size: 104px;
+    font-size: 50px;
 }
