@@ -96,6 +96,11 @@ class sectionselector extends \core_courseformat\output\local\content\sectionsel
         return $this->data;
     }
 
+    /**
+     * Get the nav data.
+     *
+     * @return stdClass
+     */
     public function get_nav_data() {
         return $this->navdata;
     }

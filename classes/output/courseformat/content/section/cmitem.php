@@ -38,6 +38,12 @@ namespace format_vsf\output\courseformat\content\section;
  */
 class cmitem extends \core_courseformat\output\local\content\section\cmitem {
 
+    /**
+     * Get the name of the template to use for this templatable.
+     *
+     * @param \renderer_base $renderer The renderer requesting the template name
+     * @return string
+     */
     public function get_template_name(\renderer_base $renderer): string {
         return 'format_vsf/local/content/section/cmitem';
     }
