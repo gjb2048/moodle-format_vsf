@@ -37,6 +37,12 @@ namespace format_vsf\output\courseformat\content;
  */
 class cm extends \core_courseformat\output\local\content\cm {
 
+    /**
+     * Get the name of the template to use for this templatable.
+     *
+     * @param \renderer_base $renderer The renderer requesting the template name
+     * @return string
+     */
     public function get_template_name(\renderer_base $renderer): string {
         return 'format_vsf/local/content/section/cm';
     }

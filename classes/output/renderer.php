@@ -526,6 +526,11 @@ class renderer extends section_renderer {
         }
     }
 
+    /**
+     * Get the navigation link icons.
+     *
+     * @return array
+     */
     public function vsf_get_nav_link_icons() {
         return [
             'next' => 'fa fa-arrow-circle-o-right',
@@ -838,10 +843,20 @@ class renderer extends section_renderer {
         return $content;
     }
 
+    /**
+     * Get the row class.
+     *
+     * @return string.
+     */
     protected function get_row_class() {
         return 'row';
     }
 
+    /**
+     * Get the column class.
+     *
+     * @return string.
+     */
     protected function get_column_class($columns) {
         if (($columns == 1) || ($this->editing)) {
             return '';
