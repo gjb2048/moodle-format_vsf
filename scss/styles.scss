@@ -303,10 +303,6 @@
     display: inline-block;
 }
 
-.format-vsf .vsfavmod {
-    /*position: relative;*/
-}
-
 .format-vsf .vsfavmod .vsfai {
     left: 10px;
     position: absolute;
@@ -357,11 +353,9 @@
     width: 90px;
 }
 
-.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic {
-    &.original,
-    &.custom {
-        opacity: 0.5;
-    }
+.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.original,
+.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.custom {
+    opacity: 0.5;
 }
 
 .format-vsf .vsf-activity-wrapper {
