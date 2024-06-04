@@ -10,7 +10,7 @@ Version 4.2.0.2
 3. Add course 'restrictedmoduleiconcolour' and 'defaultrestrictedmoduleiconcolour' settings to specify the colour of
    the 'restrictedmoduleicon' icon.
 4. Set the 'restrictedmoduleicon' to have a font size of 50px.
-5. Set '.format-vsf .activity .vsf-icon img.modpic', '.original' and '.custom' to an opacity of 0.5.
+5. Set '.format-vsf .activity .vsf-icon img.modpic', '.original' and '.custom' to an opacity of 0.5 when restricted.
 
 Version 4.2.0.1
 -----------------------------
