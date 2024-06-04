@@ -337,10 +337,6 @@
     display: inline-block;
 }
 
-.format-vsf .vsfavmod {
-    /*position: relative;*/
-}
-
 .format-vsf .vsfavmod .vsfai {
     left: 10px;
     position: absolute;
