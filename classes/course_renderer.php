@@ -335,6 +335,46 @@ class format_vsf_course_renderer extends \core_course_renderer {
     }
 
     /**
+     * Renders html to display a name with the link to the course module on a course page
+     *
+     * If module is unavailable for user but still needs to be displayed
+     * in the list, just the name is returned without a link
+     *
+     * Note, that for course modules that never have separate pages (i.e. labels)
+     * this function return an empty string
+     *
+     * @deprecated since Moodle 4.0 MDL-72656 - please do not use this function any more.
+     *
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
+        if (!$mod->is_visible_on_course_page() || !$mod->url) {
+            // Nothing to be displayed to the user.
+            return '';
+        }
+
+        list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
+        $groupinglabel = $mod->get_grouping_label($textclasses);
+
+        // Render element that allows to edit activity name inline.
+        $format = course_get_format($mod->course);
+        $cmnameclass = $format->get_output_classname('content\\cm\\cmname');
+        // Mod inplace name editable.
+        $cmname = new $cmnameclass(
+            $format,
+            $mod->get_section_info(),
+            $mod,
+            null,
+            $displayoptions
+        );
+
+        $renderer = $format->get_renderer($this->page);
+        return $renderer->render($cmname) . $groupinglabel;
+    }
+
+    /**
      * Renders HTML to show course module availability information (for someone who isn't allowed
      * to see the activity itself, or for staff)
      *
