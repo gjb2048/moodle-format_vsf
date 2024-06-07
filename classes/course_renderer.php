@@ -623,10 +623,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
         } else {
             $class .= ' custom';
         }
-        $image = html_writer::img($srcurl, $mod->get_formatted_name(),
-                ['class' => $class, 'alt' => ' ']);
-        return html_writer::tag('span',
-                $image, ['class' => 'mdl-align vsf-icon']);
+        $image = html_writer::img($srcurl, $mod->get_formatted_name(), ['class' => $class, 'alt' => ' ']);
+        return html_writer::tag('span', $image, ['class' => 'mdl-align vsf-icon']);
     }
 
     /**
