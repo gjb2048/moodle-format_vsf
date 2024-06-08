@@ -73,6 +73,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @return string.
      */
     public function course_section_cm_text_vsf($course, cm_info $mod, $vsfavailability = false, $displayoptions = []) {
+        global $DB;
+
         if (!$mod->is_visible_on_course_page()) {
             // Nothing to be displayed to the user.
             return '';
@@ -172,6 +174,17 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $modcontent,
                 ['class' => 'vsf-mod-description pt-2']
             );
+        }
+        if ($mod->modname == 'folder') {
+            $folder = $DB->get_record('folder', array('id' => $mod->instance), 'display', MUST_EXIST);
+            if ($folder->display == FOLDER_DISPLAY_INLINE) {
+                $modcontent = $mod->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
+                $output .= html_writer::tag(
+                    'div',
+                    $modcontent,
+                    ['class' => 'vsf-mod-content pt-2']
+                );
+            }
         }
 
         if (!empty($endcontent)) {
