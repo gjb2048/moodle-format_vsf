@@ -463,6 +463,28 @@ class format_vsf_course_renderer extends \core_course_renderer {
     }
 
     /**
+     * Renders HTML to show course module availability information (for someone who isn't allowed
+     * to see the activity itself, or for staff)
+     *
+     * @deprecated since Moodle 4.0 MDL-72656 - please do not use this function any more.
+     * @param cm_info $mod
+     * @param array $displayoptions
+     * @return string
+     */
+    public function course_section_cm_availability(cm_info $mod, $displayoptions = []) {
+        $format = course_get_format($mod->course);
+
+        $availabilityclass = $format->get_output_classname('content\\cm\\availability');
+        $availability = new $availabilityclass(
+            $format,
+            $mod->get_section_info(),
+            $mod,
+        );
+        $renderer = $format->get_renderer($this->page);
+        return $renderer->render($availability);
+    }
+
+    /**
      * Renders HTML to display one course module for display within a section.
      *
      * This function calls:
