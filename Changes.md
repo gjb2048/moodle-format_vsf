@@ -11,6 +11,7 @@ Version 4.4.0.2
    the 'restrictedmoduleicon' icon.
 4. Set the 'restrictedmoduleicon' to have a font size of 50px.
 5. Set '.format-vsf .activity .vsf-icon img.modpic', '.original' and '.custom' to an opacity of 0.5 when restricted.
+6. Show folder modules on the page when inline.
 
 Version 4.4.0.1
 -----------------------------
