@@ -49,6 +49,7 @@ class MoodleQuickForm_vsfcolourpopup extends HTML_QuickForm_text implements temp
      * @var string
      */
     public $_helpbutton = '';
+
     /**
      * Hidden label?
      *
@@ -56,6 +57,9 @@ class MoodleQuickForm_vsfcolourpopup extends HTML_QuickForm_text implements temp
      */
     public $_hiddenLabel = false;
 
+    /**
+     * Constructor.
+     */
     public function __construct($elementName = null, $elementLabel = null, $attributes = null, $options = null) {
         parent::__construct($elementName, $elementLabel, $attributes);
         /* Pretend we are a 'static' MoodleForm element so that we get the core_form/element-static template where
@@ -64,17 +68,27 @@ class MoodleQuickForm_vsfcolourpopup extends HTML_QuickForm_text implements temp
         $this->setType('static');
     }
 
-    /*
-     * PHP4 constructor method, kept for compatibility
+    /**
+     * PHP4 constructor method, kept for compatibility.
      */
     public function MoodleQuickForm_gfcolourpopup($elementName = null, $elementLabel = null, $attributes = null, $options = null) {
         self::__construct($elementName, $elementLabel, $attributes, $options);
     }
 
+    /**
+     * Set hidden label.
+     *
+     * @param bool $hiddenLabel
+     */
     public function setHiddenLabel($hiddenLabel) {
         $this->_hiddenLabel = $hiddenLabel;
     }
 
+    /**
+     * To HTML.
+     *
+     * @return string Markup.
+     */
     public function toHtml() {
         global $CFG, $COURSE, $USER, $PAGE, $OUTPUT;
         $id = $this->getAttribute('id');
@@ -148,6 +162,11 @@ class MoodleQuickForm_vsfcolourpopup extends HTML_QuickForm_text implements temp
         }
     }
 
+    /**
+     * Export for template.
+     *
+     * @return array Context.
+     */
     public function export_for_template(renderer_base $output) {
         $context = $this->export_for_template_base($output);
         $context['html'] = $this->toHtml();

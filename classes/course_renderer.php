@@ -176,7 +176,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             );
         }
         if ($mod->modname == 'folder') {
-            $folder = $DB->get_record('folder', array('id' => $mod->instance), 'display', MUST_EXIST);
+            $folder = $DB->get_record('folder', ['id' => $mod->instance], 'display', MUST_EXIST);
             if ($folder->display == FOLDER_DISPLAY_INLINE) {
                 $modcontent = $mod->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
                 $output .= html_writer::tag(
@@ -362,7 +362,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
+    public function course_section_cm_name(cm_info $mod, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page() || !$mod->url) {
             // Nothing to be displayed to the user.
             return '';
