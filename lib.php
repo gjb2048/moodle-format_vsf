@@ -814,7 +814,7 @@ function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forced
 
     // Make sure the filearea is one of those used by the plugin.
     if ($filearea !== 'modicon' && strpos($filearea, 'modicon_') !== 0) {
-        return false;
+        send_file_not_found();
     }
 
     // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
@@ -833,7 +833,7 @@ function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forced
     $fs = get_file_storage();
     $file = $fs->get_file($context->id, 'format_vsf', $filearea, $itemid, $filepath, $filename);
     if (!$file) {
-        return false; // The file does not exist.
+        send_file_not_found(); // The file does not exist.
     }
 
     send_stored_file($file, null, 0, $forcedownload, $options);
