@@ -801,24 +801,28 @@ function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forced
         send_file_not_found();
     }
 
-    // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
-    $itemid = array_shift($args); // The first item in the $args array.
-    // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
-    // user really does have access to the file in question.
-    // Extract the filename / filepath from the $args array.
-    $filename = array_pop($args); // The last item in the $args array.
-    if (!$args) {
-        $filepath = '/';
+    if ($context->contextlevel == CONTEXT_MODULE) {
+        // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
+        $itemid = array_shift($args); // The first item in the $args array.
+        // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
+        // user really does have access to the file in question.
+        // Extract the filename / filepath from the $args array.
+        $filename = array_pop($args); // The last item in the $args array.
+        if (!$args) {
+            $filepath = '/';
+        } else {
+            $filepath = '/' . implode('/', $args) . '/';
+        }
+
+        // Retrieve the file from the Files API.
+        $fs = get_file_storage();
+        $file = $fs->get_file($context->id, 'format_vsf', $filearea, $itemid, $filepath, $filename);
+        if (!$file) {
+            send_file_not_found(); // The file does not exist.
+        }
+
+        send_stored_file($file, null, 0, $forcedownload, $options);
     } else {
-        $filepath = '/' . implode('/', $args) . '/';
+        send_file_not_found();
     }
-
-    // Retrieve the file from the Files API.
-    $fs = get_file_storage();
-    $file = $fs->get_file($context->id, 'format_vsf', $filearea, $itemid, $filepath, $filename);
-    if (!$file) {
-        send_file_not_found(); // The file does not exist.
-    }
-
-    send_stored_file($file, null, 0, $forcedownload, $options);
 }
