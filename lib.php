@@ -796,8 +796,6 @@ function format_vsf_extend_navigation_course(navigation_node $parentnode, stdCla
  * @return boolean
  */
 function format_vsf_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
-    require_login($course, false, $cm);
-
     // Make sure the filearea is one of those used by the plugin.
     if ($filearea !== 'modicon' && strpos($filearea, 'modicon_') !== 0) {
         send_file_not_found();
