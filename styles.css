@@ -384,8 +384,8 @@
     width: 90px;
 }
 
-.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.original,
-.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.custom {
+.format-vsf .activity .vsfavmod.vsfactivity .vsf-icon img.modpic.original,
+.format-vsf .activity .vsfavmod.vsfactivity .vsf-icon img.modpic.custom {
     opacity: 0.5;
 }
 
