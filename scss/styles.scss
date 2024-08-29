@@ -356,9 +356,11 @@
     width: 90px;
 }
 
-.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.original,
-.format-vsf .activity .conditionalhidden.vsfactivity .vsf-icon img.modpic.custom {
-    opacity: 0.5;
+.format-vsf .activity .vsfavmod.vsfactivity .vsf-icon img.modpic {
+    &.original,
+    &.custom {
+        opacity: 0.5;
+    }
 }
 
 .format-vsf .vsf-activity-wrapper {
