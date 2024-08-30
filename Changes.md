@@ -1,5 +1,8 @@
 Version Information
 ===================
+Version 4.0.0.6
+-----------------------------
+1. Bug: students can see the restricted image.
 
 Version 4.0.0.5
 -----------------------------
