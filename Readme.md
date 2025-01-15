@@ -4,10 +4,10 @@ Progress section format.
 
 Required version of Moodle
 ==========================
-This version works with Moodle 4.3 version 2023100900.00 (Build: 20231009) and above within the MOODLE_403_STABLE branch until the
+This version works with Moodle 4.5 version 2024100700.00 (Build: 20241007) and above within the MOODLE_405_STABLE branch until the
 next release.
 
-Please ensure that your hardware and software complies with 'Requirements' in '[Installing Moodle](https://docs.moodle.org/403/en/Installing_Moodle)'.
+Please ensure that your hardware and software complies with 'Requirements' in '[Installing Moodle](https://docs.moodle.org/405/en/Installing_Moodle)'.
 
 Installation
 ============

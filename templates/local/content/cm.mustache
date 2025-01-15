@@ -23,9 +23,11 @@
     Different from core only in respect of adding an 'indent'.
 }}
 {{#editing}}
-    <div class="divider divider-plus bulk-hidden" data-action="insert-before-{{activityname}}">
-        {{> core_course/activitychooserbuttonactivity}}
-    </div>
+    {{< core_courseformat/local/content/divider}}
+        {{$content}}
+            {{#activitychooserbutton}}{{> core_course/activitychooserbutton}}{{/activitychooserbutton}}
+        {{/content}}
+    {{/ core_courseformat/local/content/divider}}
 {{/editing}}
 <div class="activity-item focus-control{{#modstealth}} hiddenactivity{{/modstealth}}{{!
         }}{{#modhiddenfromstudents}} hiddenactivity{{/modhiddenfromstudents}}{{!
