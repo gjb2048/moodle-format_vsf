@@ -1,6 +1,10 @@
 Version Information
 ===================
 
+Version 4.5.0.2
+-----------------------------
+1. Sub-section support.
+
 Version 4.5.0.1
 -----------------------------
 1. Supports Moodle 4.5.

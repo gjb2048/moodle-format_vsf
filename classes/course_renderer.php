@@ -543,10 +543,10 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_label_item_vsf($course, &$completioninfo,
+    public function course_section_cm_list_label_subsection_item_vsf($course, &$completioninfo,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
         $output = '';
-        if ($modulehtml = $this->course_section_label_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+        if ($modulehtml = $this->course_section_label_subsection_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
             $output .= html_writer::tag('li', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
@@ -568,7 +568,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_label_cm_vsf($course, &$completioninfo,
+    public function course_section_label_subsection_cm_vsf($course, &$completioninfo,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page()) {
             return '';
@@ -630,8 +630,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
 
-                if ($mod->modname == 'label') {
-                    if ($modulehtml = $this->course_section_cm_list_label_item_vsf($course,
+                if (($mod->modname == 'label') || ($mod->modname == 'subsection')) {
+                    if ($modulehtml = $this->course_section_cm_list_label_subsection_item_vsf($course,
                         $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
