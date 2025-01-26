@@ -376,5 +376,9 @@
     max-width: 100%;
 }
 
+.format-vsf .activity.subsection > .activity-item {
+    border-style: none;
+}
+
 @import "progress_chart";
 @import "extra";

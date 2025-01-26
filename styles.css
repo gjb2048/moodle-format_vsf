@@ -405,6 +405,10 @@
     max-width: 100%;
 }
 
+.format-vsf .activity.subsection > .activity-item {
+    border-style: none;
+}
+
 .format-vsf .progress-chart-container {
     height: 70px;
     width: 70px;
