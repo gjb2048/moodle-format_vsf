@@ -378,6 +378,12 @@
 
 .format-vsf .activity.subsection > .activity-item {
     border-style: none;
+
+    .sectionname {
+        background-color: #eee;
+        border-radius: 0.7rem;
+        padding: 0.25rem;
+    }
 }
 
 @import "progress_chart";

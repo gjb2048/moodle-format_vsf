@@ -409,6 +409,12 @@
     border-style: none;
 }
 
+.format-vsf .activity.subsection > .activity-item .sectionname {
+    background-color: #eee;
+    border-radius: 0.7rem;
+    padding: 0.25rem;
+}
+
 .format-vsf .progress-chart-container {
     height: 70px;
     width: 70px;
