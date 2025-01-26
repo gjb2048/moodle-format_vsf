@@ -537,16 +537,18 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * {@link core_course_renderer::course_section_cm()}
      *
      * @param stdClass $course
+     * @param section_info $section relative section number or section object
      * @param completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_label_subsection_item_vsf($course, &$completioninfo,
+    public function course_section_cm_list_label_subsection_item_vsf($course, $section, &$completioninfo,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
         $output = '';
-        if ($modulehtml = $this->course_section_label_subsection_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+        if ($modulehtml = $this->course_section_label_subsection_cm_vsf(
+                $course, $section, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
             $output .= html_writer::tag('li', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
@@ -562,13 +564,14 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
      *
      * @param stdClass $course
+     * @param section_info $section relative section number or section object
      * @param completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_label_subsection_cm_vsf($course, &$completioninfo,
+    public function course_section_label_subsection_cm_vsf($course, $section, &$completioninfo,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
         if (!$mod->is_visible_on_course_page()) {
             return '';
@@ -580,12 +583,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if ($sectionreturn) {
             $format->set_section_number($sectionreturn);
         }
-        $sectionnum = $format->get_sectionnum();
-        if (is_null($sectionnum)) {
-            // Section 0.
-            $sectionnum = 0;
-        }
-        $section = $modinfo->get_section_info($sectionnum);
 
         $cmclass = $format->get_output_classname('content\\cm');
         $cm = new $cmclass($format, $section, $mod, $displayoptions);
@@ -632,7 +629,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
                 if (($mod->modname == 'label') || ($mod->modname == 'subsection')) {
                     if ($modulehtml = $this->course_section_cm_list_label_subsection_item_vsf($course,
-                        $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                        $section, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
                 } else if (($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf($course,

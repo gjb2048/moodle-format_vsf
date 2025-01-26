@@ -97,7 +97,7 @@ trait format_renderer_migration_toolbox {
         // This would imply our idea of icon customisations doesn't work.
         // I don't know about the possible side effects, but made the choice to also include section 0.
         if (($this->moduleview) && (!$this->editing)) {
-            return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, 0);
+            return $this->courserenderer->course_section_cm_list_vsf($this->course, $section, $section->sectionnum);
         }
         $cmlistclass = $this->courseformat->get_output_classname('content\\section\\cmlist');
         return $this->render(new $cmlistclass($this->courseformat, $section));
