@@ -549,7 +549,7 @@ class renderer extends section_renderer {
      *
      * @return string HTML to output.
      */
-    protected function display_section($section, $onsectionpage, $sectionreturn = null,
+    public function display_section($section, $onsectionpage, $sectionreturn = null,
         $checkchart = true) {
 
         $displaysectioncontext = [
@@ -569,7 +569,7 @@ class renderer extends section_renderer {
         if (empty($this->course)) {
             $this->course = $this->courseformat->get_course();
         }
-        if (!$onsectionpage) { // Horizontal column layout.
+        if ((!$onsectionpage) && ($section->component != 'mod_subsection')) { // Horizontal column layout.
             $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
         }
 

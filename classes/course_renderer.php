@@ -538,17 +538,26 @@ class format_vsf_course_renderer extends \core_course_renderer {
      *
      * @param stdClass $course
      * @param section_info $section relative section number or section object
-     * @param completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_label_subsection_item_vsf($course, $section, &$completioninfo,
+    public function course_section_cm_list_label_subsection_item_vsf($course, $section,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
+        if (!$mod->is_visible_on_course_page()) {
+            return '';
+        }
+
         $output = '';
-        if ($modulehtml = $this->course_section_label_subsection_cm_vsf(
-                $course, $section, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+        $modulehtml = '';
+        if ($mod->modname == 'subsection') {
+            $modulehtml = $this->course_section_subsection_cm_vsf($course, $section, $mod);
+        } else {
+            $modulehtml = $this->course_section_label_cm_vsf(
+                $course, $section, $mod, $sectionreturn, $displayoptions);
+        }
+        if (!empty($modulehtml)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
             $output .= html_writer::tag('li', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
@@ -565,18 +574,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
      *
      * @param stdClass $course
      * @param section_info $section relative section number or section object
-     * @param completion_info $completioninfo
      * @param cm_info $mod
      * @param int|null $sectionreturn
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_label_subsection_cm_vsf($course, $section, &$completioninfo,
+    public function course_section_label_cm_vsf($course, $section,
             cm_info $mod, $sectionreturn, $displayoptions = []) {
-        if (!$mod->is_visible_on_course_page()) {
-            return '';
-        }
-
         $format = course_get_format($course);
         $modinfo = $format->get_modinfo();
         // Output renderers works only with real section_info objects.
@@ -590,6 +594,30 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $renderer = $format->get_renderer($this->page);
         $data = $cm->export_for_template($renderer);
         return $this->output->render_from_template('core_courseformat/local/content/cm', $data);
+    }
+
+    /**
+     * Renders HTML to display one subsection module in a course section.
+     *
+     * This includes link, content, availability, completion info and additional information
+     * that module type wants to display (i.e. number of unread forum posts)
+     *
+     * @deprecated since 4.0 MDL-72656 - use core_course output components instead.
+     *
+     * @param stdClass $course
+     * @param section_info $section relative section number or section object
+     * @param cm_info $mod
+     * @return string
+     */
+    public function course_section_subsection_cm_vsf($course, $section, cm_info $mod) {
+        $sectionid = $mod->customdata['sectionid']; // We want an error / exception if sectionid is null.
+
+        $format = course_get_format($course);
+        $modinfo = $format->get_modinfo();
+        $subsectionsection = $modinfo->get_section_info_by_id($sectionid);
+        $renderer = $format->get_renderer($this->page);
+
+        return $renderer->display_section($subsectionsection, false);
     }
 
     /**
@@ -629,7 +657,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
                 if (($mod->modname == 'label') || ($mod->modname == 'subsection')) {
                     if ($modulehtml = $this->course_section_cm_list_label_subsection_item_vsf($course,
-                        $section, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
+                        $section, $mod, $sectionreturn, $displayoptions)) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
                 } else if (($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf($course,
