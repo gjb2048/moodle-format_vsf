@@ -4,6 +4,7 @@ Version Information
 Version 4.5.0.2
 -----------------------------
 1. Sub-section support.
+2. Fix 'ARIA attribute for accessibility: aria-labelledby'.
 
 Version 4.5.0.1
 -----------------------------
