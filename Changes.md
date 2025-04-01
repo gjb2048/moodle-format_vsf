@@ -3,6 +3,7 @@ Version Information
 Version 4.0.0.6
 -----------------------------
 1. Bug: students can see the restricted image.
+2. Fix 'ARIA attribute for accessibility: aria-labelledby'.
 
 Version 4.0.0.5
 -----------------------------
