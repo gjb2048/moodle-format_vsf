@@ -90,15 +90,35 @@ module.exports = function(grunt) { // jshint ignore:line
         }
     });
 
-    // CSS indent.
-    tasks.indent = function() {
-        var indent = require('indent.js');
+    // CSS clean.
+    tasks.clean_css = function() {
+        var CleanCSS = require('clean-css');
 
         var data = grunt.file.read('./styles.css', { encoding: 'utf8' });
-        var indented = indent.css(data, {
-            tabString: "    "
-        });
-        grunt.file.write('./styles.css', indented, { encoding: 'utf8' });
+        var options = {
+            format: {
+                breaks: {
+                    afterAtRule: true,
+                    afterBlockBegins: true,
+                    afterBlockEnds: true,
+                    afterComment: true,
+                    afterProperty: true,
+                    afterRuleBegins: true,
+                    afterRuleEnds: 2,
+                    beforeBlockEnds: true,
+                    betweenSelectors: true
+                },
+                spaces: {
+                    aroundSelectorRelation: true,
+                    beforeBlockBegins: true,
+                    beforeValue: true
+                },
+                indentBy: 4,
+                semicolonAfterLastProperty: true
+            }
+        };
+        var cleaned = new CleanCSS(options).minify(data);
+        grunt.file.write('./styles.css', cleaned.styles + '\n', { encoding: 'utf8' });
     }
 
     // Register tasks.
@@ -107,10 +127,10 @@ module.exports = function(grunt) { // jshint ignore:line
     grunt.registerTask("decache", ["exec:decache"]);
 
     // Register JS tasks.
-    grunt.registerTask('indent', 'For indenting', tasks.indent);
+    grunt.registerTask('clean_css', 'For indenting etc.', tasks.clean_css);
 
     // Register CSS taks.
-    grunt.registerTask('css', ['sass', 'indent']);
+    grunt.registerTask('css', ['sass', 'clean_css']);
 
     // Register the default task.
     grunt.registerTask('default', ['css']);

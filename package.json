@@ -15,10 +15,10 @@
     "url": "https://github.com/gjb2048/moodle-format_vsf/issues"
   },
   "devDependencies": {
+    "clean-css": "5.3.3",
     "grunt": "^1.6.1",
     "grunt-exec": "3.0.0",
     "grunt-sass": "4.1.0",
-    "indent.js": "0.3.5",
     "sass": "^1.98.0",
     "semver": "7.6.0"
   },
