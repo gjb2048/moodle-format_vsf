@@ -90,17 +90,14 @@ module.exports = function(grunt) { // jshint ignore:line
         }
     });
 
-    // CSS beautify.
-    tasks.beautifycss = function() {
-        var beautify = require('js-beautify').css;
+    // CSS indent.
+    tasks.indent = function() {
+        var indent = require('indent.js');
 
-        //grunt.log.writeln("beautifycss");
         var data = grunt.file.read('./styles.css', { encoding: 'utf8' });
-        var indented = beautify(data, {
-            indent_size: 4,
-            end_with_newline: true
+        var indented = indent.css(data, {
+            tabString: "    "
         });
-        //grunt.log.writeln(indented);
         grunt.file.write('./styles.css', indented, { encoding: 'utf8' });
     }
 
@@ -110,10 +107,10 @@ module.exports = function(grunt) { // jshint ignore:line
     grunt.registerTask("decache", ["exec:decache"]);
 
     // Register JS tasks.
-    grunt.registerTask('beautifycss', 'For indenting', tasks.beautifycss);
+    grunt.registerTask('indent', 'For indenting', tasks.indent);
 
     // Register CSS taks.
-    grunt.registerTask('css', ['sass', 'beautifycss']);
+    grunt.registerTask('css', ['sass', 'indent']);
 
     // Register the default task.
     grunt.registerTask('default', ['css']);
