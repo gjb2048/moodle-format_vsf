@@ -5,6 +5,7 @@ Version 4.5.0.2
 -----------------------------
 1. Sub-section support.
 2. Fix 'ARIA attribute for accessibility: aria-labelledby'.
+3. Improve / simplify SCSS -> CSS generation to remove out of date NPM packages.
 
 Version 4.5.0.1
 -----------------------------
