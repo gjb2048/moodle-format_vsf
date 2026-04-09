@@ -79,7 +79,7 @@ class overview implements renderable, templatable {
         switch ($this->context->contextlevel) {
             case CONTEXT_MODULE:
                 // Only display for this mod type.
-                list($course, $cm) = get_course_and_cm_from_cmid($this->context->instanceid);
+                [$course, $cm] = get_course_and_cm_from_cmid($this->context->instanceid);
                 $rs->limitmod = $cm->modfullname;
                 $icons = cache::dump_modicons($cm);
                 $this->mark_active($icons);
@@ -115,7 +115,7 @@ class overview implements renderable, templatable {
      */
     protected function mark_active(&$icons) {
         $first = true;
-        array_walk($icons, function(&$item) use (&$first) {
+        array_walk($icons, function (&$item) use (&$first) {
             $item->active = $first;
             $first = false;
         });
@@ -127,7 +127,7 @@ class overview implements renderable, templatable {
      * @param array $icons
      */
     protected function mark_class(&$icons) {
-        array_walk($icons, function(&$item) {
+        array_walk($icons, function (&$item) {
             $item->cssclass = ($item->level === 'default' ? 'original' : 'custom');
         });
     }
@@ -148,11 +148,16 @@ class overview implements renderable, templatable {
         $file = reset($files);
         $modicon = null;
         if ($file) {
-            $modicon = new stdClass;
+            $modicon = new stdClass();
             $modicon->type = 'image';
-            $modicon->url = \moodle_url::make_pluginfile_url($file->get_contextid(),
-                    $file->get_component(), $file->get_filearea(), $file->get_itemid(),
-                    $file->get_filepath(), $file->get_filename());
+            $modicon->url = \moodle_url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename()
+            );
             switch ($this->context->contextlevel) {
                 case CONTEXT_MODULE:
                     $modicon->level = 'instance';
@@ -167,5 +172,4 @@ class overview implements renderable, templatable {
         }
         return $modicon;
     }
-
 }

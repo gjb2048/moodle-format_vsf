@@ -63,5 +63,4 @@ class caticonsform extends \moodleform {
         $rs = util::store_modules_form_elements($this, $this->context);
         return $rs;
     }
-
 }

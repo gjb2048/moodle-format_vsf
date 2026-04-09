@@ -38,7 +38,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_format_vsf_plugin extends restore_format_plugin {
-
     /**
      * Holds data objects that refer to custom module instance icons.
      *
@@ -72,11 +71,14 @@ class restore_format_vsf_plugin extends restore_format_plugin {
         // Since this method is executed before the restore we can do some pre-checks here.
         // In case of merging backup into existing course find the current number of sections.
         $target = $this->step->get_task()->get_target();
-        if (($target == backup::TARGET_CURRENT_ADDING || $target == backup::TARGET_EXISTING_ADDING) &&
-                $this->need_restore_numsections()) {
+        if (
+            ($target == backup::TARGET_CURRENT_ADDING || $target == backup::TARGET_EXISTING_ADDING) &&
+                $this->need_restore_numsections()
+        ) {
             $maxsection = $DB->get_field_sql(
-                    'SELECT max(section) FROM {course_sections} WHERE course = ?',
-                    [$this->step->get_task()->get_courseid()]);
+                'SELECT max(section) FROM {course_sections} WHERE course = ?',
+                [$this->step->get_task()->get_courseid()]
+            );
             $this->originalnumsections = (int) $maxsection;
         }
 
@@ -94,8 +96,8 @@ class restore_format_vsf_plugin extends restore_format_plugin {
 
         // Dummy path element is needed in order for after_restore_course() to be called.
         return array_merge(
-                [new restore_path_element('dummy_course', $this->get_pathfor('/dummycourse'))],
-                $paths
+            [new restore_path_element('dummy_course', $this->get_pathfor('/dummycourse'))],
+            $paths
         );
     }
 
@@ -105,7 +107,6 @@ class restore_format_vsf_plugin extends restore_format_plugin {
      * @return void
      */
     public function process_dummy_course() {
-
     }
 
     /**
@@ -149,8 +150,10 @@ class restore_format_vsf_plugin extends restore_format_plugin {
             if ($this->step->get_task()->get_setting_value($key . '_included')) {
                 $sectionnum = (int) $section->title;
                 if ($sectionnum > $numsections && $sectionnum > $this->originalnumsections) {
-                    $DB->execute("UPDATE {course_sections} SET visible = 0 WHERE course = ? AND section = ?",
-                        [$this->step->get_task()->get_courseid(), $sectionnum]);
+                    $DB->execute(
+                        "UPDATE {course_sections} SET visible = 0 WHERE course = ? AND section = ?",
+                        [$this->step->get_task()->get_courseid(), $sectionnum]
+                    );
                 }
             }
         }
@@ -227,5 +230,4 @@ class restore_format_vsf_plugin extends restore_format_plugin {
             $this->add_related_files('format_vsf', $filearea, $mappingitemname, $filesctxid, $itemid);
         }
     }
-
 }

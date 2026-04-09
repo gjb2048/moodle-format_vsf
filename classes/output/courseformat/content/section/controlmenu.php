@@ -39,7 +39,6 @@ use context_course;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class controlmenu extends controlmenu_base {
-
     /**
      * Generate the edit control items of a section.
      *

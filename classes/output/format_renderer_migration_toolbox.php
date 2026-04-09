@@ -30,7 +30,6 @@ namespace format_vsf\output;
  * Migration trait.
  */
 trait format_renderer_migration_toolbox {
-
     /**
      * Generate a summary of the activities in a section
      *

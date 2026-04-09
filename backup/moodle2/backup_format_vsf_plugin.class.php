@@ -38,7 +38,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_format_vsf_plugin extends backup_format_plugin {
-
     /**
      * Define course plugin structure for format_vsf
      *
@@ -131,5 +130,4 @@ class backup_format_vsf_plugin extends backup_format_plugin {
 
         return $plugin;
     }
-
 }

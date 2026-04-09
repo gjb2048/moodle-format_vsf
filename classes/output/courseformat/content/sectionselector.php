@@ -37,7 +37,6 @@ use stdClass;
  * Represents the section selector.
  */
 class sectionselector extends \core_courseformat\output\local\content\sectionselector {
-
     /** @var stdClass the calculated data to prevent calculations when rendered several times */
     private $data = null;
 

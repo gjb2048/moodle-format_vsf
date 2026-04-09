@@ -75,5 +75,4 @@ class editform extends \moodleform {
         $rs = util::store_cm_form_elements($this, $this->coursemodule);
         return $rs;
     }
-
 }

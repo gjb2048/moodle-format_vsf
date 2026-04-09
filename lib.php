@@ -24,7 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot. '/course/format/lib.php');
+require_once($CFG->dirroot . '/course/format/lib.php');
 
 /**
  * Format class.
@@ -81,8 +81,11 @@ class format_vsf extends core_courseformat\base {
     public function get_section_name($section) {
         $section = $this->get_section($section);
         if ((string)$section->name !== '') {
-            return format_string($section->name, true,
-                    ['context' => context_course::instance($this->courseid)]);
+            return format_string(
+                $section->name,
+                true,
+                ['context' => context_course::instance($this->courseid)]
+            );
         } else if ($section->section == 0) {
             return get_string('section0name', 'format_vsf');
         } else {
@@ -156,7 +159,7 @@ class format_vsf extends core_courseformat\base {
             } else {
                 // Must return a url or the local\state\section.php will fail for
                 // JS core_courseformat_get_state call.
-                $url->set_anchor('section-'.$sectionno);
+                $url->set_anchor('section-' . $sectionno);
             }
         }
         return $url;
@@ -187,8 +190,10 @@ class format_vsf extends core_courseformat\base {
         // If section is specified in course/view.php, make sure it is expanded in navigation.
         if ($navigation->includesectionnum === false) {
             $selectedsection = optional_param('section', null, PARAM_INT);
-            if ($selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
-                    $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)) {
+            if (
+                $selectedsection !== null && (!defined('AJAX_SCRIPT') || AJAX_SCRIPT == '0') &&
+                    $PAGE->url->compare(new moodle_url('/course/view.php'), URL_MATCH_BASE)
+            ) {
                 $navigation->includesectionnum = $selectedsection;
             }
         }
@@ -361,8 +366,8 @@ class format_vsf extends core_courseformat\base {
                     'element_type' => 'select',
                     'element_attributes' => [
                         [
-                            1 => new lang_string('none'),                    // None.
-                            2 => new lang_string('barchart', 'format_vsf'),  // Bar.
+                            1 => new lang_string('none'), // None.
+                            2 => new lang_string('barchart', 'format_vsf'), // Bar.
                             3 => new lang_string('donutchart', 'format_vsf'), // Donut.
                         ],
                     ],
@@ -470,8 +475,8 @@ class format_vsf extends core_courseformat\base {
                     'help_component' => 'format_vsf',
                     'element_type' => 'select',
                     'element_attributes' => [
-                        [1 => new lang_string('one', 'format_vsf'),   // Default.
-                              2 => new lang_string('two', 'format_vsf')],   // Two.
+                        [1 => new lang_string('one', 'format_vsf'), // Default.
+                              2 => new lang_string('two', 'format_vsf')], // Two.
                     ],
                 ],
             ];
@@ -532,8 +537,11 @@ class format_vsf extends core_courseformat\base {
      */
     public function create_edit_form_elements(&$mform, $forsection = false) {
         global $CFG, $COURSE;
-        MoodleQuickForm::registerElementType('vsfcolourpopup', "$CFG->dirroot/course/format/vsf/js/vsf_colourpopup.php",
-                'MoodleQuickForm_vsfcolourpopup');
+        MoodleQuickForm::registerElementType(
+            'vsfcolourpopup',
+            "$CFG->dirroot/course/format/vsf/js/vsf_colourpopup.php",
+            'MoodleQuickForm_vsfcolourpopup'
+        );
         $elements = parent::create_edit_form_elements($mform, $forsection);
 
         if (!$forsection && (empty($COURSE->id) || $COURSE->id == SITEID)) {
@@ -645,8 +653,13 @@ class format_vsf extends core_courseformat\base {
      * @param null|lang_string|string $editlabel
      * @return \core\output\inplace_editable
      */
-    public function inplace_editable_render_section_name($section, $linkifneeded = true,
-                                                         $editable = null, $edithint = null, $editlabel = null) {
+    public function inplace_editable_render_section_name(
+        $section,
+        $linkifneeded = true,
+        $editable = null,
+        $edithint = null,
+        $editlabel = null
+    ) {
         if (empty($edithint)) {
             $edithint = new lang_string('editsectionname', 'format_vsf');
         }
@@ -748,7 +761,9 @@ function format_vsf_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
         $section = $DB->get_record_sql(
             'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            [$itemid, 'vsf'], MUST_EXIST);
+            [$itemid, 'vsf'],
+            MUST_EXIST
+        );
         return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
     }
 }

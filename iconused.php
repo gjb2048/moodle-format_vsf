@@ -31,7 +31,7 @@ $view = required_param('v', PARAM_ALPHA);
 switch ($view) {
     case 'cm':
         $context = \context_module::instance($id);
-        list($course, $cm) = get_course_and_cm_from_cmid($id);
+        [$course, $cm] = get_course_and_cm_from_cmid($id);
         break;
     case 'course':
         $context = \context_course::instance($id);
@@ -58,6 +58,8 @@ $widget = new format_vsf\local\modicon\overview($context);
 
 echo $renderer->header();
 echo $renderer->heading(get_string('modicon:usage', 'format_vsf'));
-echo $renderer->render_from_template('format_vsf/local/modicons/overview',
-        $widget->export_for_template($renderer));
+echo $renderer->render_from_template(
+    'format_vsf/local/modicons/overview',
+    $widget->export_for_template($renderer)
+);
 echo $renderer->footer();

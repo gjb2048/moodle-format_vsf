@@ -37,7 +37,6 @@ namespace format_vsf\output\courseformat\content\section;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cmlist extends \core_courseformat\output\local\content\section\cmlist {
-
     /**
      * Get the name of the template to use for this templatable.
      *

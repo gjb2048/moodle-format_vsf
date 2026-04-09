@@ -78,5 +78,4 @@ class iconsform extends \moodleform {
         $rs = util::store_modules_form_elements($this, $this->context, $this->course);
         return $rs;
     }
-
 }

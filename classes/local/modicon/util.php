@@ -39,7 +39,6 @@ namespace format_vsf\local\modicon;
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class util {
-
     /**
      * @var string
      */
@@ -138,7 +137,7 @@ class util {
      * @param \stdClass $cm
      */
     public static function add_cm_form_elements(&$mform, $cm) {
-        list($course, $cminfo) = get_course_and_cm_from_cmid($cm, $cm->modname);
+        [$course, $cminfo] = get_course_and_cm_from_cmid($cm, $cm->modname);
         $maxbytes = 10 * 1024 * 1024;
         $options = [
             'subdirs' => 0,
@@ -194,8 +193,14 @@ class util {
      */
     public static function prepare_draftarea($filearea, $itemid, $context, &$draftitemid) {
         $options = ['subdirs' => 0, 'maxfiles' => static::MAX_FILES];
-        file_prepare_draft_area($draftitemid, $context->id, self::COMPONENT,
-                $filearea, $itemid, $options);
+        file_prepare_draft_area(
+            $draftitemid,
+            $context->id,
+            self::COMPONENT,
+            $filearea,
+            $itemid,
+            $options
+        );
         return $draftitemid;
     }
 
@@ -211,8 +216,15 @@ class util {
     public static function store_draft_files($filearea, $itemid, $context, $draftitemid) {
         $options = ['subdirs' => 0, 'maxfiles' => static::MAX_FILES];
         $text = null;
-        return file_save_draft_area_files($draftitemid, $context->id, self::COMPONENT,
-                $filearea, $itemid, $options, $text);
+        return file_save_draft_area_files(
+            $draftitemid,
+            $context->id,
+            self::COMPONENT,
+            $filearea,
+            $itemid,
+            $options,
+            $text
+        );
     }
 
     /**
@@ -266,17 +278,16 @@ class util {
         $options = static::get_options($context);
         $sort = '';
         $files = $fs->get_area_files(
-                $options['context']->id,
-                static::COMPONENT,
-                $filearea,
-                $identifier,
-                $sort,
-                (bool)$options['subdirs']
-            );
+            $options['context']->id,
+            static::COMPONENT,
+            $filearea,
+            $identifier,
+            $sort,
+            (bool)$options['subdirs']
+        );
         if (count($files) === 0) {
             return null;
         }
         return reset($files);
     }
-
 }

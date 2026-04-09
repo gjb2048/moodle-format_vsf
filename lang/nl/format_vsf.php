@@ -26,19 +26,19 @@
 // phpcs:disable moodle.Files.LangFilesOrdering
 
 $string['addsections'] = 'Voeg sectie toe';
+$string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
 $string['currentsection'] = 'Deze sectie';
+$string['deletesection'] = 'Verwijder sectie';
 $string['editsection'] = 'Bewerk sectie';
 $string['editsectionname'] = 'Bewerk sectienaam';
-$string['deletesection'] = 'Verwijder sectie';
+$string['hidefromothers'] = 'Verberg sectie';
 $string['newsectionname'] = 'Nieuwe naam voor sectie {$a}';
-$string['sectionname'] = 'Sectie';
-$string['pluginname'] = 'Voortgang Sectie Format';
-$string['section0name'] = 'Algemeen';
 $string['page-course-view-vsf'] = 'Elke cursus hoofdpagina in de voortgang sectie format';
 $string['page-course-view-vsf-x'] = 'Elke cursus pagina in de voortgang sectie format';
-$string['hidefromothers'] = 'Verberg sectie';
+$string['pluginname'] = 'Voortgang Sectie Format';
+$string['section0name'] = 'Algemeen';
+$string['sectionname'] = 'Sectie';
 $string['showfromothers'] = 'Toon sectie';
-$string['completionpercentagechart'] = 'Sectie {$a->sectionno} voltooid percentage tabel';
 // These are 'sections' as they are only shown in 'section' based structures.
 $string['markedthissection'] = 'Deze sectie is gemarkeerd als de huidige sectie';
 $string['markthissection'] = 'markeren deze sectie als huidige sectie';
@@ -153,4 +153,3 @@ $string['moduledescriptiontooltip'] = 'Module beschrijving tonen als tooltip';
 $string['moduledescriptiontooltip_help'] = 'De beschrijving van een activiteit wordt als tooltip/confirm box getoond wanneer er overheen wordt bewogen met de muis/op wordt geklikt.';
 $string['defaultmoduledescriptiontooltip'] = 'Standaard beschrijving tonen als tooltip';
 $string['defaultmoduledescriptiontooltip_desc'] = 'Standaardinstelling voor het tonen van de beschrijving van een activiteit wanneer er met de muis overheen wordt bewogen/op wordt geklikt.';
-

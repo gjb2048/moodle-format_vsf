@@ -27,7 +27,6 @@
  * Renderer class.
  */
 class format_vsf_course_renderer extends \core_course_renderer {
-
     /** @var bool the module view button */
     protected $moduleviewbutton = false;
     /** @var bool the module description tooltip */
@@ -91,7 +90,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             }
         }
 
-        list($linkclasses, $textclasses) = $this->course_section_cm_classes_vsf($mod);
+        [$linkclasses, $textclasses] = $this->course_section_cm_classes_vsf($mod);
 
         $avcontent = '';
         if ($vsfavailability) {
@@ -140,7 +139,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $groupinglabel = $mod->get_grouping_label($textclasses);
         }
 
-        $output = $content.$avcontent.$groupinglabel;
+        $output = $content . $avcontent . $groupinglabel;
         if (!empty($output)) {
             $output = html_writer::tag('div', $output, $classes);
         }
@@ -152,8 +151,11 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $output = html_writer::link($mod->url, $output, $attributes);
             }
             if ((!empty($availabilityinfo)) && (!empty($availabilityinfo['button']))) {
-                $output .= html_writer::tag('div', $availabilityinfo['button'],
-                        ['class' => 'mdl-align vsf-button-bottom vsf-aib']);
+                $output .= html_writer::tag(
+                    'div',
+                    $availabilityinfo['button'],
+                    ['class' => 'mdl-align vsf-button-bottom vsf-aib']
+                );
             }
         }
 
@@ -167,7 +169,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $modpicendpos = mb_strpos($modcontent, '>', $modpicstartpos) + 1;
                 $modpicimg = mb_substr($modcontent, $modpicstartpos, ($modpicendpos - $modpicstartpos));
                 $modpicwrapper = html_writer::link($mod->url, $modpicimg);
-                $modcontent = mb_substr($modcontent, 0, $modpicstartpos).$modpicwrapper.mb_substr($modcontent, $modpicendpos);
+                $modcontent = mb_substr($modcontent, 0, $modpicstartpos) . $modpicwrapper . mb_substr($modcontent, $modpicendpos);
             }
             $output .= html_writer::tag(
                 'div',
@@ -189,7 +191,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         if (!empty($endcontent)) {
             if (empty($output)) {
-                $output .= html_writer::tag('span', '').$endcontent;
+                $output .= html_writer::tag('span', '') . $endcontent;
             } else {
                 $output .= $endcontent;
             }
@@ -236,16 +238,18 @@ class format_vsf_course_renderer extends \core_course_renderer {
                     if (($currenttag == 'strong') || ($currenttag == '/strong')) {
                         $processed['text'] .= '\'';
                     } else if (($currenttag == 'li') && (($lasttag == '/li'))) {
-                        $processed['text'] .= PHP_EOL.get_string('and', 'availability').PHP_EOL;
+                        $processed['text'] .= PHP_EOL . get_string('and', 'availability') . PHP_EOL;
                     } else if (($currenttag == 'li') && ($lasttag == 'ul')) {
                         $processed['text'] .= PHP_EOL;
-                    } else if ((core_text::substr($currenttag, 0, 2) == 'a ') &&
-                        (strpos($currenttag, 'coursepayment') !== false)) {
+                    } else if (
+                        (core_text::substr($currenttag, 0, 2) == 'a ') &&
+                        (strpos($currenttag, 'coursepayment') !== false)
+                    ) {
                         $inpaymentlinktag = true;
-                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                        $processed['button'] .= $starttag . $currenttag . $endtag;
                     } else if (($currenttag == '/a') && ($inpaymentlinktag)) {
                         $inpaymentlinktag = false;
-                        $processed['button'] .= $starttag.$currenttag.$endtag;
+                        $processed['button'] .= $starttag . $currenttag . $endtag;
                     }
                     $intag = false;
                     $lasttag = $currenttag;
@@ -295,7 +299,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         $indentclasses = 'mod-indent';
         if (!empty($mod->indent)) {
-            $indentclasses .= ' mod-indent-'.$mod->indent;
+            $indentclasses .= ' mod-indent-' . $mod->indent;
             if ($mod->indent > 15) {
                 $indentclasses .= ' mod-indent-huge';
             }
@@ -368,7 +372,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
             return '';
         }
 
-        list($linkclasses, $textclasses) = $this->course_section_cm_classes($mod);
+        [$linkclasses, $textclasses] = $this->course_section_cm_classes($mod);
         $groupinglabel = $mod->get_grouping_label($textclasses);
 
         // Render element that allows to edit activity name inline.
@@ -406,7 +410,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
                to see availability info (i.e. "Available from ...") */
             if (!empty($mod->availableinfo)) {
                 $formattedinfo = \core_availability\info::format_info(
-                        $mod->availableinfo, $mod->get_course());
+                    $mod->availableinfo,
+                    $mod->get_course()
+                );
                 $output = $this->vsf_availability_info($formattedinfo, 'isrestricted');
             }
             return $output;
@@ -438,7 +444,9 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $fullinfo = $ci->get_full_information();
                 if ($fullinfo) {
                     $formattedinfo = \core_availability\info::format_info(
-                        $fullinfo, $mod->get_course());
+                        $fullinfo,
+                        $mod->get_course()
+                    );
                     $output .= $this->vsf_availability_info($formattedinfo, $hidinfoclass);
                 }
             }
@@ -460,10 +468,8 @@ class format_vsf_course_renderer extends \core_course_renderer {
 
         if (in_array('ishidden', $additionalclasses)) {
             $data['ishidden'] = 1;
-
         } else if (in_array('isstealth', $additionalclasses)) {
             $data['isstealth'] = 1;
-
         } else if (in_array('isrestricted', $additionalclasses)) {
             $data['isrestricted'] = 1;
 
@@ -510,19 +516,24 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_item_vsf($course, &$completioninfo, cm_info $mod,
-            $sectionreturn, $displayoptions = []) {
+    public function course_section_cm_list_item_vsf(
+        $course,
+        &$completioninfo,
+        cm_info $mod,
+        $sectionreturn,
+        $displayoptions = []
+    ) {
         $output = '';
         static $modulelayout = [
             1 => 'col-sm-12 col-md-6 col-lg-4 col-xl-2',
             2 => 'col-md-12 col-lg-6 col-xl-4',
         ];
-        $ourclasses = ' '.$modulelayout[$course->layoutcolumns].' moduleviewgap';
+        $ourclasses = ' ' . $modulelayout[$course->layoutcolumns] . ' moduleviewgap';
         if ($this->moduleviewbutton) {
             $ourclasses .= ' moduleviewgapwithbutton';
         }
         if ($modulehtml = $this->course_section_cm_vsf($course, $completioninfo, $mod, $sectionreturn, $displayoptions)) {
-            $modclasses = 'activity '.$mod->modname.' modtype_'.$mod->modname.' '.trim($mod->extraclasses.$ourclasses);
+            $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . trim($mod->extraclasses . $ourclasses);
             $output .= html_writer::tag('div', $modulehtml, ['class' => $modclasses, 'id' => 'module-' . $mod->id]);
         }
         return $output;
@@ -543,8 +554,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return String
      */
-    public function course_section_cm_list_label_subsection_item_vsf($course, $section,
-            cm_info $mod, $sectionreturn, $displayoptions = []) {
+    public function course_section_cm_list_label_subsection_item_vsf(
+        $course,
+        $section,
+        cm_info $mod,
+        $sectionreturn,
+        $displayoptions = []
+    ) {
         if (!$mod->is_visible_on_course_page()) {
             return '';
         }
@@ -555,7 +571,12 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $modulehtml = $this->course_section_subsection_cm_vsf($course, $section, $mod);
         } else {
             $modulehtml = $this->course_section_label_cm_vsf(
-                $course, $section, $mod, $sectionreturn, $displayoptions);
+                $course,
+                $section,
+                $mod,
+                $sectionreturn,
+                $displayoptions
+            );
         }
         if (!empty($modulehtml)) {
             $modclasses = 'activity ' . $mod->modname . ' modtype_' . $mod->modname . ' ' . $mod->extraclasses;
@@ -579,8 +600,13 @@ class format_vsf_course_renderer extends \core_course_renderer {
      * @param array $displayoptions
      * @return string
      */
-    public function course_section_label_cm_vsf($course, $section,
-            cm_info $mod, $sectionreturn, $displayoptions = []) {
+    public function course_section_label_cm_vsf(
+        $course,
+        $section,
+        cm_info $mod,
+        $sectionreturn,
+        $displayoptions = []
+    ) {
         $format = course_get_format($course);
         $modinfo = $format->get_modinfo();
         // Output renderers works only with real section_info objects.
@@ -656,12 +682,26 @@ class format_vsf_course_renderer extends \core_course_renderer {
                 $mod = $modinfo->cms[$modnumber];
 
                 if (($mod->modname == 'label') || ($mod->modname == 'subsection')) {
-                    if ($modulehtml = $this->course_section_cm_list_label_subsection_item_vsf($course,
-                        $section, $mod, $sectionreturn, $displayoptions)) {
+                    if (
+                        $modulehtml = $this->course_section_cm_list_label_subsection_item_vsf(
+                            $course,
+                            $section,
+                            $mod,
+                            $sectionreturn,
+                            $displayoptions
+                        )
+                    ) {
                         $aftermoduleshtml[$modnumber] = $modulehtml;
                     }
-                } else if (($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf($course,
-                    $completioninfo, $mod, $sectionreturn, $displayoptions))) {
+                } else if (
+                    ($mod->indent < 1) && ($modulehtml = $this->course_section_cm_list_item_vsf(
+                        $course,
+                        $completioninfo,
+                        $mod,
+                        $sectionreturn,
+                        $displayoptions
+                    ))
+                ) {
                     $moduleshtml[$modnumber] = $modulehtml;
                 }
             }
@@ -671,7 +711,6 @@ class format_vsf_course_renderer extends \core_course_renderer {
         if (!empty($moduleshtml)) {
             $sectionoutput .= html_writer::start_tag('li', ['class' => 'row no-gutters justify-content-center']);
             foreach ($moduleshtml as $modnumber => $modulehtml) {
-
                 $sectionoutput .= $modulehtml;
             }
             $sectionoutput .= html_writer::end_tag('li');
@@ -700,15 +739,19 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $this->load_tooltip_data($attributes, $mod);
         if ($mod->uservisible) {
             // Return button.
-            return html_writer::tag('span',
-                    html_writer::link($mod->url, $mod->get_formatted_name(), $attributes),
-                    ['class' => 'mdl-align px-1 w-100']);
+            return html_writer::tag(
+                'span',
+                html_writer::link($mod->url, $mod->get_formatted_name(), $attributes),
+                ['class' => 'mdl-align px-1 w-100']
+            );
         } else {
             // Return as disabled text only button.
             $this->merge_attributes($attributes, ['class' => 'disabled']);
-            return html_writer::tag('span',
-                    html_writer::tag('span', $mod->get_formatted_name(), $attributes),
-                    ['class' => 'mdl-align px-1 w-100']);
+            return html_writer::tag(
+                'span',
+                html_writer::tag('span', $mod->get_formatted_name(), $attributes),
+                ['class' => 'mdl-align px-1 w-100']
+            );
         }
     }
 
@@ -728,10 +771,16 @@ class format_vsf_course_renderer extends \core_course_renderer {
         } else {
             $class .= ' custom';
         }
-        $image = html_writer::img($srcurl, $mod->get_formatted_name(),
-                ['class' => $class, 'alt' => '']);
-        return html_writer::tag('span',
-                $image, ['class' => 'mdl-align vsf-icon']);
+        $image = html_writer::img(
+            $srcurl,
+            $mod->get_formatted_name(),
+            ['class' => $class, 'alt' => '']
+        );
+        return html_writer::tag(
+            'span',
+            $image,
+            ['class' => 'mdl-align vsf-icon']
+        );
     }
 
     /**
@@ -782,5 +831,4 @@ class format_vsf_course_renderer extends \core_course_renderer {
             $this->merge_attributes($attributes, ['data-vsf-tooltip' => 1, 'title' => $content]);
         }
     }
-
 }

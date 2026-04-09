@@ -36,7 +36,6 @@ namespace format_vsf\output\courseformat\content;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cm extends \core_courseformat\output\local\content\cm {
-
     /**
      * Get the name of the template to use for this templatable.
      *

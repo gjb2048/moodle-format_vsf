@@ -35,7 +35,7 @@ use course_get_url;
 use html_writer;
 use section_info;
 
-require_once($CFG->dirroot.'/course/format/lib.php'); // For course_get_format.
+require_once($CFG->dirroot . '/course/format/lib.php'); // For course_get_format.
 
 /**
  * The renderer.
@@ -167,7 +167,7 @@ class renderer extends section_renderer {
      * @return string HTML to output.
      */
     protected function start_columns_section_list() {
-        $classes = 'sections '.$this->get_row_class(); // Horizontal.
+        $classes = 'sections ' . $this->get_row_class(); // Horizontal.
 
         return html_writer::start_tag('ul', ['class' => $classes]);
     }
@@ -196,53 +196,61 @@ class renderer extends section_renderer {
         $coursestylescontext = [];
 
         if ($this->course->restrictedmoduleiconcolour[0] != '#') {
-            $coursestylescontext['restrictedmoduleiconcolour'] = '#'.$this->course->restrictedmoduleiconcolour;
+            $coursestylescontext['restrictedmoduleiconcolour'] = '#' . $this->course->restrictedmoduleiconcolour;
         } else {
             $coursestylescontext['restrictedmoduleiconcolour'] = $this->course->restrictedmoduleiconcolour;
         }
 
         if ($this->course->continuebackgroundcolour[0] != '#') {
-            $coursestylescontext['continuebackgroundcolour'] = '#'.$this->course->continuebackgroundcolour;
+            $coursestylescontext['continuebackgroundcolour'] = '#' . $this->course->continuebackgroundcolour;
         } else {
             $coursestylescontext['continuebackgroundcolour'] = $this->course->continuebackgroundcolour;
         }
 
         if ($this->course->continuetextcolour[0] != '#') {
-            $coursestylescontext['continuetextcolour'] = '#'.$this->course->continuetextcolour;
+            $coursestylescontext['continuetextcolour'] = '#' . $this->course->continuetextcolour;
         } else {
             $coursestylescontext['continuetextcolour'] = $this->course->continuetextcolour;
         }
 
         if ($this->course->sectionheaderbackgroundcolour[0] != '#') {
-            $coursestylescontext['sectionheaderbackgroundcolour'] = '#'.$this->course->sectionheaderbackgroundcolour;
+            $coursestylescontext['sectionheaderbackgroundcolour'] = '#' . $this->course->sectionheaderbackgroundcolour;
         } else {
             $coursestylescontext['sectionheaderbackgroundcolour'] = $this->course->sectionheaderbackgroundcolour;
         }
 
         // Site wide configuration Site Administration -> Plugins -> Course formats -> Collapsed Topics.
-        $coursestylescontext['vsfborderradiustl'] = clean_param(get_config('format_vsf',
-                'defaultsectionheaderborderradiustl'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiustr'] = clean_param(get_config('format_vsf',
-                'defaultsectionheaderborderradiustr'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiusbr'] = clean_param(get_config('format_vsf',
-                'defaultsectionheaderborderradiusbr'), PARAM_TEXT);
-        $coursestylescontext['vsfborderradiusbl'] = clean_param(get_config('format_vsf',
-                'defaultsectionheaderborderradiusbl'), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiustl'] = clean_param(get_config(
+            'format_vsf',
+            'defaultsectionheaderborderradiustl'
+        ), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiustr'] = clean_param(get_config(
+            'format_vsf',
+            'defaultsectionheaderborderradiustr'
+        ), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbr'] = clean_param(get_config(
+            'format_vsf',
+            'defaultsectionheaderborderradiusbr'
+        ), PARAM_TEXT);
+        $coursestylescontext['vsfborderradiusbl'] = clean_param(get_config(
+            'format_vsf',
+            'defaultsectionheaderborderradiusbl'
+        ), PARAM_TEXT);
 
         if ($this->course->sectionheaderforegroundcolour[0] != '#') {
-            $coursestylescontext['sectionheaderforegroundcolour'] = '#'.$this->course->sectionheaderforegroundcolour;
+            $coursestylescontext['sectionheaderforegroundcolour'] = '#' . $this->course->sectionheaderforegroundcolour;
         } else {
             $coursestylescontext['sectionheaderforegroundcolour'] = $this->course->sectionheaderforegroundcolour;
         }
 
         if ($this->course->sectionheaderbackgroundhvrcolour[0] != '#') {
-            $coursestylescontext['sectionheaderbackgroundhvrcolour'] = '#'.$this->course->sectionheaderbackgroundhvrcolour;
+            $coursestylescontext['sectionheaderbackgroundhvrcolour'] = '#' . $this->course->sectionheaderbackgroundhvrcolour;
         } else {
             $coursestylescontext['sectionheaderbackgroundhvrcolour'] = $this->course->sectionheaderbackgroundhvrcolour;
         }
 
         if ($this->course->sectionheaderforegroundhvrcolour[0] != '#') {
-            $coursestylescontext['sectionheaderforegroundhvrcolour'] = '#'.$this->course->sectionheaderforegroundhvrcolour;
+            $coursestylescontext['sectionheaderforegroundhvrcolour'] = '#' . $this->course->sectionheaderforegroundhvrcolour;
         } else {
             $coursestylescontext['sectionheaderforegroundhvrcolour'] = $this->course->sectionheaderforegroundhvrcolour;
         }
@@ -259,8 +267,14 @@ class renderer extends section_renderer {
      * @param type $barchart States if the bar chart is shown.
      * @param type $thissection Section.
      */
-    protected function section_header_helper($title, $titleattributes, $activitysummary,
-            $barchart, $thissection, $vsfsectionname = true) {
+    protected function section_header_helper(
+        $title,
+        $titleattributes,
+        $activitysummary,
+        $barchart,
+        $thissection,
+        $vsfsectionname = true
+    ) {
         $sectionheaderhelpercontext = [
             'editing' => $this->editing,
             'hasbarchart' => $barchart,
@@ -275,8 +289,12 @@ class renderer extends section_renderer {
             $sectionheaderhelpercontext['activitysummary'] = $activitysummary;
         }
 
-        $sectionheaderhelpercontext['heading'] = $this->output->heading($title, 3, $titleattributes,
-                "sectionid-{$thissection->id}-title");
+        $sectionheaderhelpercontext['heading'] = $this->output->heading(
+            $title,
+            3,
+            $titleattributes,
+            "sectionid-{$thissection->id}-title"
+        );
 
         if ($this->courseformat->show_editor()) {
             if (empty($this->hidecontrols)) {
@@ -324,8 +342,12 @@ class renderer extends section_renderer {
     protected function stealth_section($section, $course) {
         $stealthsectioncontext = [
             'cscml' => $this->course_section_cmlist($section),
-            'heading' => $this->output->heading(get_string('orphanedactivitiesinsectionno', '', $section->section),
-                3, 'sectionname vsf-sectionname', "sectionid-{$section->id}-title"),
+            'heading' => $this->output->heading(
+                get_string('orphanedactivitiesinsectionno', '', $section->section),
+                3,
+                'sectionname vsf-sectionname',
+                "sectionid-{$section->id}-title"
+            ),
             'sectionid' => $section->id,
             'sectionno' => $section->section,
         ];
@@ -377,37 +399,45 @@ class renderer extends section_renderer {
             $this->course = $this->courseformat->get_course();
         }
         if ($this->course->layoutcolumns > 1) { // Horizontal column layout.
-            $classattrextra .= ' '.$this->get_column_class($this->course->layoutcolumns);
+            $classattrextra .= ' ' . $this->get_column_class($this->course->layoutcolumns);
         }
         $sectionsummarycontext['classattrextra'] = $classattrextra;
 
         if ($section->uservisible) {
-            $title = html_writer::tag('a', $title,
-                ['href' => course_get_url($this->course, $section->section), 'class' => $linkclasses]);
+            $title = html_writer::tag(
+                'a',
+                $title,
+                ['href' => course_get_url($this->course, $section->section), 'class' => $linkclasses]
+            );
         }
         $activitysummary = $this->section_activity_summary($section, $this->course, null);
         $barchart = ((!empty($activitysummary)) && ($this->course->chart == 2)); // Chart '2' is 'Bar chart'.
 
-        $sectionsummarycontext['heading'] = $this->section_header_helper($title, 'section-title',
-                $activitysummary, $barchart, $section);
+        $sectionsummarycontext['heading'] = $this->section_header_helper(
+            $title,
+            'section-title',
+            $activitysummary,
+            $barchart,
+            $section
+        );
 
         if ($this->course->chart == 3) { // Donut chart.
             if (!empty($activitysummary)) {
                 $sectionsummarycontext['chartas'] = true;
                 $sectionsummarycontext['activitysummary'] = $activitysummary;
-                switch($this->course->layoutcolumns) {
+                switch ($this->course->layoutcolumns) {
                     case 1:
                         $sectionsummarycontext['chartcol1'] = true;
-                    break;
+                        break;
                     case 2:
                         $sectionsummarycontext['chartcol2'] = true;
-                    break;
+                        break;
                     case 3:
                         $sectionsummarycontext['chartcol3'] = true;
-                    break;
+                        break;
                     case 4:
                         $sectionsummarycontext['chartcol4'] = true;
-                    break;
+                        break;
                 }
             }
         }
@@ -458,8 +488,10 @@ class renderer extends section_renderer {
                     if ($cancomplete && $completioninfo->is_enabled($thismod) != COMPLETION_TRACKING_NONE) {
                         $total++;
                         $completiondata = $completioninfo->get_data($thismod, true);
-                        if ($completiondata->completionstate == COMPLETION_COMPLETE ||
-                            $completiondata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        if (
+                            $completiondata->completionstate == COMPLETION_COMPLETE ||
+                            $completiondata->completionstate == COMPLETION_COMPLETE_PASS
+                        ) {
                             $complete++;
                         }
                     }
@@ -475,11 +507,15 @@ class renderer extends section_renderer {
             if (!$this->moduleview) {
                 // Output section activities summary.
                 $this->sectioncompletionmarkup[$section->section] = html_writer::start_tag(
-                    'div', ['class' => 'section-summary-activities mdl-right']);
+                    'div',
+                    ['class' => 'section-summary-activities mdl-right']
+                );
                 foreach ($sectionmods as $mod) {
                     $this->sectioncompletionmarkup[$section->section] .= html_writer::start_tag(
-                        'span', ['class' => 'activity-count']);
-                    $this->sectioncompletionmarkup[$section->section] .= $mod['name'].': '.$mod['count'];
+                        'span',
+                        ['class' => 'activity-count']
+                    );
+                    $this->sectioncompletionmarkup[$section->section] .= $mod['name'] . ': ' . $mod['count'];
                     $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('span');
                 }
                 $this->sectioncompletionmarkup[$section->section] .= html_writer::end_tag('div');
@@ -493,7 +529,7 @@ class renderer extends section_renderer {
                 $data = new \stdClass();
                 if ($this->course->chart == 2) { // Chart '2' is 'Bar chart'.
                     $data->percentagevalue = $this->sectioncompletionpercentage[$section->section];
-                    $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section].'%';
+                    $data->percentlabelvalue = $this->sectioncompletionpercentage[$section->section] . '%';
                     $this->sectioncompletionmarkup[$section->section] .=
                             $this->render_from_template('format_vsf/progress-bar', $data);
                 } else if ($this->course->chart == 3) { // Chart '3' is 'Donut chart'.
@@ -549,8 +585,12 @@ class renderer extends section_renderer {
      *
      * @return string HTML to output.
      */
-    public function display_section($section, $onsectionpage, $sectionreturn = null,
-        $checkchart = true) {
+    public function display_section(
+        $section,
+        $onsectionpage,
+        $sectionreturn = null,
+        $checkchart = true
+    ) {
 
         $displaysectioncontext = [
             'sectionavailabilty' => $this->section_availability($section),
@@ -570,7 +610,7 @@ class renderer extends section_renderer {
             $this->course = $this->courseformat->get_course();
         }
         if ((!$onsectionpage) && ($section->component != 'mod_subsection')) { // Horizontal column layout.
-            $sectionstyle .= ' '.$this->get_column_class($this->course->layoutcolumns);
+            $sectionstyle .= ' ' . $this->get_column_class($this->course->layoutcolumns);
         }
 
         $displaysectioncontext['sectionstyle'] = $sectionstyle;
@@ -584,8 +624,13 @@ class renderer extends section_renderer {
             // Hidden section name so don't output anything bar the header name.
             $headerclasses .= ' accesshide';
             $displaysectioncontext['header'] = $this->section_header_helper(
-                    $this->section_title_without_link($section, $this->course),
-                $headerclasses, '', false, $section, false);
+                $this->section_title_without_link($section, $this->course),
+                $headerclasses,
+                '',
+                false,
+                $section,
+                false
+            );
         } else {
             // When not on a section page, we display the section titles.
             $activitysummary = $this->section_activity_summary($section, $this->course, null);
@@ -593,8 +638,12 @@ class renderer extends section_renderer {
             $barchart = ((!empty($activitysummary)) && (!$this->editing) && ($this->course->chart == 2));
 
             $displaysectioncontext['header'] = $this->section_header_helper(
-                    $this->section_title_without_link($section, $this->course),
-                $headerclasses, $activitysummary, $barchart, $section);
+                $this->section_title_without_link($section, $this->course),
+                $headerclasses,
+                $activitysummary,
+                $barchart,
+                $section
+            );
         }
 
         if (($checkchart) && (!$this->editing) && ($this->course->chart == 3)) { // Donut chart.
@@ -604,19 +653,19 @@ class renderer extends section_renderer {
             if (!empty($activitysummary)) {
                 $displaysectioncontext['chartas'] = true;
                 $displaysectioncontext['activitysummary'] = $activitysummary;
-                switch($this->course->layoutcolumns) {
+                switch ($this->course->layoutcolumns) {
                     case 1:
                         $displaysectioncontext['chartcol1'] = true;
-                    break;
+                        break;
                     case 2:
                         $displaysectioncontext['chartcol2'] = true;
-                    break;
+                        break;
                     case 3:
                         $displaysectioncontext['chartcol3'] = true;
-                    break;
+                        break;
                     case 4:
                         $displaysectioncontext['chartcol4'] = true;
-                    break;
+                        break;
                 }
             }
         }
@@ -657,8 +706,14 @@ class renderer extends section_renderer {
      */
     protected function format_summary_text($section) {
         $context = context_course::instance($section->course);
-        $summarytext = file_rewrite_pluginfile_urls($section->summary, 'pluginfile.php',
-            $context->id, 'course', 'section', $section->id);
+        $summarytext = file_rewrite_pluginfile_urls(
+            $section->summary,
+            'pluginfile.php',
+            $context->id,
+            'course',
+            'section',
+            $section->id
+        );
 
         if (!empty($summarytext)) {
             $options = new \stdClass();
@@ -686,8 +741,12 @@ class renderer extends section_renderer {
         // Can we view the section in question?
         if (!($thissection = $modinfo->get_section_info($displaysection))) {
             // This section doesn't exist.
-            throw new \moodle_exception('unknowncoursesection', 'error', '',
-                get_string('unknowncoursesection', 'error', $course->fullname));
+            throw new \moodle_exception(
+                'unknowncoursesection',
+                'error',
+                '',
+                get_string('unknowncoursesection', 'error', $course->fullname)
+            );
         }
 
         if (!$thissection->uservisible) {

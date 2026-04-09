@@ -39,7 +39,6 @@ namespace format_vsf\local\modicon;
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cache {
-
     /**
      * @var string
      */
@@ -152,9 +151,14 @@ class cache {
      * @return moodle_url
      */
     protected static function get_url_from_file($file) {
-        return \moodle_url::make_pluginfile_url($file->get_contextid(),
-                $file->get_component(), $file->get_filearea(), $file->get_itemid(),
-                $file->get_filepath(), $file->get_filename());
+        return \moodle_url::make_pluginfile_url(
+            $file->get_contextid(),
+            $file->get_component(),
+            $file->get_filearea(),
+            $file->get_itemid(),
+            $file->get_filepath(),
+            $file->get_filename()
+        );
     }
 
     /**
@@ -259,5 +263,4 @@ class cache {
 
         return $icons;
     }
-
 }

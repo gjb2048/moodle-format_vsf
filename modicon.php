@@ -35,7 +35,7 @@ if ($sr !== null) {
 }
 $url = new moodle_url('/course/format/vsf/modicon.php', $params);
 
-list($course, $cm) = get_course_and_cm_from_cmid($cmid);
+[$course, $cm] = get_course_and_cm_from_cmid($cmid);
 require_login($course, false, $cm);
 
 $PAGE->set_url($url);
@@ -66,9 +66,15 @@ if ($form->is_cancelled()) {
 $oneupurl = new moodle_url($CFG->wwwroot . '/course/format/vsf/courseicons.php', ['id' => $course->id]);
 
 echo $renderer->header();
-echo $renderer->heading(get_string('modicon:image:coursemodule:head', 'format_vsf',
-        $cm->name));
-echo html_writer::div(get_string('modicon:image:coursemodule:desc', 'format_vsf',
-        $oneupurl->out(false)), 'alert alert-info');
+echo $renderer->heading(get_string(
+    'modicon:image:coursemodule:head',
+    'format_vsf',
+    $cm->name
+));
+echo html_writer::div(get_string(
+    'modicon:image:coursemodule:desc',
+    'format_vsf',
+    $oneupurl->out(false)
+), 'alert alert-info');
 echo $form->render();
 echo $renderer->footer();

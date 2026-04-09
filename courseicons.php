@@ -63,9 +63,15 @@ $oneupurl = new moodle_url($CFG->wwwroot . '/course/format/vsf/coursecaticons.ph
 ]);
 
 echo $renderer->header();
-echo $renderer->heading(get_string('modicon:image:course:head', 'format_vsf',
-        $course->fullname));
-echo html_writer::div(get_string('modicon:image:course:desc', 'format_vsf',
-        $oneupurl->out(false)), 'alert alert-info');
+echo $renderer->heading(get_string(
+    'modicon:image:course:head',
+    'format_vsf',
+    $course->fullname
+));
+echo html_writer::div(get_string(
+    'modicon:image:course:desc',
+    'format_vsf',
+    $oneupurl->out(false)
+), 'alert alert-info');
 echo $form->render();
 echo $renderer->footer();

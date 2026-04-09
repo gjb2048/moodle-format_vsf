@@ -26,7 +26,6 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-
     // Continue button.
     // Show continue button - 1 = no, 2 = yes.
     $name = 'format_vsf/defaultcontinueshow';
@@ -34,8 +33,8 @@ if ($ADMIN->fulltree) {
     $description = get_string('defaultcontinueshow_desc', 'format_vsf');
     $default = 2;
     $choices = [
-        1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes'),   // Yes.
+        1 => new lang_string('no'), // No.
+        2 => new lang_string('yes'), // Yes.
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
@@ -46,8 +45,8 @@ if ($ADMIN->fulltree) {
     $description = get_string('defaultchart_desc', 'format_vsf');
     $default = 3;
     $choices = [
-        1 => new lang_string('none'),                    // None.
-        2 => new lang_string('barchart', 'format_vsf'),  // Bar.
+        1 => new lang_string('none'), // None.
+        2 => new lang_string('barchart', 'format_vsf'), // Bar.
         3 => new lang_string('donutchart', 'format_vsf'), // Donut.
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
@@ -59,8 +58,8 @@ if ($ADMIN->fulltree) {
     $description = get_string('defaultmoduleviewbutton_desc', 'format_vsf');
     $default = 2;
     $choices = [
-        1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes'),   // Yes.
+        1 => new lang_string('no'), // No.
+        2 => new lang_string('yes'), // Yes.
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
@@ -71,8 +70,8 @@ if ($ADMIN->fulltree) {
     $description = get_string('defaultmoduledescriptiontooltip_desc', 'format_vsf');
     $default = 2;
     $choices = [
-        1 => new lang_string('no'),   // No.
-        2 => new lang_string('yes'),   // Yes.
+        1 => new lang_string('no'), // No.
+        2 => new lang_string('yes'), // Yes.
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
@@ -225,17 +224,22 @@ if ($ADMIN->fulltree) {
     // Inject link to global/system level custom icons.
     $dparams = ['return' => (new moodle_url($CFG->wwwroot . '/admin/settings.php', ['section' => 'formatsettingvsf']))->out(false)];
     $settings->add(new admin_setting_description(
-            'format_vsf/modiconlinks',
-            get_string('modicons', 'format_vsf'),
-            \html_writer::link(
-                    new moodle_url($CFG->wwwroot . '/course/format/vsf/modicons.php', $dparams),
-                    get_string('modicons:global', 'format_vsf'))
-        ));
-
+        'format_vsf/modiconlinks',
+        get_string('modicons', 'format_vsf'),
+        \html_writer::link(
+            new moodle_url($CFG->wwwroot . '/course/format/vsf/modicons.php', $dparams),
+            get_string('modicons:global', 'format_vsf')
+        )
+    ));
 }
 
 $category = new admin_category('vsfcategory', get_string('pluginname', 'format_vsf'));
 $ADMIN->add('root', $category);
-$category->add('vsfcategory', new admin_externalpage('vsfmodicons', get_string('modicons', 'format_vsf'),
-        new moodle_url($CFG->wwwroot . '/course/format/vsf/modicons.php',
-                ['return' => (new moodle_url($CFG->wwwroot . '/admin/search.php'))->out(false)])));
+$category->add('vsfcategory', new admin_externalpage(
+    'vsfmodicons',
+    get_string('modicons', 'format_vsf'),
+    new moodle_url(
+        $CFG->wwwroot . '/course/format/vsf/modicons.php',
+        ['return' => (new moodle_url($CFG->wwwroot . '/admin/search.php'))->out(false)]
+    )
+));
