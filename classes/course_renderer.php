@@ -611,7 +611,7 @@ class format_vsf_course_renderer extends \core_course_renderer {
         $modinfo = $format->get_modinfo();
         // Output renderers works only with real section_info objects.
         if ($sectionreturn) {
-            $format->set_section_number($sectionreturn);
+            $format->set_sectionnum($sectionreturn);
         }
 
         $cmclass = $format->get_output_classname('content\\cm');
