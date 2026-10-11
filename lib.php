@@ -777,6 +777,11 @@ class format_vsf extends core_courseformat\base {
     public function get_required_jsfiles(): array {
         return [];
     }
+
+    #[\Override]
+    public static function uses_linear_navigation(): bool {
+        return true;
+    }
 }
 
 /**

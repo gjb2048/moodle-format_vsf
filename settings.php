@@ -51,6 +51,21 @@ if ($ADMIN->fulltree) {
     ];
     $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
 
+    // Linear navigation.
+    $label = new \core\lang_string('linearnavigationsettings', 'core_courseformat');
+    $description = new \core\lang_string('linearnavigationsettings_help', 'core_courseformat');
+    $options = [
+        0 => get_string('no'),
+        1 => get_string('yes'),
+    ];
+    $settings->add(new admin_setting_configselect(
+        'format_vsf/enablelinearnav',
+        new lang_string('linearnavigationsettings', 'core_courseformat'),
+        new lang_string('linearnavigationsettings_help', 'core_courseformat'),
+        1,
+        $options,
+    ));
+
     // Module view button.
     // 1 = no, 2 = yes.
     $name = 'format_vsf/defaultmoduleviewbutton';

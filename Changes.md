@@ -6,6 +6,7 @@ Version 503.0.1
 1. Fix module restricted icon not over module.
 2. Section navigation $data now has protected visibility.
 3. Dark mode support for sections and their module icons.
+4. Add linear navigation control - [MDL-87302](https://tracker.moodle.org/browse/MDL-87302) - needed?  Added for comparison at the moment.
 
 Version 4.5.0.3
 -----------------------------
