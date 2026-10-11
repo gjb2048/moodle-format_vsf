@@ -67,9 +67,8 @@
     padding-top: 0;
 }
 
-.format-vsf .course-content .single-section,
-.format-vsf .course-content ul.sections li.section {
-    background-color: #fff;
+[data-bs-theme=dark] img.modpic {
+    filter: invert(1);
 }
 
 .format-vsf .course-content .single-section {
