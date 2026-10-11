@@ -296,6 +296,10 @@
     display: inline;
 }
 
+.format-vsf .moduleview .activity {
+    position: relative;
+}
+
 .format-vsf .moduleviewgap {
     margin-bottom: 10px;
 }

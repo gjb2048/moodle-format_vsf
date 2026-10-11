@@ -3,6 +3,8 @@ Version Information
 
 Version 503.0.1
 -----------------------------
+1. Fix module restricted icon not over module.
+2. Section navigation $data now has protected visibility.
 
 Version 4.5.0.3
 -----------------------------
