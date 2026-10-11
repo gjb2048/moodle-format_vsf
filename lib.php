@@ -361,6 +361,11 @@ class format_vsf extends core_courseformat\base {
             ];
         }
         if ($foreditform && !isset($courseformatoptions['numsections']['label'])) {
+            $helpoption = get_config('format_vsf', 'displayhelp');
+            if (empty($helpoption)) {
+                $helpoption = 'help';
+            }
+
             if (empty($defaults)) {
                 /* Note: Because 'admin_setting_configcolourpicker' in 'settings.php' needs to use a prefixing '#'
                          this needs to be stripped off here if it's there for the format's specific colour picker. */
@@ -390,7 +395,7 @@ class format_vsf extends core_courseformat\base {
                             COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi'),
                         ],
                     ],
-                    'help' => 'coursedisplay',
+                    $helpoption => 'coursedisplay',
                     'help_component' => 'moodle',
                 ],
                 'chart' => [
@@ -403,7 +408,7 @@ class format_vsf extends core_courseformat\base {
                             3 => new lang_string('donutchart', 'format_vsf'), // Donut.
                         ],
                     ],
-                    'help' => 'chart',
+                    $helpoption => 'chart',
                     'help_component' => 'format_vsf',
                 ],
                 'moduleviewbutton' => [
@@ -415,7 +420,7 @@ class format_vsf extends core_courseformat\base {
                             2 => new lang_string('yes'),
                         ],
                     ],
-                    'help' => 'moduleviewbutton',
+                    $helpoption => 'moduleviewbutton',
                     'help_component' => 'format_vsf',
                 ],
                 'moduledescriptiontooltip' => [
@@ -427,18 +432,18 @@ class format_vsf extends core_courseformat\base {
                             2 => new lang_string('yes'),
                         ],
                     ],
-                    'help' => 'moduledescriptiontooltip',
+                    $helpoption => 'moduledescriptiontooltip',
                     'help_component' => 'format_vsf',
                 ],
                 'restrictedmoduleicon' => [
                     'label' => new lang_string('restrictedmoduleicon', 'format_vsf'),
                     'element_type' => 'text',
-                    'help' => 'restrictedmoduleicon',
+                    $helpoption => 'restrictedmoduleicon',
                     'help_component' => 'format_vsf',
                 ],
                 'restrictedmoduleiconcolour' => [
                     'label' => new lang_string('restrictedmoduleiconcolour', 'format_vsf'),
-                    'help' => 'restrictedmoduleiconcolour',
+                    $helpoption => 'restrictedmoduleiconcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -448,7 +453,7 @@ class format_vsf extends core_courseformat\base {
                 // Continue button.
                 'continuebackgroundcolour' => [
                     'label' => new lang_string('continuebackgroundcolour', 'format_vsf'),
-                    'help' => 'continuebackgroundcolour',
+                    $helpoption => 'continuebackgroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -457,7 +462,7 @@ class format_vsf extends core_courseformat\base {
                 ],
                 'continuetextcolour' => [
                     'label' => new lang_string('continuetextcolour', 'format_vsf'),
-                    'help' => 'continuetextcolour',
+                    $helpoption => 'continuetextcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -467,7 +472,7 @@ class format_vsf extends core_courseformat\base {
                 // Section header.
                 'sectionheaderbackgroundcolour' => [
                     'label' => new lang_string('sectionheaderbackgroundcolour', 'format_vsf'),
-                    'help' => 'sectionheaderbackgroundcolour',
+                    $helpoption => 'sectionheaderbackgroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -476,7 +481,7 @@ class format_vsf extends core_courseformat\base {
                 ],
                 'sectionheaderbackgroundhvrcolour' => [
                     'label' => new lang_string('sectionheaderbackgroundhvrcolour', 'format_vsf'),
-                    'help' => 'sectionheaderbackgroundhvrcolour',
+                    $helpoption => 'sectionheaderbackgroundhvrcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -485,7 +490,7 @@ class format_vsf extends core_courseformat\base {
                 ],
                 'sectionheaderforegroundcolour' => [
                     'label' => new lang_string('sectionheaderforegroundcolour', 'format_vsf'),
-                    'help' => 'sectionheaderforegroundcolour',
+                    $helpoption => 'sectionheaderforegroundcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -494,7 +499,7 @@ class format_vsf extends core_courseformat\base {
                 ],
                 'sectionheaderforegroundhvrcolour' => [
                     'label' => new lang_string('sectionheaderforegroundhvrcolour', 'format_vsf'),
-                    'help' => 'sectionheaderforegroundhvrcolour',
+                    $helpoption => 'sectionheaderforegroundhvrcolour',
                     'help_component' => 'format_vsf',
                     'element_type' => 'vsfcolourpopup',
                     'element_attributes' => [
@@ -503,7 +508,7 @@ class format_vsf extends core_courseformat\base {
                 ],
                 'layoutcolumns' => [
                     'label' => new lang_string('setlayoutcolumns', 'format_vsf'),
-                    'help' => 'setlayoutcolumns',
+                    $helpoption => 'setlayoutcolumns',
                     'help_component' => 'format_vsf',
                     'element_type' => 'select',
                     'element_attributes' => [

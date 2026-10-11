@@ -66,6 +66,17 @@ if ($ADMIN->fulltree) {
         $options,
     ));
 
+    // Setting help.
+    $name = 'format_vsf/displayhelp';
+    $title = get_string('displayhelp', 'format_vsf');
+    $description = get_string('displayhelp_desc', 'format_vsf');
+    $default = 'help';
+    $choices = [
+        'inline_help' => new lang_string('displayhelpinline', 'format_vsf'),
+        'help' => new lang_string('displayhelppopup', 'format_vsf'),
+    ];
+    $settings->add(new admin_setting_configselect($name, $title, $description, $default, $choices));
+
     // Module view button.
     // 1 = no, 2 = yes.
     $name = 'format_vsf/defaultmoduleviewbutton';
