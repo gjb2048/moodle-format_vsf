@@ -67,7 +67,7 @@
     padding-top: 0;
 }
 
-[data-bs-theme=dark] img.modpic {
+[data-bs-theme=dark] .vsf-icon img.modpic {
     filter: invert(1);
 }
 
