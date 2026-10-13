@@ -45,20 +45,7 @@ class format_vsf extends core_courseformat\base {
      * @return bool
      */
     public function uses_course_index() {
-
-        // Dirty tweak to allow both index and submenu.
-        // First run will be -> course_index_drawer().
-        // Next run will be -> activity_navigation().
-
-        static $i = false;
-
-        if ($i === false) {
-            $i = true;
-
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
