@@ -70,7 +70,7 @@ if ($ADMIN->fulltree) {
     $name = 'format_vsf/displayhelp';
     $title = get_string('displayhelp', 'format_vsf');
     $description = get_string('displayhelp_desc', 'format_vsf');
-    $default = 'help';
+    $default = 'inline_help';
     $choices = [
         'inline_help' => new lang_string('displayhelpinline', 'format_vsf'),
         'help' => new lang_string('displayhelppopup', 'format_vsf'),

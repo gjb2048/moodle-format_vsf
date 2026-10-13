@@ -7,7 +7,7 @@ Version 503.0.1
 2. Section navigation $data now has protected visibility.
 3. Dark mode support for sections and their module icons.
 4. Add linear navigation control, site level setting 'enablelinearnav' - [MDL-87302](https://tracker.moodle.org/browse/MDL-87302).
-5. Add site level 'displayhelp' setting to control how the course level setting help is presented, popup or inline - [MDL-88669](https://tracker.moodle.org/browse/MDL-88669).
+5. Add site level 'displayhelp' setting to control how the course level setting help is presented, popup or inline - [MDL-88669](https://tracker.moodle.org/browse/MDL-88669).  Default of 'Inline'.
 6. Remove activity navigation in light of new 'enablelinearnav' setting.
 
 Version 4.5.0.3
